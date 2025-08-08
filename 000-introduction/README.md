@@ -47,3 +47,43 @@ By opuścić sqlite należy wpisać w terminalu `.exit`.
 
 ### Sprawdzenie wersji:
 SELECT sqlite_version();
+
+---
+
+## Praktyka – jak uruchomić zapytania z pliku `hdfhd_khgfs.sql`
+
+**Przejdź do folderu z plikiem**
+   ```bash
+   cd "C:\Users\11\OneDrive\Desktop\PYTHON PLIKI\git-projekty\sql_learner\004-basic-syntax"
+   ```
+Uruchom MySQL i zaloguj się
+
+```bash
+mysql -u root -p
+```
+Wpisz swoje hasło do MySQL.
+
+Wybierz bazę danych
+
+```sql
+USE test_db;
+```
+(lub inną, której chcesz używać)
+
+Uruchom plik z zapytaniami
+
+```sql
+SOURCE basic_syntax.sql;
+```
+MySQL wykona wszystkie komendy w pliku po kolei, a wyniki SELECT zostaną wyświetlone w terminalu.
+
+Opcjonalnie – ładniejsze wyświetlanie wyników
+W trybie MySQL wpisz:
+```sql
+\G
+```
+aby rekordy były prezentowane w formie listy, lub uruchom MySQL z opcjami:
+
+```sql
+mysql -u root -p --table --pager=less
+```
