@@ -80,7 +80,7 @@ MySQL wykona wszystkie komendy w pliku po kolei, a wyniki SELECT zostaną wyświ
 Opcjonalnie – ładniejsze wyświetlanie wyników
 W trybie MySQL wpisz:
 ```sql
-\G
+Zamiast ; wpisz \G
 ```
 aby rekordy były prezentowane w formie listy, lub uruchom MySQL z opcjami:
 
