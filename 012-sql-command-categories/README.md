@@ -4,11 +4,9 @@
 - SQL dzieli się na kilka „podjęzyków” — każdy odpowiada za inny obszar pracy z bazą danych.
 
 - DDL – Data Definition Language (język definicji danych)
-Do tworzenia i modyfikowania struktury bazy danych (tabele, widoki, procedury itp.).
+Do tworzenia i modyfikowania struktury bazy danych (tabele, widoki, procedury itp.). Zmienia strukturę, a nie dane.
 
-Zmienia strukturę, a nie dane.
-
-Typowe komendy:
+### Typowe komendy:
 
 CREATE – tworzy obiekt (tabelę, bazę, widok…)
 
@@ -25,14 +23,14 @@ COMMENT – dodaje komentarz do obiektu
 - DQL – Data Query Language (język zapytań do danych)
 Służy do pobierania danych z bazy.
 
-Praktycznie jedyna główna komenda:
+### Praktycznie jedyna główna komenda:
 
 SELECT
 
 - DML – Data Manipulation Language (język manipulacji danymi)
 Służy do modyfikowania zawartości tabel (rekordów).
 
-Typowe komendy:
+### Typowe komendy:
 
 INSERT – dodaje rekord
 
@@ -49,7 +47,7 @@ EXPLAIN – pokazuje plan wykonania zapytania
 - DCL – Data Control Language (język kontroli dostępu)
 Kontroluje prawa dostępu użytkowników.
 
-Typowe komendy:
+### Typowe komendy:
 
 GRANT – przydziela uprawnienia
 
@@ -58,7 +56,7 @@ REVOKE – odbiera uprawnienia
 - TCL – Transaction Control Language (język kontroli transakcji)
 Zarządza transakcjami w bazie (np. przy operacjach DML).
 
-Typowe komendy:
+### Typowe komendy:
 
 COMMIT – zatwierdza transakcję
 
