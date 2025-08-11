@@ -1,70 +1,70 @@
 # 012 SQL | DDL, DQL, DML, DCL and TCL Commands
 
 ## Podział: 
-- SQL dzieli się na kilka „podjęzyków” — każdy odpowiada za inny obszar pracy z bazą danych.
+### SQL dzieli się na kilka „podjęzyków” — każdy odpowiada za inny obszar pracy z bazą danych.
 
-- DDL – Data Definition Language (język definicji danych)
+### DDL – Data Definition Language (język definicji danych)
 Do tworzenia i modyfikowania struktury bazy danych (tabele, widoki, procedury itp.). Zmienia strukturę, a nie dane.
 
-### Typowe komendy:
+#### Typowe komendy:
 
-CREATE – tworzy obiekt (tabelę, bazę, widok…)
+- CREATE – tworzy obiekt (tabelę, bazę, widok…)
 
-DROP – usuwa obiekt
+- DROP – usuwa obiekt
 
-ALTER – zmienia istniejący obiekt (np. dodaje kolumnę)
+- ALTER – zmienia istniejący obiekt (np. dodaje kolumnę)
 
-TRUNCATE – usuwa wszystkie rekordy z tabeli (bez możliwości ROLLBACK)
+- TRUNCATE – usuwa wszystkie rekordy z tabeli (bez możliwości ROLLBACK)
 
-RENAME – zmienia nazwę obiektu
+- RENAME – zmienia nazwę obiektu
 
-COMMENT – dodaje komentarz do obiektu
+- COMMENT – dodaje komentarz do obiektu
 
-- DQL – Data Query Language (język zapytań do danych)
+### DQL – Data Query Language (język zapytań do danych)
 Służy do pobierania danych z bazy.
 
-### Praktycznie jedyna główna komenda:
+#### Praktycznie jedyna główna komenda:
 
-SELECT
+- SELECT
 
-- DML – Data Manipulation Language (język manipulacji danymi)
+### DML – Data Manipulation Language (język manipulacji danymi)
 Służy do modyfikowania zawartości tabel (rekordów).
 
-### Typowe komendy:
+#### Typowe komendy:
 
-INSERT – dodaje rekord
+- INSERT – dodaje rekord
 
-UPDATE – zmienia rekord
+- UPDATE – zmienia rekord
 
-DELETE – usuwa rekord
+- DELETE – usuwa rekord
 
-LOCK – blokuje tabelę
+- LOCK – blokuje tabelę
 
-CALL – wywołuje procedurę
+- CALL – wywołuje procedurę
 
-EXPLAIN – pokazuje plan wykonania zapytania
+- EXPLAIN – pokazuje plan wykonania zapytania
 
-- DCL – Data Control Language (język kontroli dostępu)
+### DCL – Data Control Language (język kontroli dostępu)
 Kontroluje prawa dostępu użytkowników.
 
-### Typowe komendy:
+#### Typowe komendy:
 
-GRANT – przydziela uprawnienia
+- GRANT – przydziela uprawnienia
 
-REVOKE – odbiera uprawnienia
+- REVOKE – odbiera uprawnienia
 
-- TCL – Transaction Control Language (język kontroli transakcji)
+### TCL – Transaction Control Language (język kontroli transakcji)
 Zarządza transakcjami w bazie (np. przy operacjach DML).
 
-### Typowe komendy:
+#### Typowe komendy:
 
-COMMIT – zatwierdza transakcję
+- COMMIT – zatwierdza transakcję
 
-ROLLBACK – wycofuje transakcję
+- ROLLBACK – wycofuje transakcję
 
-SAVEPOINT – ustawia punkt przywracania
+- SAVEPOINT – ustawia punkt przywracania
 
-SET TRANSACTION – ustawia parametry transakcji
+- SET TRANSACTION – ustawia parametry transakcji
 
 ## Tabela porównawcza
 | Typ poleceń | Pełna nazwa                     | Cel / zastosowanie                                          | Przykłady poleceń                                          |
