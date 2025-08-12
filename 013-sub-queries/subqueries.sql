@@ -1,0 +1,66 @@
+-- Tworzymy bazę i przełączamy się na nią
+CREATE DATABASE IF NOT EXISTS sql_learner;
+USE sql_learner;
+
+-- Usuwamy tabele jeśli istnieją
+DROP TABLE IF EXISTS CUSTOMERS;
+DROP TABLE IF EXISTS CUSTOMERS_BKP;
+
+-- Tworzymy tabele
+CREATE TABLE CUSTOMERS (
+    ID INT PRIMARY KEY,
+    NAME VARCHAR(50),
+    AGE INT,
+    ADDRESS VARCHAR(100),
+    SALARY DECIMAL(10,2)
+);
+
+CREATE TABLE CUSTOMERS_BKP (
+    ID INT PRIMARY KEY,
+    NAME VARCHAR(50),
+    AGE INT,
+    ADDRESS VARCHAR(100),
+    SALARY DECIMAL(10,2)
+);
+
+-- Wstawiamy dane do tabeli CUSTOMERS
+INSERT INTO CUSTOMERS (ID, NAME, AGE, ADDRESS, SALARY) VALUES
+(1, 'Ramesh', 35, 'Ahmedabad', 2000.00),
+(2, 'Khilan', 25, 'Delhi', 1500.00),
+(3, 'Kaushik', 23, 'Kota', 2000.00),
+(4, 'Chaitali', 25, 'Mumbai', 6500.00),
+(5, 'Hardik', 27, 'Bhopal', 8500.00),
+(6, 'Komal', 22, 'MP', 4500.00),
+(7, 'Muffy', 24, 'Indore', 10000.00);
+
+-- Wstawiamy dane do tabeli CUSTOMERS_BKP (kopię CUSTOMERS)
+INSERT INTO CUSTOMERS_BKP (ID, NAME, AGE, ADDRESS, SALARY)
+SELECT ID, NAME, AGE, ADDRESS, SALARY FROM CUSTOMERS;
+
+-- Przykład subquery w SELECT:
+SELECT *
+FROM CUSTOMERS
+WHERE ID IN (
+    SELECT ID
+    FROM CUSTOMERS
+    WHERE SALARY > 4500
+);
+
+-- Przykład subquery w UPDATE:
+UPDATE CUSTOMERS
+SET SALARY = SALARY * 0.25
+WHERE AGE IN (
+    SELECT AGE
+    FROM CUSTOMERS_BKP
+    WHERE AGE >= 27
+);
+SELECT * FROM CUSTOMERS;
+
+-- Przykład subquery w DELETE:
+DELETE FROM CUSTOMERS
+WHERE AGE IN (
+    SELECT AGE
+    FROM CUSTOMERS_BKP
+    WHERE AGE >= 27
+);
+SELECT * FROM CUSTOMERS;
