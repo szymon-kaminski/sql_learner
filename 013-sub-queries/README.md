@@ -42,7 +42,7 @@ WHERE ID IN (
 );
 ```
 Wynik:
-
+```
 +----+----------+------+---------+----------+
 | ID | NAME     | AGE  | ADDRESS | SALARY   |
 +----+----------+------+---------+----------+
@@ -50,7 +50,7 @@ Wynik:
 |  5 | Hardik   |   27 | Bhopal  |  8500.00 |
 |  7 | Muffy    |   24 | Indore  | 10000.00 |
 +----+----------+------+---------+----------+
-
+```
 2. Subquery w UPDATE
 ```sql
 UPDATE CUSTOMERS
@@ -62,7 +62,7 @@ WHERE AGE IN (
 );
 ```
 Tabela po aktualizacji:
-
+```
 +----+---------+-----+-----------+----------+
 | ID | NAME    | AGE | ADDRESS   | SALARY   |
 +----+---------+-----+-----------+----------+
@@ -74,7 +74,7 @@ Tabela po aktualizacji:
 |  6 | Komal   | 22  | MP        |  4500.00 |
 |  7 | Muffy   | 24  | Indore    | 10000.00 |
 +----+---------+-----+-----------+----------+
-
+```
 
 3. Subquery w DELETE
 ```sql
@@ -86,7 +86,7 @@ WHERE AGE IN (
 );
 ```
 Tabela po usunięciu:
-
+```
 +----+---------+-----+---------+----------+
 | ID | NAME    | AGE | ADDRESS | SALARY   |
 +----+---------+-----+---------+----------+
@@ -96,5 +96,5 @@ Tabela po usunięciu:
 |  6 | Komal   | 22  | MP      |  4500.00 |
 |  7 | Muffy   | 24  | Indore  | 10000.00 |
 +----+---------+-----+---------+----------+
-
+```
 
