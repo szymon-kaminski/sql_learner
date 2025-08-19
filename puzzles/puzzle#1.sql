@@ -13,4 +13,6 @@ INSERT INFO ShoppingCarts (Cart1, Cart2) VALUES
 ('SODA', 'CHEESE'),
 ('FLOUR', 'FRUIT');
 
-
+-- Step 2: Select Cart1 only
+SELECT Cart1 as ItemCart1, NULL AS ItemCart2
+FROM ShoppingCarts;
