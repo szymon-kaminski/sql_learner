@@ -20,3 +20,11 @@ FROM ShoppingCarts;
 -- Step 3: Secelct Cart2 only
 SELECT NULL AS ItemCart1, Cart2 as ItemCart2
 FROM ShoppingCarts;
+
+-- Step 4: Union both cart into final result
+SELECT Cart1 as ItemCart1, NULL AS ItemCart2, 1 AS OrderCol
+FROM ShoppingCarts
+UNION ALL
+SELECT NULL AS ItemCart1, Cart2 as ItemCart2, 2 AS OrderCol
+FROM ShoppingCarts
+ORDER BY OrderCol, ItemCart1, ItemCart2;
