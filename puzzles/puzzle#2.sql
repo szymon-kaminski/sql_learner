@@ -14,3 +14,16 @@ INSERT INTO Employees (EmployeeID, ManagerID, JobTitle) VALUES
 (4004, 2002, 'Engineer'),
 (5005, 2002, 'Engineer'),
 (6006, 2002, 'Engineer');
+
+-- Step 2: Base case - select the President with dept = 0
+WITH RECURSIVE EmployeeHierarchy AS (
+    SELECT
+        EmployeeID,
+        ManagerID,
+        JobTitle,
+        0 AS Depth
+    FROM Employees
+    WHERE JobTitle = 'President'
+);
+
+SELECT * FROM EmployeeHierarchy;
