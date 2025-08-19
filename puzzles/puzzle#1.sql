@@ -16,3 +16,7 @@ INSERT INFO ShoppingCarts (Cart1, Cart2) VALUES
 -- Step 2: Select Cart1 only
 SELECT Cart1 as ItemCart1, NULL AS ItemCart2
 FROM ShoppingCarts;
+
+-- Step 3: Secelct Cart2 only
+SELECT NULL AS ItemCart1, Cart2 as ItemCart2
+FROM ShoppingCarts;
