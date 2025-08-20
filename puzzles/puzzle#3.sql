@@ -44,3 +44,13 @@ ADD CONSTRAINT CK_EPR_Start_Le_End CHECK (StartDate <= EndDate);
 -- Wymusza max 2 miejsca po przecinku:
 ALTER TABLE #EmployeePayRecord
 ADD CONSTRAINT CK_EPR_PayRate_2decimals CHECK (ROUND(PayRate, 2) = PayRate);
+
+
+-- Step 3 — Jednoznaczność: jeden rekord na pracownika i rok
+ALTER TABLE #EmployeePayRecord
+ADD CONSTRAINT PK_EPR PRIMARY KEY (EmployeeID, FiscalYear);
+
+-- (Opcjonalnie) jeśli istnieje tabela pracowników, warto dodać FK:
+-- ALTER TABLE #EmployeePayRecord
+-- ADD CONSTRAINT FK_EPR_Employee
+--     FOREIGN KEY (EmployeeID) REFERENCES dbo.Employees(EmployeeID);
