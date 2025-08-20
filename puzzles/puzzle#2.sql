@@ -52,5 +52,28 @@ WITH RECURSIVE EmployeeHierarchy AS (
 
 SELECT * FROM EmployeeHierarchy;
 
-
+-- Step 4: final query - full hierarchy with depth
+WITH RECURSIVE EmployeeHierarchy AS (
+    SELECT
+        EmployeeID,
+        ManagerID,
+        JobTitle,
+        0 AS Depth
+    FROM Employees
+    WHERE JobTitle = 'President'
     
+    UNION ALL
+
+    SELECT
+        e.EmployeeID,
+        e.ManagerID,
+        e.JobTitle,
+        eh.Depth + 1
+    FROM Employees e
+    INNER JOIN EmployeeHierarchy eh 
+        ON e.ManagerID = eh.EmployeeID
+)
+
+SELECT *
+FROM EmployeeHierarchy
+ORDER BY Depth, EmployeeID;
