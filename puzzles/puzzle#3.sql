@@ -70,3 +70,60 @@ ADD CONSTRAINT CK_EPR_End_MatchesFY
 -- że Year(StartDate) = Year(EndDate) = FiscalYear
 -- oraz że zakres obejmuje cały rok (365/366 dni).
 
+
+-- Step 5 — Walidacja: przykładowe INSERT-y
+-- Każdą próbę owijamy w TRY/CATCH, aby skrypt biegł dalej.
+------------------------------------------------------------
+
+-- 5.1 Próba niepoprawna: mid-year (zły StartDate)
+BEGIN TRY
+    INSERT INTO #EmployeePayRecord (EmployeeID, FiscalYear, StartDate, EndDate, PayRate)
+    VALUES (1, 2025, '2025-04-01', '2025-12-31', 5000.00);
+    PRINT '5.1: NIEOCZEKIWANY SUKCES (powinno się wyłożyć)';
+END TRY
+BEGIN CATCH
+    PRINT '5.1: OK - oczekiwany błąd: ' + ERROR_MESSAGE();
+END CATCH;
+
+-- 5.2 Próba niepoprawna: zły EndDate
+BEGIN TRY
+    INSERT INTO #EmployeePayRecord (EmployeeID, FiscalYear, StartDate, EndDate, PayRate)
+    VALUES (1, 2025, '2025-01-01', '2025-11-30', 5000.00);
+    PRINT '5.2: NIEOCZEKIWANY SUKCES (powinno się wyłożyć)';
+END TRY
+BEGIN CATCH
+    PRINT '5.2: OK - oczekiwany błąd: ' + ERROR_MESSAGE();
+END CATCH;
+
+-- 5.3 Próba niepoprawna: ujemna stawka
+BEGIN TRY
+    INSERT INTO #EmployeePayRecord (EmployeeID, FiscalYear, StartDate, EndDate, PayRate)
+    VALUES (1, 2025, '2025-01-01', '2025-12-31', -1.00);
+    PRINT '5.3: NIEOCZEKIWANY SUKCES (powinno się wyłożyć)';
+END TRY
+BEGIN CATCH
+    PRINT '5.3: OK - oczekiwany błąd: ' + ERROR_MESSAGE();
+END CATCH;
+
+-- 5.4 Próba poprawna
+BEGIN TRY
+    INSERT INTO #EmployeePayRecord (EmployeeID, FiscalYear, StartDate, EndDate, PayRate)
+    VALUES (1, 2025, '2025-01-01', '2025-12-31', 5000.00);
+    PRINT '5.4: OK - poprawny insert';
+END TRY
+BEGIN CATCH
+    PRINT '5.4: BŁĄD (nie powinno się wyłożyć): ' + ERROR_MESSAGE();
+END CATCH;
+
+-- 5.5 Próba duplikatu (ten sam pracownik i ten sam rok) - powinno się wyłożyć przez PK
+BEGIN TRY
+    INSERT INTO #EmployeePayRecord (EmployeeID, FiscalYear, StartDate, EndDate, PayRate)
+    VALUES (1, 2025, '2025-01-01', '2025-12-31', 5200.00);
+    PRINT '5.5: NIEOCZEKIWANY SUKCES (powinno się wyłożyć - PK)';
+END TRY
+BEGIN CATCH
+    PRINT '5.5: OK - oczekiwany błąd (PK): ' + ERROR_MESSAGE();
+END CATCH;
+
+-- 5.6 Podgląd danych (powinien być 1 wiersz: EmployeeID=1, 2025)
+SELECT * FROM #EmployeePayRecord;
