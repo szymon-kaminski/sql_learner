@@ -18,3 +18,29 @@ CREATE TABLE #EmployeePayRecord
     PayRate     MONEY
 );
 GO
+
+-- Step 2 — NOT NULL + podstawowe ograniczenia domeny
+
+-- Ustawiamy NOT NULL (tabela jest pusta, więc ALTER przejdzie bez problemu)
+ALTER TABLE #EmployeePayRecord ALTER COLUMN EmployeeID INT  NOT NULL;
+ALTER TABLE #EmployeePayRecord ALTER COLUMN FiscalYear INT  NOT NULL;
+ALTER TABLE #EmployeePayRecord ALTER COLUMN StartDate  DATE NOT NULL;
+ALTER TABLE #EmployeePayRecord ALTER COLUMN EndDate    DATE NOT NULL;
+ALTER TABLE #EmployeePayRecord ALTER COLUMN PayRate    MONEY NOT NULL;
+
+-- Dodatkowe CHECK-i domenowe
+ALTER TABLE #EmployeePayRecord
+ADD CONSTRAINT CK_EPR_EmployeeID_Positive CHECK (EmployeeID > 0);
+
+ALTER TABLE #EmployeePayRecord
+ADD CONSTRAINT CK_EPR_FiscalYear_Range CHECK (FiscalYear BETWEEN 1900 AND 9999);
+
+ALTER TABLE #EmployeePayRecord
+ADD CONSTRAINT CK_EPR_PayRate_Positive CHECK (PayRate > 0);
+
+ALTER TABLE #EmployeePayRecord
+ADD CONSTRAINT CK_EPR_Start_Le_End CHECK (StartDate <= EndDate);
+
+-- Wymusza max 2 miejsca po przecinku:
+ALTER TABLE #EmployeePayRecord
+ADD CONSTRAINT CK_EPR_PayRate_2decimals CHECK (ROUND(PayRate, 2) = PayRate);
