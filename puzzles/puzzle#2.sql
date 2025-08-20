@@ -27,3 +27,30 @@ WITH RECURSIVE EmployeeHierarchy AS (
 );
 
 SELECT * FROM EmployeeHierarchy;
+
+-- Step 3: recursive step - add direct reports of each manager
+WITH RECURSIVE EmployeeHierarchy AS (
+    SELECT
+        EmployeeID,
+        ManagerID,
+        JobTitle,
+        0 AS Depth
+    FROM Employees
+    WHERE JobTitle = 'President'
+
+    UNION ALL
+
+    SELECT
+        e.EmployeeID,
+        e.ManagerID,
+        e.JobTitle,
+        eh.Depth + 1
+    FROM Employees e
+    INNER JOIN EmployeeHierarchy eh 
+        ON e.ManagerID = eh.EmployeeID
+)
+
+SELECT * FROM EmployeeHierarchy;
+
+
+    
