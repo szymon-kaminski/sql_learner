@@ -54,3 +54,19 @@ ADD CONSTRAINT PK_EPR PRIMARY KEY (EmployeeID, FiscalYear);
 -- ALTER TABLE #EmployeePayRecord
 -- ADD CONSTRAINT FK_EPR_Employee
 --     FOREIGN KEY (EmployeeID) REFERENCES dbo.Employees(EmployeeID);
+
+---------------------------------------------------------------------
+-- Step 4 — Spójność dat z "standardowym" rokiem fiskalnym
+-- (tu: kalendarzowym). Broni to przed "mid-year raises".
+ALTER TABLE #EmployeePayRecord
+ADD CONSTRAINT CK_EPR_Start_MatchesFY
+    CHECK (StartDate = DATEFROMPARTS(FiscalYear, 1, 1));
+
+ALTER TABLE #EmployeePayRecord
+ADD CONSTRAINT CK_EPR_End_MatchesFY
+    CHECK (EndDate = DATEFROMPARTS(FiscalYear, 12, 31));
+
+-- Uwaga: Dwa powyższe CHECK-i automatycznie gwarantują,
+-- że Year(StartDate) = Year(EndDate) = FiscalYear
+-- oraz że zakres obejmuje cały rok (365/366 dni).
+
