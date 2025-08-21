@@ -40,3 +40,13 @@ SELECT
     MAX(CASE WHEN Type = 'Home'     THEN PhoneNumber END) AS Home
 FROM PhoneDirectory
 GROUP BY CustomerID;
+
+-- Step 5 — Finalne zapytanie (posortowane dla czytelności)
+SELECT 
+    CustomerID,
+    MAX(CASE WHEN Type = 'Cellular' THEN PhoneNumber END) AS Cellular,
+    MAX(CASE WHEN Type = 'Work'     THEN PhoneNumber END) AS Work,
+    MAX(CASE WHEN Type = 'Home'     THEN PhoneNumber END) AS Home
+FROM PhoneDirectory
+GROUP BY CustomerID
+ORDER BY CustomerID;
