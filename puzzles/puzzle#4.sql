@@ -33,9 +33,20 @@ WHERE DeliveryState = 'CA';
 SELECT *
 FROM Orders
 WHERE DeliveryState = 'TX'
-    AND Customer IN (
+    AND CustomerID IN (
         SELECT DISTINCT CustomerID
         FROM Orders
         WHERE DeliveryState = 'CA'
     );
+
+-- Step 5 — Finalne zapytanie (czytelny wynik, posortowany)
+SELECT CustomerID, OrderID, DeliveryState, Amount
+FROM Orders
+WHERE DeliveryState = 'TX'
+    AND CustomerID IN (
+        SELECT DISTINCT CustomerID
+        FROM Orders
+        WHERE DeliveryState = 'CA'
+    )
+ORDER BY CustomerID, OrderID;
 
