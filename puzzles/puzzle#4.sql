@@ -23,3 +23,8 @@ INSERT INTO Orders (CustomerID, OrderID, DeliveryState, Amount) VALUES
 
 -- Step 2 — Sprawdzenie danych wejściowych
 SELECT * FROM Orders;
+
+-- Step 3 — Znalezienie klientów, którzy mieli dostawę do CA
+SELECT DISTINCT CustomerID
+FROM Orders
+WHERE DeliveryState = 'CA';
