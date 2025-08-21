@@ -20,3 +20,6 @@ INSERT INTO Orders (CustomerID, OrderID, DeliveryState, Amount) VALUES
 (3003, 6, 'CA', 650),
 (3003, 7, 'CA', 830),
 (4004, 8, 'TX', 120);
+
+-- Step 2 — Sprawdzenie danych wejściowych
+SELECT * FROM Orders;
