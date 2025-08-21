@@ -28,3 +28,14 @@ SELECT * FROM Orders;
 SELECT DISTINCT CustomerID
 FROM Orders
 WHERE DeliveryState = 'CA';
+
+-- Step 4 — Wyciągnięcie zamówień do TX tylko dla klientów z CA
+SELECT *
+FROM Orders
+WHERE DeliveryState = 'TX'
+    AND Customer IN (
+        SELECT DISTINCT CustomerID
+        FROM Orders
+        WHERE DeliveryState = 'CA'
+    );
+
