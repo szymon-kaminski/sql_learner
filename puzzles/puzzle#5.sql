@@ -20,3 +20,14 @@ INSERT INTO PhoneDirectory (CustomerID, Type, PhoneNumber) VALUES
 
 -- Step 2 — Sprawdzenie danych wejściowych
 SELECT * FROM PhoneDirectory;
+
+-- Step 3 — Przekształcenie typu na kolumny (CASE)
+SELECT 
+    CustomerID,
+    CASE WHEN Type = 'Cellular' THEN PhoneNumber END AS Cellular,
+    CASE WHEN Type = 'Work'     THEN PhoneNumber END AS Work,
+    CASE WHEN Type = 'Home'     THEN PhoneNumber END AS Home
+FROM PhoneDirectory;
+
+-- Wynik: kilka wierszy dla tego samego klienta, z NULL-ami
+-- (bo tylko jedna kolumna ma wartość w danym wierszu)
