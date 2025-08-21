@@ -31,3 +31,12 @@ FROM PhoneDirectory;
 
 -- Wynik: kilka wierszy dla tego samego klienta, z NULL-ami
 -- (bo tylko jedna kolumna ma wartość w danym wierszu)
+
+-- Step 4 — Grupowanie po CustomerID z agregacją MAX
+SELECT 
+    CustomerID,
+    MAX(CASE WHEN Type = 'Cellular' THEN PhoneNumber END) AS Cellular,
+    MAX(CASE WHEN Type = 'Work'     THEN PhoneNumber END) AS Work,
+    MAX(CASE WHEN Type = 'Home'     THEN PhoneNumber END) AS Home
+FROM PhoneDirectory
+GROUP BY CustomerID;
