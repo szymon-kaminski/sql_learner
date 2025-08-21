@@ -17,3 +17,6 @@ INSERT INTO PhoneDirectory (CustomerID, Type, PhoneNumber) VALUES
 (2002, 'Cellular', '555-963-6544'),
 (2002, 'Work',     '555-812-9856'),
 (3003, 'Cellular', '555-987-6541');
+
+-- Step 2 — Sprawdzenie danych wejściowych
+SELECT * FROM PhoneDirectory;
