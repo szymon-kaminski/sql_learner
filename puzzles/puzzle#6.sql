@@ -28,3 +28,9 @@ SELECT * FROM Workflows;
 SELECT DISTINCT Workflow
 FROM Workflows
 WHERE CompletionDate IS NULL;
+
+-- Step 4 — Rozwiązanie z GROUP BY + HAVING (CASE)
+SELECT Workflow
+FROM Workflows
+GROUP BY Workflow
+HAVING COUNT(CASE WHEN CompletionDate IS NULL THEN 1 END) > 0;
