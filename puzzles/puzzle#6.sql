@@ -34,3 +34,12 @@ SELECT Workflow
 FROM Workflows
 GROUP BY Workflow
 HAVING COUNT(CASE WHEN CompletionDate IS NULL THEN 1 END) > 0;
+
+-- Step 5 — Bonus: tylko COUNT, bez subqueries
+-- COUNT(*) liczy wszystkie rekordy,
+-- COUNT(CompletionDate) liczy tylko nie-NULL.
+-- Jeśli różne → znaczy, że jest przynajmniej jeden NULL.
+SELECT Workflow
+FROM Workflows
+GROUP BY Workflow
+HAVING COUNT(*) > COUNT(CompletionDate);
