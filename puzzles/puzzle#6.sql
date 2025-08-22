@@ -22,3 +22,9 @@ INSERT INTO Workflows (Workflow, StepNumber, CompletionDate) VALUES
 
 -- Step 2 — Sprawdzenie danych wejściowych
 SELECT * FROM Workflows;
+
+-- Step 3 — Identyfikacja workflowów z brakującym CompletionDate
+-- Proste sprawdzenie: które workflowy mają przynajmniej jeden krok NULL
+SELECT DISTINCT Workflow
+FROM Workflows
+WHERE CompletionDate IS NULL;
