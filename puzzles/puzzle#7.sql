@@ -28,3 +28,7 @@ INSERT INTO Requirements (Description) VALUES
 ('Geologist'),
 ('Astrogator'),
 ('Technician');
+
+-- Step 2 — Sprawdzenie danych wejściowych
+SELECT * FROM Candidates;
+SELECT * FROM Requirements;
