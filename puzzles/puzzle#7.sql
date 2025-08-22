@@ -38,3 +38,10 @@ SELECT c.CandidateID, c.Description
 FROM Candidates c
 INNER JOIN Requirements r
     ON c.Description = r.Description;
+
+-- Step 4 — Policzenie ilu wymagań spełnia każdy kandydat
+SELECT c.CandidateID, COUNT(*) AS MatchedRequirements
+FROM Candidates c
+INNER JOIN Requirements r
+    ON c.Description = r.Description
+GROUP BY c.CandidateID;
