@@ -19,3 +19,6 @@ INSERT INTO Workflows (Workflow, StepNumber, CompletionDate) VALUES
 ('Bravo',   3, '2018-06-27'),
 ('Charlie', 1, NULL),
 ('Charlie', 2, '2018-07-01');
+
+-- Step 2 — Sprawdzenie danych wejściowych
+SELECT * FROM Workflows;
