@@ -32,3 +32,9 @@ INSERT INTO Requirements (Description) VALUES
 -- Step 2 — Sprawdzenie danych wejściowych
 SELECT * FROM Candidates;
 SELECT * FROM Requirements;
+
+-- Step 3 — Połączenie kandydatów z wymaganiami
+SELECT c.CandidateID, c.Description
+FROM Candidates c
+INNER JOIN Requirements r
+    ON c.Description = r.Description;
