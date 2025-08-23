@@ -45,3 +45,11 @@ FROM Candidates c
 INNER JOIN Requirements r
     ON c.Description = r.Description
 GROUP BY c.CandidateID;
+
+-- Step 5 — Porównanie z całkowitą liczbą wymagań
+SELECT c.CandidateID
+FROM Candidates c
+INNER JOIN Requirements r
+    ON c.Description = r.Description
+GROUP BY c.CandidateID
+HAVING COUNT(*) = (SELECT COUNT(*) FROM Requirements);
