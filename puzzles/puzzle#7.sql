@@ -53,3 +53,11 @@ INNER JOIN Requirements r
     ON c.Description = r.Description
 GROUP BY c.CandidateID
 HAVING COUNT(*) = (SELECT COUNT(*) FROM Requirements);
+
+-- Step 6 — Finalne zapytanie (czytelny wynik, unikalne ID)
+SELECT DISTINCT c.CandidateID
+FROM Candidates c
+INNER JOIN Requirements r
+    ON c.Description = r.Description
+GROUP BY c.CandidateID
+HAVING COUNT(*) = (SELECT COUNT(*) FROM Requirements);
