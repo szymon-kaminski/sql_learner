@@ -1,9 +1,11 @@
--- Puzzle #4: Two Predicates
--- Cel: Dla każdego klienta, który miał dostawę do Kalifornii (CA),
---      pokaż zamówienia tego klienta, które były dostarczone do Teksasu (TX).
+-- Puzzle #4: Two Predicates (MySQL version)
+-- Cel: znaleźć zamówienia do TX od klientów, którzy mieli też zamówienia do CA.
 
+------------------------------------------------------------
+-- Step 1 — Utworzenie tabeli Orders
+------------------------------------------------------------
+DROP TABLE IF EXISTS Orders;
 
--- Step 1 — Utworzenie tabeli i danych wejściowych
 CREATE TABLE Orders (
     CustomerID INT,
     OrderID INT,
@@ -21,32 +23,20 @@ INSERT INTO Orders (CustomerID, OrderID, DeliveryState, Amount) VALUES
 (3003, 7, 'CA', 830),
 (4004, 8, 'TX', 120);
 
--- Step 2 — Sprawdzenie danych wejściowych
-SELECT * FROM Orders;
+------------------------------------------------------------
+-- Step 2 — Podgląd danych wejściowych
+------------------------------------------------------------
+SELECT * FROM Orders ORDER BY CustomerID, OrderID;
 
--- Step 3 — Znalezienie klientów, którzy mieli dostawę do CA
-SELECT DISTINCT CustomerID
-FROM Orders
-WHERE DeliveryState = 'CA';
-
--- Step 4 — Wyciągnięcie zamówień do TX tylko dla klientów z CA
+------------------------------------------------------------
+-- Step 3 — Zapytanie końcowe
+------------------------------------------------------------
 SELECT *
 FROM Orders
 WHERE DeliveryState = 'TX'
-    AND CustomerID IN (
-        SELECT DISTINCT CustomerID
-        FROM Orders
-        WHERE DeliveryState = 'CA'
-    );
-
--- Step 5 — Finalne zapytanie (czytelny wynik, posortowany)
-SELECT CustomerID, OrderID, DeliveryState, Amount
-FROM Orders
-WHERE DeliveryState = 'TX'
-    AND CustomerID IN (
-        SELECT DISTINCT CustomerID
-        FROM Orders
-        WHERE DeliveryState = 'CA'
-    )
+  AND CustomerID IN (
+      SELECT DISTINCT CustomerID
+      FROM Orders
+      WHERE DeliveryState = 'CA'
+  )
 ORDER BY CustomerID, OrderID;
-
