@@ -1,129 +1,51 @@
--- Puzzle #3: Fiscal Year Pay Rates
--- Cel: Zabezpieczyć tabelę constraintami, aby zawierała tylko poprawne rekordy.
--- Założenie: standardowy rok fiskalny = kalendarzowy (1 stycznia – 31 grudnia).
--- Dialekt: T-SQL (SQL Server) – # oznacza tabelę tymczasową.
+-- Puzzle #3: Fiscal Year Pay Rates (MySQL version)
+-- Cel: stworzyć tabelę EmployeePayRecord z odpowiednimi constraintami,
+-- aby zapewnić poprawność danych.
 
 ------------------------------------------------------------
--- Step 1 — Utworzenie tabeli bazowej (jak w treści zadania)
-IF OBJECT_ID('tempdb..#EmployeePayRecord') IS NOT NULL
-    DROP TABLE #EmployeePayRecord;
-GO
+-- Step 1 — Utworzenie tabeli z constraintami
+------------------------------------------------------------
+DROP TABLE IF EXISTS EmployeePayRecord;
 
-CREATE TABLE #EmployeePayRecord
-(
-    EmployeeID  INT,
-    FiscalYear  INT,
-    StartDate   DATE,
-    EndDate     DATE,
-    PayRate     MONEY
+CREATE TABLE EmployeePayRecord (
+    EmployeeID INT NOT NULL,
+    FiscalYear INT NOT NULL,
+    StartDate DATE NOT NULL,
+    EndDate DATE NOT NULL,
+    PayRate DECIMAL(10,2) NOT NULL,
+
+    -- Unikalność pracownik + rok
+    CONSTRAINT uq_employee_year UNIQUE (EmployeeID, FiscalYear),
+
+    -- Poprawność dat
+    CONSTRAINT chk_dates CHECK (StartDate <= EndDate),
+
+    -- Poprawność płacy
+    CONSTRAINT chk_payrate CHECK (PayRate > 0)
 );
-GO
 
--- Step 2 — NOT NULL + podstawowe ograniczenia domeny
-
--- Ustawiamy NOT NULL (tabela jest pusta, więc ALTER przejdzie bez problemu)
-ALTER TABLE #EmployeePayRecord ALTER COLUMN EmployeeID INT  NOT NULL;
-ALTER TABLE #EmployeePayRecord ALTER COLUMN FiscalYear INT  NOT NULL;
-ALTER TABLE #EmployeePayRecord ALTER COLUMN StartDate  DATE NOT NULL;
-ALTER TABLE #EmployeePayRecord ALTER COLUMN EndDate    DATE NOT NULL;
-ALTER TABLE #EmployeePayRecord ALTER COLUMN PayRate    MONEY NOT NULL;
-
--- Dodatkowe CHECK-i domenowe
-ALTER TABLE #EmployeePayRecord
-ADD CONSTRAINT CK_EPR_EmployeeID_Positive CHECK (EmployeeID > 0);
-
-ALTER TABLE #EmployeePayRecord
-ADD CONSTRAINT CK_EPR_FiscalYear_Range CHECK (FiscalYear BETWEEN 1900 AND 9999);
-
-ALTER TABLE #EmployeePayRecord
-ADD CONSTRAINT CK_EPR_PayRate_Positive CHECK (PayRate > 0);
-
-ALTER TABLE #EmployeePayRecord
-ADD CONSTRAINT CK_EPR_Start_Le_End CHECK (StartDate <= EndDate);
-
--- Wymusza max 2 miejsca po przecinku:
-ALTER TABLE #EmployeePayRecord
-ADD CONSTRAINT CK_EPR_PayRate_2decimals CHECK (ROUND(PayRate, 2) = PayRate);
-
-
--- Step 3 — Jednoznaczność: jeden rekord na pracownika i rok
-ALTER TABLE #EmployeePayRecord
-ADD CONSTRAINT PK_EPR PRIMARY KEY (EmployeeID, FiscalYear);
-
--- (Opcjonalnie) jeśli istnieje tabela pracowników, warto dodać FK:
--- ALTER TABLE #EmployeePayRecord
--- ADD CONSTRAINT FK_EPR_Employee
---     FOREIGN KEY (EmployeeID) REFERENCES dbo.Employees(EmployeeID);
-
----------------------------------------------------------------------
--- Step 4 — Spójność dat z "standardowym" rokiem fiskalnym
--- (tu: kalendarzowym). Broni to przed "mid-year raises".
-ALTER TABLE #EmployeePayRecord
-ADD CONSTRAINT CK_EPR_Start_MatchesFY
-    CHECK (StartDate = DATEFROMPARTS(FiscalYear, 1, 1));
-
-ALTER TABLE #EmployeePayRecord
-ADD CONSTRAINT CK_EPR_End_MatchesFY
-    CHECK (EndDate = DATEFROMPARTS(FiscalYear, 12, 31));
-
--- Uwaga: Dwa powyższe CHECK-i automatycznie gwarantują,
--- że Year(StartDate) = Year(EndDate) = FiscalYear
--- oraz że zakres obejmuje cały rok (365/366 dni).
-
-
--- Step 5 — Walidacja: przykładowe INSERT-y
--- Każdą próbę owijamy w TRY/CATCH, aby skrypt biegł dalej.
+------------------------------------------------------------
+-- Step 2 — Testy poprawności
 ------------------------------------------------------------
 
--- 5.1 Próba niepoprawna: mid-year (zły StartDate)
-BEGIN TRY
-    INSERT INTO #EmployeePayRecord (EmployeeID, FiscalYear, StartDate, EndDate, PayRate)
-    VALUES (1, 2025, '2025-04-01', '2025-12-31', 5000.00);
-    PRINT '5.1: NIEOCZEKIWANY SUKCES (powinno się wyłożyć)';
-END TRY
-BEGIN CATCH
-    PRINT '5.1: OK - oczekiwany błąd: ' + ERROR_MESSAGE();
-END CATCH;
+-- 2.1 Poprawna próba (powinna działać)
+INSERT INTO EmployeePayRecord (EmployeeID, FiscalYear, StartDate, EndDate, PayRate)
+VALUES (1, 2025, '2025-01-01', '2025-12-31', 5000.00);
 
--- 5.2 Próba niepoprawna: zły EndDate
-BEGIN TRY
-    INSERT INTO #EmployeePayRecord (EmployeeID, FiscalYear, StartDate, EndDate, PayRate)
-    VALUES (1, 2025, '2025-01-01', '2025-11-30', 5000.00);
-    PRINT '5.2: NIEOCZEKIWANY SUKCES (powinno się wyłożyć)';
-END TRY
-BEGIN CATCH
-    PRINT '5.2: OK - oczekiwany błąd: ' + ERROR_MESSAGE();
-END CATCH;
+-- 2.2 Duplikat (ten sam pracownik i rok) — powinno się wyłożyć
+-- ERROR: Duplicate entry
+INSERT INTO EmployeePayRecord (EmployeeID, FiscalYear, StartDate, EndDate, PayRate)
+VALUES (1, 2025, '2025-01-01', '2025-12-31', 5200.00);
 
--- 5.3 Próba niepoprawna: ujemna stawka
-BEGIN TRY
-    INSERT INTO #EmployeePayRecord (EmployeeID, FiscalYear, StartDate, EndDate, PayRate)
-    VALUES (1, 2025, '2025-01-01', '2025-12-31', -1.00);
-    PRINT '5.3: NIEOCZEKIWANY SUKCES (powinno się wyłożyć)';
-END TRY
-BEGIN CATCH
-    PRINT '5.3: OK - oczekiwany błąd: ' + ERROR_MESSAGE();
-END CATCH;
+-- 2.3 Zła kolejność dat (powinno się wyłożyć)
+INSERT INTO EmployeePayRecord (EmployeeID, FiscalYear, StartDate, EndDate, PayRate)
+VALUES (2, 2025, '2025-12-31', '2025-01-01', 4500.00);
 
--- 5.4 Próba poprawna
-BEGIN TRY
-    INSERT INTO #EmployeePayRecord (EmployeeID, FiscalYear, StartDate, EndDate, PayRate)
-    VALUES (1, 2025, '2025-01-01', '2025-12-31', 5000.00);
-    PRINT '5.4: OK - poprawny insert';
-END TRY
-BEGIN CATCH
-    PRINT '5.4: BŁĄD (nie powinno się wyłożyć): ' + ERROR_MESSAGE();
-END CATCH;
+-- 2.4 Ujemna płaca (powinno się wyłożyć)
+INSERT INTO EmployeePayRecord (EmployeeID, FiscalYear, StartDate, EndDate, PayRate)
+VALUES (3, 2025, '2025-01-01', '2025-12-31', -1000.00);
 
--- 5.5 Próba duplikatu (ten sam pracownik i ten sam rok) - powinno się wyłożyć przez PK
-BEGIN TRY
-    INSERT INTO #EmployeePayRecord (EmployeeID, FiscalYear, StartDate, EndDate, PayRate)
-    VALUES (1, 2025, '2025-01-01', '2025-12-31', 5200.00);
-    PRINT '5.5: NIEOCZEKIWANY SUKCES (powinno się wyłożyć - PK)';
-END TRY
-BEGIN CATCH
-    PRINT '5.5: OK - oczekiwany błąd (PK): ' + ERROR_MESSAGE();
-END CATCH;
-
--- 5.6 Podgląd danych (powinien być 1 wiersz: EmployeeID=1, 2025)
-SELECT * FROM #EmployeePayRecord;
+------------------------------------------------------------
+-- Step 3 — Podgląd danych końcowych
+------------------------------------------------------------
+SELECT * FROM EmployeePayRecord;
