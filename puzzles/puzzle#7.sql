@@ -1,8 +1,12 @@
--- Puzzle #7: Mission to Mars
--- Cel: Wybrać kandydatów, którzy posiadają wszystkie wymagane umiejętności.
+-- Puzzle #7: Mission to Mars (MySQL version)
+-- Cel: znaleźć kandydatów, którzy spełniają WSZYSTKIE wymagania.
 
+------------------------------------------------------------
+-- Step 1 — Utworzenie tabel
+------------------------------------------------------------
+DROP TABLE IF EXISTS Candidates;
+DROP TABLE IF EXISTS Requirements;
 
--- Step 1 — Utworzenie tabel i danych wejściowych
 CREATE TABLE Candidates (
     CandidateID INT,
     Description VARCHAR(50)
@@ -12,6 +16,9 @@ CREATE TABLE Requirements (
     Description VARCHAR(50)
 );
 
+------------------------------------------------------------
+-- Step 2 — Wstawienie danych
+------------------------------------------------------------
 INSERT INTO Candidates (CandidateID, Description) VALUES
 (1001, 'Geologist'),
 (1001, 'Astrogator'),
@@ -29,35 +36,36 @@ INSERT INTO Requirements (Description) VALUES
 ('Astrogator'),
 ('Technician');
 
--- Step 2 — Sprawdzenie danych wejściowych
-SELECT * FROM Candidates;
-SELECT * FROM Requirements;
+------------------------------------------------------------
+-- Step 3 — Podgląd danych wejściowych
+------------------------------------------------------------
+SELECT * FROM Candidates ORDER BY CandidateID, Description;
+SELECT * FROM Requirements ORDER BY Description;
 
--- Step 3 — Połączenie kandydatów z wymaganiami
+------------------------------------------------------------
+-- Step 4 — Połączenie kandydatów z wymaganiami
+------------------------------------------------------------
 SELECT c.CandidateID, c.Description
 FROM Candidates c
 INNER JOIN Requirements r
-    ON c.Description = r.Description;
+    ON c.Description = r.Description
+ORDER BY c.CandidateID, c.Description;
 
--- Step 4 — Policzenie ilu wymagań spełnia każdy kandydat
-SELECT c.CandidateID, COUNT(*) AS MatchedRequirements
+------------------------------------------------------------
+-- Step 5 — Zliczenie spełnionych wymagań na kandydata
+------------------------------------------------------------
+SELECT c.CandidateID, COUNT(DISTINCT c.Description) AS MatchedRequirements
 FROM Candidates c
 INNER JOIN Requirements r
     ON c.Description = r.Description
 GROUP BY c.CandidateID;
 
--- Step 5 — Porównanie z całkowitą liczbą wymagań
+------------------------------------------------------------
+-- Step 6 — Wybranie kandydatów spełniających WSZYSTKIE wymagania
+------------------------------------------------------------
 SELECT c.CandidateID
 FROM Candidates c
 INNER JOIN Requirements r
     ON c.Description = r.Description
 GROUP BY c.CandidateID
-HAVING COUNT(*) = (SELECT COUNT(*) FROM Requirements);
-
--- Step 6 — Finalne zapytanie (czytelny wynik, unikalne ID)
-SELECT DISTINCT c.CandidateID
-FROM Candidates c
-INNER JOIN Requirements r
-    ON c.Description = r.Description
-GROUP BY c.CandidateID
-HAVING COUNT(*) = (SELECT COUNT(*) FROM Requirements);
+HAVING COUNT(DISTINCT c.Description) = (SELECT COUNT(*) FROM Requirements);
