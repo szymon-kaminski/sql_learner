@@ -1,9 +1,11 @@
--- Puzzle #6: Workflow Steps
--- Cel: Znaleźć workflowy, które zostały rozpoczęte, ale nie zostały ukończone.
--- Bonus: Rozwiązanie wyłącznie z COUNT (bez subqueries).
+-- Puzzle #6: Workflow Steps (MySQL version)
+-- Cel: znaleźć workflowy, które zostały rozpoczęte, ale nie zostały w pełni ukończone.
 
+------------------------------------------------------------
+-- Step 1 — Utworzenie tabeli Workflows
+------------------------------------------------------------
+DROP TABLE IF EXISTS Workflows;
 
--- Step 1 — Utworzenie tabeli i danych wejściowych
 CREATE TABLE Workflows (
     Workflow VARCHAR(20),
     StepNumber INT,
@@ -20,25 +22,24 @@ INSERT INTO Workflows (Workflow, StepNumber, CompletionDate) VALUES
 ('Charlie', 1, NULL),
 ('Charlie', 2, '2018-07-01');
 
--- Step 2 — Sprawdzenie danych wejściowych
-SELECT * FROM Workflows;
+------------------------------------------------------------
+-- Step 2 — Podgląd danych wejściowych
+------------------------------------------------------------
+SELECT * FROM Workflows ORDER BY Workflow, StepNumber;
 
--- Step 3 — Identyfikacja workflowów z brakującym CompletionDate
--- Proste sprawdzenie: które workflowy mają przynajmniej jeden krok NULL
-SELECT DISTINCT Workflow
-FROM Workflows
-WHERE CompletionDate IS NULL;
-
--- Step 4 — Rozwiązanie z GROUP BY + HAVING (CASE)
+------------------------------------------------------------
+-- Step 3 — Znalezienie workflowów zaczętych, ale nieukończonych
+------------------------------------------------------------
 SELECT Workflow
 FROM Workflows
 GROUP BY Workflow
-HAVING COUNT(CASE WHEN CompletionDate IS NULL THEN 1 END) > 0;
+HAVING SUM(CASE WHEN CompletionDate IS NOT NULL THEN 1 ELSE 0 END) > 0
+   AND SUM(CASE WHEN CompletionDate IS NULL THEN 1 ELSE 0 END) > 0
+ORDER BY Workflow;
 
--- Step 5 — Bonus: tylko COUNT, bez subqueries
--- COUNT(*) liczy wszystkie rekordy,
--- COUNT(CompletionDate) liczy tylko nie-NULL.
--- Jeśli różne → znaczy, że jest przynajmniej jeden NULL.
+------------------------------------------------------------
+-- BONUS
+------------------------------------------------------------
 SELECT Workflow
 FROM Workflows
 GROUP BY Workflow
