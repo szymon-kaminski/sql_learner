@@ -1,9 +1,12 @@
--- Puzzle #5: Phone Directory
--- Cel: Przekształcić tabelę z typami telefonów (Cellular, Work, Home)
---      w jedną tabelę, gdzie każdy typ telefonu jest osobną kolumną.
+-- Puzzle #5: Phone Directory (MySQL version)
+-- Cel: z tabeli z numerami telefonów zrobić pivot:
+-- CustomerID | Cellular | Work | Home
 
+------------------------------------------------------------
+-- Step 1 — Utworzenie tabeli PhoneDirectory
+------------------------------------------------------------
+DROP TABLE IF EXISTS PhoneDirectory;
 
--- Step 1 — Utworzenie tabeli i danych wejściowych
 CREATE TABLE PhoneDirectory (
     CustomerID INT,
     Type VARCHAR(20),
@@ -18,31 +21,15 @@ INSERT INTO PhoneDirectory (CustomerID, Type, PhoneNumber) VALUES
 (2002, 'Work',     '555-812-9856'),
 (3003, 'Cellular', '555-987-6541');
 
--- Step 2 — Sprawdzenie danych wejściowych
-SELECT * FROM PhoneDirectory;
+------------------------------------------------------------
+-- Step 2 — Podgląd danych wejściowych
+------------------------------------------------------------
+SELECT * FROM PhoneDirectory ORDER BY CustomerID, Type;
 
--- Step 3 — Przekształcenie typu na kolumny (CASE)
-SELECT 
-    CustomerID,
-    CASE WHEN Type = 'Cellular' THEN PhoneNumber END AS Cellular,
-    CASE WHEN Type = 'Work'     THEN PhoneNumber END AS Work,
-    CASE WHEN Type = 'Home'     THEN PhoneNumber END AS Home
-FROM PhoneDirectory;
-
--- Wynik: kilka wierszy dla tego samego klienta, z NULL-ami
--- (bo tylko jedna kolumna ma wartość w danym wierszu)
-
--- Step 4 — Grupowanie po CustomerID z agregacją MAX
-SELECT 
-    CustomerID,
-    MAX(CASE WHEN Type = 'Cellular' THEN PhoneNumber END) AS Cellular,
-    MAX(CASE WHEN Type = 'Work'     THEN PhoneNumber END) AS Work,
-    MAX(CASE WHEN Type = 'Home'     THEN PhoneNumber END) AS Home
-FROM PhoneDirectory
-GROUP BY CustomerID;
-
--- Step 5 — Finalne zapytanie (posortowane dla czytelności)
-SELECT 
+------------------------------------------------------------
+-- Step 3 — Pivot za pomocą CASE
+------------------------------------------------------------
+SELECT
     CustomerID,
     MAX(CASE WHEN Type = 'Cellular' THEN PhoneNumber END) AS Cellular,
     MAX(CASE WHEN Type = 'Work'     THEN PhoneNumber END) AS Work,
