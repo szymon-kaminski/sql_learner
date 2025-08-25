@@ -1,9 +1,14 @@
--- Puzzle #2: Managers and Employees
+-- Puzzle #2: Managers and Employees (MySQL version)
+-- Cel: policzyć głębokość (depth) każdego pracownika względem prezesa.
 
--- Step 1: Create table and insert sample data
+------------------------------------------------------------
+-- Step 1 — Utworzenie tabeli z danymi wejściowymi
+------------------------------------------------------------
+DROP TABLE IF EXISTS Employees;
+
 CREATE TABLE Employees (
     EmployeeID INT PRIMARY KEY,
-    ManagerID INT,
+    ManagerID INT NULL,
     JobTitle VARCHAR(50)
 );
 
@@ -15,22 +20,17 @@ INSERT INTO Employees (EmployeeID, ManagerID, JobTitle) VALUES
 (5005, 2002, 'Engineer'),
 (6006, 2002, 'Engineer');
 
--- Step 2: Base case - select the President with dept = 0
-WITH RECURSIVE EmployeeHierarchy AS (
-    SELECT
-        EmployeeID,
-        ManagerID,
-        JobTitle,
-        0 AS Depth
-    FROM Employees
-    WHERE JobTitle = 'President'
-);
+------------------------------------------------------------
+-- Step 2 — Podgląd danych wejściowych
+------------------------------------------------------------
+SELECT * FROM Employees ORDER BY EmployeeID;
 
-SELECT * FROM EmployeeHierarchy;
-
--- Step 3: recursive step - add direct reports of each manager
+------------------------------------------------------------
+-- Step 3 — Rekurencyjne CTE do policzenia depth
+------------------------------------------------------------
 WITH RECURSIVE EmployeeHierarchy AS (
-    SELECT
+    -- punkt startowy: prezes (depth = 0)
+    SELECT 
         EmployeeID,
         ManagerID,
         JobTitle,
@@ -40,40 +40,15 @@ WITH RECURSIVE EmployeeHierarchy AS (
 
     UNION ALL
 
-    SELECT
+    -- rekurencja: dodajemy pracowników pod managerem
+    SELECT 
         e.EmployeeID,
         e.ManagerID,
         e.JobTitle,
-        eh.Depth + 1
+        eh.Depth + 1 AS Depth
     FROM Employees e
-    INNER JOIN EmployeeHierarchy eh 
-        ON e.ManagerID = eh.EmployeeID
+    INNER JOIN EmployeeHierarchy eh ON e.ManagerID = eh.EmployeeID
 )
-
-SELECT * FROM EmployeeHierarchy;
-
--- Step 4: final query - full hierarchy with depth
-WITH RECURSIVE EmployeeHierarchy AS (
-    SELECT
-        EmployeeID,
-        ManagerID,
-        JobTitle,
-        0 AS Depth
-    FROM Employees
-    WHERE JobTitle = 'President'
-    
-    UNION ALL
-
-    SELECT
-        e.EmployeeID,
-        e.ManagerID,
-        e.JobTitle,
-        eh.Depth + 1
-    FROM Employees e
-    INNER JOIN EmployeeHierarchy eh 
-        ON e.ManagerID = eh.EmployeeID
-)
-
-SELECT *
+SELECT EmployeeID, ManagerID, JobTitle, Depth
 FROM EmployeeHierarchy
-ORDER BY Depth, EmployeeID;
+ORDER BY EmployeeID;
