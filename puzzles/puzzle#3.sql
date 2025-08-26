@@ -2,9 +2,10 @@
 -- Cel: stworzyć tabelę EmployeePayRecord z odpowiednimi constraintami,
 -- aby zapewnić poprawność danych.
 
-------------------------------------------------------------
+
 -- Step 1 — Utworzenie tabeli z constraintami
-------------------------------------------------------------
+
+USE sql_learner;
 DROP TABLE IF EXISTS EmployeePayRecord;
 
 CREATE TABLE EmployeePayRecord (
@@ -24,9 +25,9 @@ CREATE TABLE EmployeePayRecord (
     CONSTRAINT chk_payrate CHECK (PayRate > 0)
 );
 
-------------------------------------------------------------
+
 -- Step 2 — Testy poprawności
-------------------------------------------------------------
+
 
 -- 2.1 Poprawna próba (powinna działać)
 INSERT INTO EmployeePayRecord (EmployeeID, FiscalYear, StartDate, EndDate, PayRate)
@@ -45,7 +46,7 @@ VALUES (2, 2025, '2025-12-31', '2025-01-01', 4500.00);
 INSERT INTO EmployeePayRecord (EmployeeID, FiscalYear, StartDate, EndDate, PayRate)
 VALUES (3, 2025, '2025-01-01', '2025-12-31', -1000.00);
 
-------------------------------------------------------------
+
 -- Step 3 — Podgląd danych końcowych
-------------------------------------------------------------
+
 SELECT * FROM EmployeePayRecord;

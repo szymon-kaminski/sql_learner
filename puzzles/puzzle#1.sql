@@ -2,9 +2,10 @@
 -- Cel: Audyt dwóch koszyków. Najpierw elementy wspólne w jednej linii,
 --      potem tylko z Cart 1, a na końcu tylko z Cart 2.
 
-------------------------------------------------------------
+
 -- Step 1 — Utworzenie tabeli z danymi wejściowymi
-------------------------------------------------------------
+
+USE sql_learner;
 DROP TABLE IF EXISTS ShoppingCarts;
 
 CREATE TABLE ShoppingCarts (
@@ -20,14 +21,14 @@ INSERT INTO ShoppingCarts (cart1_item, cart2_item) VALUES
 ('Soda',  'Cheese'),
 ('Flour', 'Fruit');
 
-------------------------------------------------------------
+
 -- Step 2 — Weryfikacja danych
-------------------------------------------------------------
+
 SELECT * FROM ShoppingCarts ORDER BY id;
 
-------------------------------------------------------------
+
 -- Step 3 — Rozbicie na dwie listy (Cart 1 i Cart 2)
-------------------------------------------------------------
+
 -- Cart 1
 SELECT id, cart1_item AS ItemCart1
 FROM ShoppingCarts
@@ -38,9 +39,9 @@ SELECT id, cart2_item AS ItemCart2
 FROM ShoppingCarts
 ORDER BY id;
 
-------------------------------------------------------------
+
 -- Step 4 — Częściowe wyniki: Intersection / Left-only / Right-only
-------------------------------------------------------------
+
 -- Intersection: elementy, które występują w obu koszykach (po nazwie)
 WITH c1 AS (
   SELECT id, cart1_item AS item FROM ShoppingCarts
@@ -79,9 +80,9 @@ LEFT JOIN c1 ON c2.item = c1.item
 WHERE c1.item IS NULL
 ORDER BY c2.id;
 
-------------------------------------------------------------
+
 -- Step 5 — Finalne zapytanie (wspólne / tylko Cart1 / tylko Cart2)
-------------------------------------------------------------
+
 WITH
 c1 AS (SELECT id, cart1_item AS item FROM ShoppingCarts),
 c2 AS (SELECT id, cart2_item AS item FROM ShoppingCarts)

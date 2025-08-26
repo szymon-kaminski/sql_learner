@@ -1,9 +1,10 @@
 -- Puzzle #4: Two Predicates (MySQL version)
 -- Cel: znaleźć zamówienia do TX od klientów, którzy mieli też zamówienia do CA.
 
-------------------------------------------------------------
+
 -- Step 1 — Utworzenie tabeli Orders
-------------------------------------------------------------
+
+USE sql_learner;
 DROP TABLE IF EXISTS Orders;
 
 CREATE TABLE Orders (
@@ -23,14 +24,14 @@ INSERT INTO Orders (CustomerID, OrderID, DeliveryState, Amount) VALUES
 (3003, 7, 'CA', 830),
 (4004, 8, 'TX', 120);
 
-------------------------------------------------------------
+
 -- Step 2 — Podgląd danych wejściowych
-------------------------------------------------------------
+
 SELECT * FROM Orders ORDER BY CustomerID, OrderID;
 
-------------------------------------------------------------
+
 -- Step 3 — Zapytanie końcowe
-------------------------------------------------------------
+
 SELECT *
 FROM Orders
 WHERE DeliveryState = 'TX'

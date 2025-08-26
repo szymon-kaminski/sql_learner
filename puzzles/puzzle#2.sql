@@ -1,9 +1,10 @@
 -- Puzzle #2: Managers and Employees (MySQL version)
 -- Cel: policzyć głębokość (depth) każdego pracownika względem prezesa.
 
-------------------------------------------------------------
+
 -- Step 1 — Utworzenie tabeli z danymi wejściowymi
-------------------------------------------------------------
+
+USE sql_learner;
 DROP TABLE IF EXISTS Employees;
 
 CREATE TABLE Employees (
@@ -20,14 +21,14 @@ INSERT INTO Employees (EmployeeID, ManagerID, JobTitle) VALUES
 (5005, 2002, 'Engineer'),
 (6006, 2002, 'Engineer');
 
-------------------------------------------------------------
+
 -- Step 2 — Podgląd danych wejściowych
-------------------------------------------------------------
+
 SELECT * FROM Employees ORDER BY EmployeeID;
 
-------------------------------------------------------------
+
 -- Step 3 — Rekurencyjne CTE do policzenia depth
-------------------------------------------------------------
+
 WITH RECURSIVE EmployeeHierarchy AS (
     -- punkt startowy: prezes (depth = 0)
     SELECT 
