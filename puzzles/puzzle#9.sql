@@ -33,3 +33,13 @@ INSERT INTO EmployeeLicenses (EmployeeID, License) VALUES
 
 -- Podgląd tabeli
 SELECT * FROM EmployeeLicenses;
+
+-- Step 3 — Porównanie licencji między pracownikami
+-- Łączymy tabelę samą ze sobą (self-join), aby znaleźć pary pracowników,
+-- którzy mają wspólną licencję.
+SELECT e1.EmployeeID, e2.EmployeeID AS OtherEmployee, COUNT(*) AS CommonLicenses
+FROM EmployeeLicenses e1
+JOIN EmployeeLicenses e2
+  ON e1.License = e2.License
+ AND e1.EmployeeID < e2.EmployeeID
+GROUP BY e1.EmployeeID, e2.EmployeeID;
