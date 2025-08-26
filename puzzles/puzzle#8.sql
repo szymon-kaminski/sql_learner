@@ -12,3 +12,12 @@ CREATE TABLE WorkflowCases (
     Case2 INT,
     Case3 INT
 );
+
+------------------------------------------------------------
+-- Step 2 — Wstawienie danych
+------------------------------------------------------------
+INSERT INTO WorkflowCases (Workflow, Case1, Case2, Case3) VALUES
+('Alpha',   0, 0, 0),
+('Bravo',   0, 1, 1),
+('Charlie', 1, 0, 0),
+('Delta',   0, 0, 0);
