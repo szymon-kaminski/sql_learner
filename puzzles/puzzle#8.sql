@@ -21,3 +21,8 @@ INSERT INTO WorkflowCases (Workflow, Case1, Case2, Case3) VALUES
 ('Bravo',   0, 1, 1),
 ('Charlie', 1, 0, 0),
 ('Delta',   0, 0, 0);
+
+------------------------------------------------------------
+-- Step 3 — Podgląd danych wejściowych
+------------------------------------------------------------
+SELECT * FROM WorkflowCases;
