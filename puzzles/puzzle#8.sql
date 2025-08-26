@@ -26,3 +26,12 @@ INSERT INTO WorkflowCases (Workflow, Case1, Case2, Case3) VALUES
 -- Step 3 — Podgląd danych wejściowych
 ------------------------------------------------------------
 SELECT * FROM WorkflowCases;
+
+------------------------------------------------------------
+-- Step 4 — Obliczenie kolumny Passed
+------------------------------------------------------------
+SELECT 
+    Workflow,
+    (Case1 + Case2 + Case3) AS Passed
+FROM WorkflowCases
+ORDER BY Workflow;
