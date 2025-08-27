@@ -14,6 +14,7 @@ Column-oriented (kolumnowe)
 
 Graph-based (grafowe)
 
+
 ## 1. Document-Based Databases (bazy dokumentowe)
 Dane przechowywane w postaci dokumentów (np. JSON, BSON, XML).
 
@@ -53,6 +54,7 @@ CouchDB → aplikacje offline (np. mobilne).
 
 Firebase Firestore → aplikacje w czasie rzeczywistym (czaty).
 
+
 ## 2. Key-Value Stores (bazy klucz-wartość)
 Najprostsza forma bazy NoSQL.
 
@@ -83,6 +85,7 @@ Redis → sesje użytkowników, rankingi na żywo.
 Memcached → cache stron internetowych.
 
 Amazon DynamoDB → aplikacje chmurowe na dużą skalę.
+
 
 ## 3. Column-Oriented Databases (bazy kolumnowe)
 Dane przechowywane w kolumnach zamiast wierszy.
@@ -124,6 +127,7 @@ Google Bigtable → dane szeregów czasowych, ML.
 
 HBase → część ekosystemu Hadoop.
 
+
 ## 4.  Graph-Based Databases (bazy grafowe)
 Dane przechowywane jako węzły (nodes) i relacje (edges).
 
@@ -155,6 +159,8 @@ Amazon Neptune → grafy wiedzy, AI.
 
 ArangoDB → baza wielomodelowa (obsługuje też dokumenty).
 
+
+
 ## Podsumowanie – porównanie typów NoSQL
 ```txt
 | Typ bazy     | Model danych           | Najlepsze zastosowanie       | Przykłady             |
@@ -164,3 +170,25 @@ ArangoDB → baza wielomodelowa (obsługuje też dokumenty).
 | Kolumnowe    | Kolumny zamiast wierszy| Big Data, analityka          | Cassandra, HBase      |
 | Grafowe      | Węzły i relacje        | Dane złożone relacyjnie      | Neo4j, Neptune        |
 ```
+
+## W SKRÓCIE
+
+### 1. Co to jest baza danych NoSQL i jakie są główne rodzaje baz danych NoSQL?
+
+Baza danych NoSQL to nierelacyjna baza danych, która przechowuje dane w formie nietabularycznej, czyli nie opartej na tradycyjnych tabelach. Główne rodzaje baz danych NoSQL to bazy dokumentowe, bazy klucz-wartość, bazy kolumnowe oraz bazy grafowe.
+
+### 2. Jakie są charakterystyczne cechy document-based database i jak przechowuje dane? Podaj przykład takiej bazy.
+
+Document-based database (baza dokumentowa) to nierelacyjna baza danych, która przechowuje dane w dokumentach, zazwyczaj w formatach JSON, BSON lub XML. Dokumenty mogą być łatwo przechowywane i odzyskiwane w formie zbliżonej do obiektów danych używanych w aplikacjach, co minimalizuje potrzebę translacji danych. Kluczową cechą są elastyczne schematy dokumentów, co oznacza, że dokumenty w bazie mogą mieć różne schematy. Przykłady: MongoDB, CouchDB.
+
+### 3. Jakie są zalety używania key-value store i jakie są jej główne cechy? Podaj przykład takiej bazy.
+
+Key-value store to prosta forma bazy danych NoSQL, która przechowuje elementy danych w parach klucz-wartość. Kluczowymi zaletami są prostota, skalowalność i szybkość. Dane można łatwo odzyskać za pomocą unikalnego klucza przypisanego do każdego elementu, a wartości mogą być prostymi typami danych lub złożonymi obiektami. Przykłady: Redis, Amazon DynamoDB, FoundationDB.
+
+### 4. Czym różni się column-based database od tradycyjnej bazy relacyjnej i jakie są jej zalety? Podaj przykład takiej bazy.
+
+W column database (baza kolumnowa) dane są przechowywane w kolumnach zamiast wierszach, co pozwala na efektywniejsze odczytywanie danych, szczególnie przy analizach skupiających się na małej liczbie kolumn. Bazy kolumnowe są zaprojektowane do efektywnego odczytywania danych i szybszego ich odzyskiwania, co sprawia, że są idealne do przechowywania dużych ilości danych. Zalety to skalowalność, kompresja i szybkość odpowiedzi. Przykłady: ClickHouse, Cassandra, HBase.
+
+### 5. Jakie są kluczowe cechy graph-based databases i jakie korzyści przynoszą w analizie danych? Podaj przykład takiej bazy.
+
+Bazy grafowe koncentrują się na relacjach między elementami danych, przechowując dane w formie węzłów i połączeń między nimi zwanych krawędziami lub relacjami. Pozwalają łatwo identyfikować relacje między danymi dzięki czemu łączą i oferują wyniki zapytań w czasie rzeczywistym. Dodawanie nowego węzła czy krawędzi jest prostym zadaniem, które nie wymaga znaczących zmian schematu. Są one szczególnie przydatne w aplikacjach wymagających głębokiego zrozumienia złożonych relacji między obiektami, takich jak sieci społecznościowe, rekomendacje produktów czy analizy grafów. Przykład: Neo4j, OrientDB, ArangoDB.
