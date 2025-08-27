@@ -6,13 +6,13 @@ Dlatego powstały bazy NoSQL, które obsługują duże ilości danych nieustrukt
 
 Główne typy baz NoSQL:
 
-Document-based (dokumentowe)
+- Document-based (dokumentowe)
 
-Key-Value Stores (klucz-wartość)
+- Key-Value Stores (klucz-wartość)
 
-Column-oriented (kolumnowe)
+- Column-oriented (kolumnowe)
 
-Graph-based (grafowe)
+- Graph-based (grafowe)
 
 
 ## 1. Document-Based Databases (bazy dokumentowe)
@@ -26,11 +26,11 @@ Nie ma kluczy obcych (dokumenty są niezależne).
 
 ### Zalety:
 
-Łatwość odwzorowania danych obiektowych (np. z aplikacji w JavaScript).
+- Łatwość odwzorowania danych obiektowych (np. z aplikacji w JavaScript).
 
-Szybkie tworzenie i modyfikacja dokumentów.
+- Szybkie tworzenie i modyfikacja dokumentów.
 
-Dobre do danych półustrukturyzowanych.
+- Dobre do danych półustrukturyzowanych.
 
 ### Przykład JSON dokumentu użytkownika w MongoDB:
 
@@ -48,11 +48,11 @@ Dobre do danych półustrukturyzowanych.
 
 ### Popularne bazy i zastosowania:
 
-MongoDB → katalogi produktów, profile użytkowników.
+- MongoDB → katalogi produktów, profile użytkowników.
 
-CouchDB → aplikacje offline (np. mobilne).
+- CouchDB → aplikacje offline (np. mobilne).
 
-Firebase Firestore → aplikacje w czasie rzeczywistym (czaty).
+- Firebase Firestore → aplikacje w czasie rzeczywistym (czaty).
 
 
 ## 2. Key-Value Stores (bazy klucz-wartość)
@@ -64,11 +64,11 @@ Klucz jest unikalny, wartością może być liczba, string, albo złożony obiek
 
 ### Zalety:
 
-Ekstremalnie szybkie odczyty (dostęp po kluczu).
+- Ekstremalnie szybkie odczyty (dostęp po kluczu).
 
-Łatwa skalowalność pozioma.
+- Łatwa skalowalność pozioma.
 
-Świetne do cache’owania i danych sesyjnych.
+- Świetne do cache’owania i danych sesyjnych.
 
 ### Przykład (Redis):
 
@@ -80,11 +80,11 @@ Zwróci "Jan Nowak"
 
 ### Popularne bazy i zastosowania:
 
-Redis → sesje użytkowników, rankingi na żywo.
+- Redis → sesje użytkowników, rankingi na żywo.
 
-Memcached → cache stron internetowych.
+- Memcached → cache stron internetowych.
 
-Amazon DynamoDB → aplikacje chmurowe na dużą skalę.
+- Amazon DynamoDB → aplikacje chmurowe na dużą skalę.
 
 
 ## 3. Column-Oriented Databases (bazy kolumnowe)
@@ -96,11 +96,11 @@ Wysoka kompresja danych i wydajne zapytania.
 
 ### Zalety:
 
-Bardzo dobre w analizie Big Data.
+- Bardzo dobre w analizie Big Data.
 
-Szybsze zapytania analityczne niż wierszowe bazy SQL.
+- Szybsze zapytania analityczne niż wierszowe bazy SQL.
 
-Skalowalne i zoptymalizowane pod analitykę.
+- Skalowalne i zoptymalizowane pod analitykę.
 
 ### Przykład:
 Zamiast:
@@ -121,11 +121,11 @@ Kolumna City: [Kraków, Warszawa]
 
 ### Popularne bazy i zastosowania:
 
-Apache Cassandra → analiza w czasie rzeczywistym, IoT.
+- Apache Cassandra → analiza w czasie rzeczywistym, IoT.
 
-Google Bigtable → dane szeregów czasowych, ML.
+- Google Bigtable → dane szeregów czasowych, ML.
 
-HBase → część ekosystemu Hadoop.
+- HBase → część ekosystemu Hadoop.
 
 
 ## 4.  Graph-Based Databases (bazy grafowe)
@@ -137,11 +137,11 @@ Umożliwiają szybkie zapytania grafowe (np. „znajomi znajomych”).
 
 ### Zalety:
 
-Świetne do sieci społecznościowych, wykrywania oszustw, rekomendacji.
+- Świetne do sieci społecznościowych, wykrywania oszustw, rekomendacji.
 
-Bardzo szybkie w analizie powiązań.
+- Bardzo szybkie w analizie powiązań.
 
-Elastyczny schemat.
+- Elastyczny schemat.
 
 ### Przykład (Neo4j, zapytanie Cypher):
 
@@ -153,15 +153,15 @@ Zwróci listę znajomych Anny.
 
 ### Popularne bazy i zastosowania:
 
-Neo4j → sieci społecznościowe, wykrywanie fraudów.
+- Neo4j → sieci społecznościowe, wykrywanie fraudów.
 
-Amazon Neptune → grafy wiedzy, AI.
+- Amazon Neptune → grafy wiedzy, AI.
 
-ArangoDB → baza wielomodelowa (obsługuje też dokumenty).
+- ArangoDB → baza wielomodelowa (obsługuje też dokumenty).
 
 
 
-## Podsumowanie – porównanie typów NoSQL
+# Podsumowanie – porównanie typów NoSQL
 ```txt
 | Typ bazy     | Model danych           | Najlepsze zastosowanie       | Przykłady             |
 |--------------|------------------------|------------------------------|-----------------------|
