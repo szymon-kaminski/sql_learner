@@ -26,6 +26,16 @@ def get_user(r):
         print("Nie znaleziono użytkownika.")
 
 
+def list_users(r):
+    keys = r.keys("user:*")
+    if not keys:
+        print("Brak użytkowników w bazie.")
+        return
+    for key in keys:
+        user = r.hgetall(key)
+        print(f"{key} -> {user}")
+
+
 def main():
     r = connect_redis()
     print("Połączono z Redisem!")
@@ -34,6 +44,8 @@ def main():
         print("\n--- MENU ---")
         print("1. Dodaj użytkownika")
         print("2. Pobierz użytkownika")
+        print("3. Lista wszystkich użytkowników")
+        print("4. Wyjście")
 
         choice = input("Wybierz opcję: ")
 
@@ -41,11 +53,14 @@ def main():
             add_user(r)
         elif choice == "2":
             get_user(r)
+        elif choice == "3":
+            list_users(r)
+        elif choice == "4":
+            print("Zakończono.")
             break
         else:
             print("Nieprawidłowa opcja.")
 
 
 if __name__ == "__main__":
-    r = connect_redis()
-    print("Ping:", r.ping())
+    main()
