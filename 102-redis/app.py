@@ -44,6 +44,14 @@ def delete_user(r):
         print("Nie znaleziono użytkownika.")
 
 
+def export_users(r):
+    keys = r.keys("user:*")
+    data = {key: r.hgetall(key) for key in keys}
+    with open("users.json", "w") as f:
+        json.dump(data, f, indent=4)
+    print("Wyeksportowano do users.json")
+
+
 def main():
     r = connect_redis()
     print("Połączono z Redisem!")
@@ -54,7 +62,8 @@ def main():
         print("2. Pobierz użytkownika")
         print("3. Lista wszystkich użytkowników")
         print("4. Usuń użytkownika")
-        print("5. Wyjście")
+        print("5. Export do JSON")
+        print("6. Wyjście")
 
         choice = input("Wybierz opcję: ")
 
@@ -67,6 +76,8 @@ def main():
         elif choice == "4":
             delete_user(r)
         elif choice == "5":
+            export_users(r)
+        elif choice == "6":
             print("Zakończono.")
             break
         else:
