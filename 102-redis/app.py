@@ -17,6 +17,15 @@ def add_user(r):
     print("Użytkownik dodany!")
 
 
+def get_user(r):
+    user_id = input("Podaj ID użytkownika: ")
+    user = r.hgetall(f"user:{user_id}")
+    if user:
+        print(f"Użytkownik {user_id}: {user}")
+    else:
+        print("Nie znaleziono użytkownika.")
+
+
 def main():
     r = connect_redis()
     print("Połączono z Redisem!")
@@ -24,11 +33,15 @@ def main():
     while True:
         print("\n--- MENU ---")
         print("1. Dodaj użytkownika")
+        print("2. Pobierz użytkownika")
 
         choice = input("Wybierz opcję: ")
 
         if choice == "1":
             add_user(r)
+        elif choice == "2":
+            get_user(r)
+            break
         else:
             print("Nieprawidłowa opcja.")
 
