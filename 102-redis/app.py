@@ -1,3 +1,4 @@
+import json
 import redis
 
 def connect_redis():
@@ -27,7 +28,7 @@ def get_user(r):
 
 
 def list_users(r):
-    keys = r.keys("user:*")
+    keys = list(r.scan_iter("user:*"))
     if not keys:
         print("Brak użytkowników w bazie.")
         return
@@ -45,7 +46,7 @@ def delete_user(r):
 
 
 def export_users(r):
-    keys = r.keys("user:*")
+    keys = list(r.scan_iter("user:*"))
     data = {key: r.hgetall(key) for key in keys}
     with open("users.json", "w") as f:
         json.dump(data, f, indent=4)
