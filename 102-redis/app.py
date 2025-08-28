@@ -36,6 +36,14 @@ def list_users(r):
         print(f"{key} -> {user}")
 
 
+def delete_user(r):
+    user_id = input("Podaj ID użytkownika do usunięcia: ")
+    if r.delete(f"user:{user_id}"):
+        print("Użytkownik usunięty.")
+    else:
+        print("Nie znaleziono użytkownika.")
+
+
 def main():
     r = connect_redis()
     print("Połączono z Redisem!")
@@ -45,7 +53,8 @@ def main():
         print("1. Dodaj użytkownika")
         print("2. Pobierz użytkownika")
         print("3. Lista wszystkich użytkowników")
-        print("4. Wyjście")
+        print("4. Usuń użytkownika")
+        print("5. Wyjście")
 
         choice = input("Wybierz opcję: ")
 
@@ -56,6 +65,8 @@ def main():
         elif choice == "3":
             list_users(r)
         elif choice == "4":
+            delete_user(r)
+        elif choice == "5":
             print("Zakończono.")
             break
         else:
