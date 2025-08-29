@@ -21,3 +21,9 @@ SELECT
 FROM TestCases t1
 JOIN TestCases t2 ON t1.Value <> t2.Value
 JOIN TestCases t3 ON t1.Value <> t3.Value AND t2.Value <> t3.Value;
+
+-- Step 3 — Generalize solution (dynamic size with GROUP_CONCAT)
+-- NOTE: This approach relies on MySQL’s GROUP_CONCAT and can handle 
+--       variable input size by combining rows dynamically.
+SELECT GROUP_CONCAT(Value ORDER BY Value) AS Combined
+FROM TestCases;
