@@ -36,3 +36,12 @@ FROM Ordered
 WHERE RowAsc = RowDesc
    OR RowAsc + 1 = RowDesc
    OR RowDesc + 1 = RowAsc;
+
+-- Step 4 — Calculate mode using aggregation
+
+SELECT 
+    IntegerValue AS ModeValue
+FROM SampleData
+GROUP BY IntegerValue
+ORDER BY COUNT(*) DESC
+LIMIT 1;
