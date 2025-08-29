@@ -20,3 +20,19 @@ SELECT
     AVG(IntegerValue) AS MeanValue,
     MAX(IntegerValue) - MIN(IntegerValue) AS RangeValue
 FROM SampleData;
+
+-- Step 3 — Calculate median using window functions
+
+WITH Ordered AS (
+    SELECT 
+        IntegerValue,
+        ROW_NUMBER() OVER (ORDER BY IntegerValue) AS RowAsc,
+        ROW_NUMBER() OVER (ORDER BY IntegerValue DESC) AS RowDesc
+    FROM SampleData
+)
+SELECT 
+    AVG(IntegerValue) AS MedianValue
+FROM Ordered
+WHERE RowAsc = RowDesc
+   OR RowAsc + 1 = RowDesc
+   OR RowDesc + 1 = RowAsc;
