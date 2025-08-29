@@ -13,3 +13,10 @@ INSERT INTO SampleData (IntegerValue) VALUES
 (14),(17),(20),(81),(90),(76);
 
 SELECT * FROM SampleData;
+
+-- Step 2 — Calculate mean and range
+
+SELECT 
+    AVG(IntegerValue) AS MeanValue,
+    MAX(IntegerValue) - MIN(IntegerValue) AS RangeValue
+FROM SampleData;
