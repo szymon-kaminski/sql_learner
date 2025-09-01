@@ -23,3 +23,11 @@ VALUES
 
 SELECT * 
 FROM Inventory;
+
+-- Step 3 — Add running balance with SUM() OVER()
+
+SELECT 
+    Date,
+    QuantityAdjustment,
+    SUM(QuantityAdjustment) OVER (ORDER BY Date) AS Inventory
+FROM Inventory;
