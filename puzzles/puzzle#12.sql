@@ -40,3 +40,18 @@ SELECT
     DATEDIFF(ExecutionDate, LAG(ExecutionDate) OVER (PARTITION BY Workflow ORDER BY ExecutionDate)) AS DaysDiff
 FROM WorkflowExecutions
 ORDER BY Workflow, ExecutionDate;
+
+
+-- Step 4 — Calculate average days per workflow
+
+SELECT 
+    Workflow,
+    ROUND(AVG(DaysDiff)) AS AverageDays
+FROM (
+    SELECT 
+        Workflow,
+        DATEDIFF(ExecutionDate, LAG(ExecutionDate) OVER (PARTITION BY Workflow ORDER BY ExecutionDate)) AS DaysDiff
+    FROM WorkflowExecutions
+) t
+WHERE DaysDiff IS NOT NULL
+GROUP BY Workflow;
