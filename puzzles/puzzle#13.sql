@@ -17,3 +17,9 @@ VALUES
 ('2018-07-03', -150),
 ('2018-07-04', 50),
 ('2018-07-05', -100);
+
+
+-- Step 2 — View the raw data
+
+SELECT * 
+FROM Inventory;
