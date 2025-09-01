@@ -22,3 +22,10 @@ VALUES
 ('Charlie', '2018-06-01'),
 ('Charlie', '2018-06-15'),
 ('Charlie', '2018-06-30');
+
+
+-- Step 2 — Verify data
+
+SELECT *
+FROM WorkflowExecutions
+ORDER BY Workflow, ExecutionDate;
