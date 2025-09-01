@@ -29,3 +29,14 @@ VALUES
 SELECT *
 FROM WorkflowExecutions
 ORDER BY Workflow, ExecutionDate;
+
+
+-- Step 3 — Compute date differences between consecutive executions
+
+SELECT 
+    Workflow,
+    ExecutionDate,
+    LAG(ExecutionDate) OVER (PARTITION BY Workflow ORDER BY ExecutionDate) AS PrevDate,
+    DATEDIFF(ExecutionDate, LAG(ExecutionDate) OVER (PARTITION BY Workflow ORDER BY ExecutionDate)) AS DaysDiff
+FROM WorkflowExecutions
+ORDER BY Workflow, ExecutionDate;
