@@ -28,3 +28,9 @@ VALUES
 -- Step 2 — View raw data
 
 SELECT * FROM SqlSyntax ORDER BY Sequence;
+
+
+-- Step 3 — Concatenate rows into single SQL statement
+
+SELECT GROUP_CONCAT(Syntax ORDER BY Sequence SEPARATOR ' ') AS Syntax
+FROM SqlSyntax;
