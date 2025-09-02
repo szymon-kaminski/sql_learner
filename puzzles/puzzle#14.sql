@@ -24,3 +24,8 @@ VALUES
 ('Delta',   2, 'Error'),
 ('Echo',    1, 'Error'),
 ('Echo',    2, 'Running');
+
+
+-- Step 2 — View raw process log
+
+SELECT * FROM ProcessLog;
