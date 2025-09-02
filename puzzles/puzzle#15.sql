@@ -23,3 +23,8 @@ VALUES
 (7, 'WHERE'),
 (8, 'UnitPrice'),
 (9, '> 100');
+
+
+-- Step 2 — View raw data
+
+SELECT * FROM SqlSyntax ORDER BY Sequence;
