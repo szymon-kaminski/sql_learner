@@ -29,3 +29,14 @@ VALUES
 -- Step 2 — View raw process log
 
 SELECT * FROM ProcessLog;
+
+
+-- Step 3 — Aggregate per workflow and count status types
+
+SELECT 
+    Workflow,
+    SUM(CASE WHEN Status = 'Error' THEN 1 ELSE 0 END) AS ErrorCount,
+    SUM(CASE WHEN Status = 'Complete' THEN 1 ELSE 0 END) AS CompleteCount,
+    SUM(CASE WHEN Status = 'Running' THEN 1 ELSE 0 END) AS RunningCount
+FROM ProcessLog
+GROUP BY Workflow;
