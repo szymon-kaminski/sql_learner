@@ -19,3 +19,15 @@ INSERT INTO Products (Product, Quantity) VALUES
 -- Step 2 — View raw data
 
 SELECT * FROM Products;
+
+
+-- Step 3 — Generate a sequence of numbers (tally table) 
+-- MySQL trick: use a derived table with UNION ALL
+
+SELECT n FROM (
+    SELECT 1 AS n UNION ALL
+    SELECT 2 UNION ALL
+    SELECT 3 UNION ALL
+    SELECT 4 UNION ALL
+    SELECT 5
+) AS numbers;
