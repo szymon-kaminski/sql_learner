@@ -1,0 +1,17 @@
+-- Puzzle #16
+
+-- Step 1 — Create table and insert sample data
+
+USE sql_learner;
+
+DROP TABLE IF EXISTS GameScores;
+CREATE TABLE GameScores (
+    PlayerA INT,
+    PlayerB INT,
+    Score INT
+);
+
+INSERT INTO GameScores (PlayerA, PlayerB, Score) VALUES
+(1001, 2002, 150),
+(3003, 4004, 15),
+(4004, 3003, 125);
