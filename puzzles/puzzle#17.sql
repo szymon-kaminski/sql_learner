@@ -14,3 +14,8 @@ INSERT INTO Products (Product, Quantity) VALUES
 ('Pencil', 3),
 ('Eraser', 4),
 ('Notebook', 2);
+
+
+-- Step 2 — View raw data
+
+SELECT * FROM Products;
