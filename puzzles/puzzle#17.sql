@@ -31,3 +31,20 @@ SELECT n FROM (
     SELECT 4 UNION ALL
     SELECT 5
 ) AS numbers;
+
+
+-- Step 4 — De-group: expand each product by joining with sequence
+
+SELECT 
+    p.Product,
+    1 AS Quantity
+FROM Products p
+JOIN (
+    SELECT 1 AS n UNION ALL
+    SELECT 2 UNION ALL
+    SELECT 3 UNION ALL
+    SELECT 4 UNION ALL
+    SELECT 5
+) nums
+  ON nums.n <= p.Quantity
+ORDER BY p.Product;
