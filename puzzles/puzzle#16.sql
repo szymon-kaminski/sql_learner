@@ -29,3 +29,13 @@ SELECT
     GREATEST(PlayerA, PlayerB) AS PlayerB,
     Score
 FROM GameScores;
+
+
+-- Step 4 — Aggregate scores by reciprocal pairs
+
+SELECT 
+    LEAST(PlayerA, PlayerB) AS PlayerA,
+    GREATEST(PlayerA, PlayerB) AS PlayerB,
+    SUM(Score) AS Score
+FROM GameScores
+GROUP BY LEAST(PlayerA, PlayerB), GREATEST(PlayerA, PlayerB);
