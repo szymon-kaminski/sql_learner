@@ -20,3 +20,12 @@ INSERT INTO GameScores (PlayerA, PlayerB, Score) VALUES
 -- Step 2 — View raw data
 
 SELECT * FROM GameScores;
+
+
+-- Step 3 — Normalize pairs (ensure reciprocal players are treated the same)
+
+SELECT 
+    LEAST(PlayerA, PlayerB) AS PlayerA,
+    GREATEST(PlayerA, PlayerB) AS PlayerB,
+    Score
+FROM GameScores;
