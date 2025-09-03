@@ -15,3 +15,8 @@ INSERT INTO GameScores (PlayerA, PlayerB, Score) VALUES
 (1001, 2002, 150),
 (3003, 4004, 15),
 (4004, 3003, 125);
+
+
+-- Step 2 — View raw data
+
+SELECT * FROM GameScores;
