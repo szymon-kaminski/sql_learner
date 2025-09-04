@@ -27,3 +27,11 @@ SELECT
     LEAD(SeatNumber) OVER (ORDER BY SeatNumber) - 1 AS GapEnd
 FROM SeatingChart
 WHERE LEAD(SeatNumber) OVER (ORDER BY SeatNumber) - SeatNumber > 1;
+
+
+-- Step 4 — Count total missing numbers
+
+SELECT 
+    (MAX(SeatNumber) - MIN(SeatNumber) + 1) - COUNT(*) 
+    AS TotalMissingNumbers
+FROM SeatingChart;
