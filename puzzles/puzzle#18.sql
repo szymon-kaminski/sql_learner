@@ -12,3 +12,8 @@ CREATE TABLE SeatingChart (
 INSERT INTO SeatingChart (SeatNumber) VALUES
 (7),(13),(14),(15),(27),(28),(29),(30),
 (31),(32),(33),(34),(35),(52),(53),(54);
+
+
+-- Step 2 — Show raw data
+
+SELECT * FROM SeatingChart ORDER BY SeatNumber;
