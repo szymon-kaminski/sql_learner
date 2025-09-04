@@ -35,3 +35,12 @@ SELECT
     (MAX(SeatNumber) - MIN(SeatNumber) + 1) - COUNT(*) 
     AS TotalMissingNumbers
 FROM SeatingChart;
+
+
+-- Step 5 — Count odd and even numbers
+
+SELECT 
+    CASE WHEN SeatNumber % 2 = 0 THEN 'Even Numbers' ELSE 'Odd Numbers' END AS Type,
+    COUNT(*) AS Count
+FROM SeatingChart
+GROUP BY Type;
