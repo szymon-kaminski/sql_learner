@@ -44,3 +44,6 @@ SELECT
     COUNT(*) AS Count
 FROM SeatingChart
 GROUP BY Type;
+
+
+
