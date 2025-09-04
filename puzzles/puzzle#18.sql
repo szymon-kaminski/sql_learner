@@ -17,3 +17,13 @@ INSERT INTO SeatingChart (SeatNumber) VALUES
 -- Step 2 — Show raw data
 
 SELECT * FROM SeatingChart ORDER BY SeatNumber;
+
+
+-- Step 3 — Find gaps (gap start and gap end)
+-- Use LEAD() window function to compare current and next seat number
+
+SELECT 
+    SeatNumber + 1 AS GapStart,
+    LEAD(SeatNumber) OVER (ORDER BY SeatNumber) - 1 AS GapEnd
+FROM SeatingChart
+WHERE LEAD(SeatNumber) OVER (ORDER BY SeatNumber) - SeatNumber > 1;
