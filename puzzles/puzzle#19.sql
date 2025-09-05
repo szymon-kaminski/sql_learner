@@ -35,3 +35,10 @@ MarkedGroups AS (
         END AS NewGroup
     FROM OrderedPeriods
 ),
+NumberedGroups AS (
+    SELECT
+        StartDate,
+        EndDate,
+        SUM(NewGroup) OVER (ORDER BY StartDate ROWS UNBOUNDED PRECEDING) AS GroupID
+    FROM MarkedGroups
+)
