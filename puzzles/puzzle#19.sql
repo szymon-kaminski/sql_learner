@@ -17,7 +17,7 @@ INSERT INTO TimePeriods (StartDate, EndDate) VALUES
 ('2018-01-15', '2018-01-19');
 
 
--- Step 2 — Wykrywanie początków nowych grup przedziałów (przerwy w datach lub większe niż 1 dzień)
+-- Step 2: Wykrywanie początków nowych grup przedziałów (przerwy w datach lub większe niż 1 dzień)
 WITH MarkedGroups AS (
     SELECT 
         StartDate,
@@ -30,7 +30,8 @@ WITH MarkedGroups AS (
     FROM TimePeriods
 )
 
--- Step 3 — Nadawanie numerów grup (sumowanie flag IsNewGroup)
+
+-- Step 3: Nadawanie numerów grup (sumowanie flag IsNewGroup)
 , NumberedGroups AS (
     SELECT 
         StartDate,
