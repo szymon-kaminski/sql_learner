@@ -17,34 +17,30 @@ INSERT INTO TimePeriods (StartDate, EndDate) VALUES
 ('2018-01-15', '2018-01-19');
 
 
--- Step 2: Sort periods and detect new groups
-WITH OrderedPeriods AS (
+-- Step 2 — Wykrywanie początków nowych grup przedziałów (przerwy w datach lub większe niż 1 dzień)
+WITH MarkedGroups AS (
     SELECT 
         StartDate,
         EndDate,
-        LAG(EndDate) OVER (ORDER BY StartDate) AS PrevEnd
-    FROM TimePeriods
-),
-MarkedGroups AS (
-    SELECT
-        StartDate,
-        EndDate,
         CASE 
-            WHEN PrevEnd IS NULL OR StartDate > DATE_ADD(PrevEnd, INTERVAL 0 DAY)
-            THEN 1 ELSE 0 
-        END AS NewGroup
-    FROM OrderedPeriods
-),
-NumberedGroups AS (
-    SELECT
+            WHEN StartDate <= LAG(EndDate) OVER (ORDER BY StartDate)
+            THEN 0
+            ELSE 1
+        END AS IsNewGroup
+    FROM TimePeriods
+)
+
+-- Step 3 — Nadawanie numerów grup (sumowanie flag IsNewGroup)
+, NumberedGroups AS (
+    SELECT 
         StartDate,
         EndDate,
-        SUM(NewGroup) OVER (ORDER BY StartDate ROWS UNBOUNDED PRECEDING) AS GroupID
+        SUM(IsNewGroup) OVER (ORDER BY StartDate) AS GroupID
     FROM MarkedGroups
-);
+)
 
 
--- Step 3: Merge intervals per group
+-- Step 4: Merge intervals per group
 SELECT 
     MIN(StartDate) AS StartDate,
     MAX(EndDate) AS EndDate
