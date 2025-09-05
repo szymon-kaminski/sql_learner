@@ -41,4 +41,13 @@ NumberedGroups AS (
         EndDate,
         SUM(NewGroup) OVER (ORDER BY StartDate ROWS UNBOUNDED PRECEDING) AS GroupID
     FROM MarkedGroups
-)
+);
+
+
+-- Step 3: Merge intervals per group
+SELECT 
+    MIN(StartDate) AS StartDate,
+    MAX(EndDate) AS EndDate
+FROM NumberedGroups
+GROUP BY GroupID
+ORDER BY StartDate;
