@@ -39,3 +39,14 @@ WITH MonthlyTotals AS (
     FROM Orders
     GROUP BY CustomerID, State, YEAR(OrderDate), MONTH(OrderDate)
 ),
+
+
+-- Step 3: Compute average monthly per customer
+CustomerAverages AS (
+    SELECT 
+        CustomerID,
+        State,
+        AVG(MonthlyAmount) AS AvgMonthly
+    FROM MonthlyTotals
+    GROUP BY CustomerID, State
+),
