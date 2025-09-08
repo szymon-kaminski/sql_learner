@@ -30,3 +30,13 @@ WITH RankedPrices AS (
         ) AS rn
     FROM ProductPrices
 )
+
+
+-- Step 3: Select only the latest price per product
+SELECT 
+    ProductID,
+    EffectiveDate,
+    UnitPrice
+FROM RankedPrices
+WHERE rn = 1
+ORDER BY ProductID;
