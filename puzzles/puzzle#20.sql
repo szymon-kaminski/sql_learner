@@ -16,3 +16,17 @@ INSERT INTO ProductPrices (ProductID, EffectiveDate, UnitPrice) VALUES
 (1001, '2018-06-08', 2.99),
 (2002, '2018-04-17', 3.99),
 (2002, '2018-05-19', 1.99);
+
+
+-- Step 2: Add row numbers per product (latest price = rn = 1)
+WITH RankedPrices AS (
+    SELECT 
+        ProductID,
+        EffectiveDate,
+        UnitPrice,
+        ROW_NUMBER() OVER (
+            PARTITION BY ProductID
+            ORDER BY EffectiveDate DESC
+        ) AS rn
+    FROM ProductPrices
+)
