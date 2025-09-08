@@ -50,3 +50,17 @@ CustomerAverages AS (
     FROM MonthlyTotals
     GROUP BY CustomerID, State
 ),
+
+
+-- Step 4: Filter states where ALL customers > 100
+ValidStates AS (
+    SELECT 
+        State
+    FROM CustomerAverages
+    GROUP BY State
+    HAVING MIN(AvgMonthly) > 100
+)
+
+-- Final Output
+SELECT State
+FROM ValidStates;
