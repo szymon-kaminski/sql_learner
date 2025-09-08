@@ -26,3 +26,16 @@ INSERT INTO Orders (OrderID, CustomerID, OrderDate, Amount, State) VALUES
 (11,4004, '2018-04-01', 100, 'IA'),
 (12,4004, '2018-05-01', 100, 'IA'),
 (13,4004, '2018-05-01', 50,  'IA');
+
+
+-- Step 2: Compute monthly totals per customer
+WITH MonthlyTotals AS (
+    SELECT 
+        CustomerID,
+        State,
+        YEAR(OrderDate) AS Yr,
+        MONTH(OrderDate) AS Mn,
+        SUM(Amount) AS MonthlyAmount
+    FROM Orders
+    GROUP BY CustomerID, State, YEAR(OrderDate), MONTH(OrderDate)
+),
