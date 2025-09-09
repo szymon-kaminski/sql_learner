@@ -41,15 +41,22 @@ WITH MonthlyTotals AS (
 ),
 
 
--- Step 3: Keep only customers who had ALL months > 100
-ValidCustomers AS (
-    SELECT CustomerID, State
+-- Step 3: Compute average per customer across months
+CustomerAvg AS (
+    SELECT 
+        CustomerID,
+        State,
+        AVG(MonthlyAmount) AS AvgPerCustomer
     FROM MonthlyTotals
     GROUP BY CustomerID, State
-    HAVING MIN(MonthlyAmount) > 100
+),
+
+-- Step 4: Keep states where all customers have avg > 100
+ValidStates AS (
+    SELECT State
+    FROM CustomerAvg
+    GROUP BY State
+    HAVING MIN(AvgPerCustomer) > 100
 )
 
-
--- Step 4: Return valid states
-SELECT DISTINCT State
-FROM ValidCustomers;
+SELECT * FROM ValidStates;
