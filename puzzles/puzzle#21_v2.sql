@@ -48,3 +48,8 @@ ValidCustomers AS (
     GROUP BY CustomerID, State
     HAVING MIN(MonthlyAmount) > 100
 )
+
+
+-- Step 4: Return valid states
+SELECT DISTINCT State
+FROM ValidCustomers;
