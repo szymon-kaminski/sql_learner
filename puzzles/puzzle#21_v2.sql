@@ -39,3 +39,12 @@ WITH MonthlyTotals AS (
     FROM Orders
     GROUP BY CustomerID, State, YEAR(OrderDate), MONTH(OrderDate)
 ),
+
+
+-- Step 3: Keep only customers who had ALL months > 100
+ValidCustomers AS (
+    SELECT CustomerID, State
+    FROM MonthlyTotals
+    GROUP BY CustomerID, State
+    HAVING MIN(MonthlyAmount) > 100
+)
