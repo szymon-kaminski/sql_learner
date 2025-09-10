@@ -39,3 +39,14 @@ MaxPerMessage AS (
     FROM Aggregated
     GROUP BY Message
 )
+
+
+-- Step 4: Keep only workflow(s) that match the max per message
+SELECT 
+    a.Workflow,
+    a.Message,
+    a.TotalOcc AS Occurrences
+FROM Aggregated a
+JOIN MaxPerMessage m 
+  ON a.Message = m.Message AND a.TotalOcc = m.MaxOcc
+ORDER BY a.Message;
