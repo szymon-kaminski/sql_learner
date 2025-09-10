@@ -10,8 +10,10 @@ CREATE TABLE Players (
 );
 
 INSERT INTO Players (PlayerID, Score) VALUES
-(1001, 2002),
-(2343, 9432),
-(3003, 4004),
-(6548, 1054),
+(1001, 2343),
+(2002, 9432),
+(3003, 6548),
+(4004, 1054),
 (5005, 6832);
+
+SELECT * FROM Players ORDER BY PlayerID, Score;
