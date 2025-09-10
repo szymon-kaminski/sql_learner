@@ -29,3 +29,13 @@ WITH Aggregated AS (
     FROM Logs
     GROUP BY Workflow, Message
 ),
+
+
+-- Step 3: Find max occurrence per message
+MaxPerMessage AS (
+    SELECT 
+        Message,
+        MAX(TotalOcc) AS MaxOcc
+    FROM Aggregated
+    GROUP BY Message
+)
