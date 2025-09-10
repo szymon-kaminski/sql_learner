@@ -18,3 +18,14 @@ INSERT INTO Logs VALUES
 ('Bravo',   'Error: Unidentified error occurred', 1),
 ('Charlie', 'Error: Unidentified error occurred', 10),
 ('Charlie', 'Status Complete', 8);
+
+
+-- Step 2: Aggregate total occurrences per workflow and message
+WITH Aggregated AS (
+    SELECT 
+        Workflow,
+        Message,
+        SUM(Occurrences) AS TotalOcc
+    FROM Logs
+    GROUP BY Workflow, Message
+),
