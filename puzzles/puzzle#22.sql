@@ -19,6 +19,7 @@ INSERT INTO Logs VALUES
 ('Charlie', 'Error: Unidentified error occurred', 10),
 ('Charlie', 'Status Complete', 8);
 
+SELECT * FROM Logs ORDER BY Workflow, Message;
 
 -- Step 2: Aggregate total occurrences per workflow and message
 WITH Aggregated AS (
