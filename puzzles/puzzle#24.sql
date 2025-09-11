@@ -34,3 +34,8 @@ FROM Orders24
 ORDER BY OrderID;
 
 
+-- Step 3: Retrieve rows 5 through 10
+SELECT *
+FROM Orders24
+ORDER BY OrderID
+LIMIT 6 OFFSET 4;
