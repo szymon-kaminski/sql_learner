@@ -17,3 +17,15 @@ INSERT INTO Players (PlayerID, Score) VALUES
 (5005, 6832);
 
 SELECT * FROM Players ORDER BY PlayerID, Score;
+
+
+-- Step 2: Rank players by score
+WITH Ranked AS (
+    SELECT 
+        PlayerID,
+        Score,
+        ROW_NUMBER() OVER (ORDER BY Score DESC) AS rn,
+        COUNT(*) OVER () AS total_count
+    FROM Players
+)
+
