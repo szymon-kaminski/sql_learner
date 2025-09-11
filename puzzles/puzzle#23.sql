@@ -29,3 +29,14 @@ WITH Ranked AS (
     FROM Players
 )
 
+
+-- Step 3: Divide players into top and bottom half
+SELECT 
+    CASE 
+        WHEN rn <= total_count / 2 THEN 1
+        ELSE 2
+    END AS Quartile,
+    PlayerID,
+    Score
+FROM Ranked
+ORDER BY Quartile, Score DESC;
