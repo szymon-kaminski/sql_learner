@@ -27,3 +27,10 @@ INSERT INTO Orders24 VALUES
 (12,3003, '2018-02-01', 75,  'TX'),
 (13,4004, '2018-05-01', 100, 'IA');
 
+
+-- Step 2: Select records ordered by OrderID
+SELECT *
+FROM Orders24
+ORDER BY OrderID;
+
+
