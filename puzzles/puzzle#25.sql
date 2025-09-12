@@ -31,3 +31,21 @@ WITH VendorTotals AS (
 )
 SELECT * FROM VendorTotals;
 
+
+-- Step 3 - wybieramy TOP vendora dla każdego klienta
+, RankedVendors AS (
+    SELECT 
+        CustomerID,
+        Vendor,
+        TotalOrders,
+        ROW_NUMBER() OVER (
+            PARTITION BY CustomerID 
+            ORDER BY TotalOrders DESC
+        ) AS rn
+    FROM VendorTotals
+)
+SELECT CustomerID, Vendor
+FROM RankedVendors
+WHERE rn = 1;
+
+
