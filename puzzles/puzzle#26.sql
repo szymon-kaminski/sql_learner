@@ -40,3 +40,9 @@ WithLag AS (
     FROM YearlyTotals
 )
 
+
+-- Step 4: Select results (only years with previous data will show complete row)
+SELECT Year, TotalAmount, PrevYear, TwoYearsAgo
+FROM WithLag
+ORDER BY Year DESC;
+
