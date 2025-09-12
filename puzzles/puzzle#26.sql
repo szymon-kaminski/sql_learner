@@ -18,3 +18,14 @@ INSERT INTO Sales26 VALUES
 (2016, 111894);
 
 SELECT * FROM Sales26 ORDER BY Year, Amount;
+
+
+-- Step 2: Aggregate yearly totals
+WITH YearlyTotals AS (
+    SELECT 
+        Year,
+        SUM(Amount) AS TotalAmount
+    FROM Sales26
+    GROUP BY Year
+),
+
