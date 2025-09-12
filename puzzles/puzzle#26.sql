@@ -29,3 +29,14 @@ WITH YearlyTotals AS (
     GROUP BY Year
 ),
 
+
+-- Step 3: Use LAG() to get previous years’ totals
+WithLag AS (
+    SELECT 
+        Year,
+        TotalAmount,
+        LAG(TotalAmount, 1) OVER (ORDER BY Year) AS PrevYear,
+        LAG(TotalAmount, 2) OVER (ORDER BY Year) AS TwoYearsAgo
+    FROM YearlyTotals
+)
+
