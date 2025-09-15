@@ -5,10 +5,11 @@ USE sql_learner;
 
 DROP TABLE IF EXISTS SampleData;
 CREATE TABLE SampleData (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     IntegerValue INT
 );
 
-INSERT INTO SampleData VALUES
+INSERT INTO SampleData (IntegerValue) VALUES
 (1),(1),(2),(3),(3),(4);
 
 
@@ -16,15 +17,12 @@ INSERT INTO SampleData VALUES
 SELECT * FROM SampleData;
 
 
--- Step 3: Delete duplicates, keeping only one occurrence of each value
-DELETE sd
-FROM SampleData sd
-JOIN (
-    SELECT 
-        IntegerValue,
-        ROW_NUMBER() OVER (PARTITION BY IntegerValue ORDER BY IntegerValue) AS rn
-    FROM SampleData
-) t ON sd.IntegerValue = t.IntegerValue AND t.rn > 1;
+-- Step 3: Usuń duplikaty, zostawiając jedno wystąpienie każdej liczby
+DELETE s1
+FROM SampleData s1
+JOIN SampleData s2
+  ON s1.IntegerValue = s2.IntegerValue
+ AND s1.id > s2.id;
 
 
 -- Step 4: Show final result without duplicates
