@@ -1,6 +1,8 @@
 -- Puzzle #27: Delete the Duplicates
 
 -- Step 1: Create table and insert data
+USE sql_learner;
+
 DROP TABLE IF EXISTS SampleData;
 CREATE TABLE SampleData (
     IntegerValue INT
