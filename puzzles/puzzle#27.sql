@@ -8,3 +8,7 @@ CREATE TABLE SampleData (
 
 INSERT INTO SampleData VALUES
 (1),(1),(2),(3),(3),(4);
+
+
+-- Step 2: Show initial data
+SELECT * FROM SampleData;
