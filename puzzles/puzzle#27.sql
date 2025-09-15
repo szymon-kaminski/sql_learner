@@ -23,3 +23,9 @@ JOIN (
         ROW_NUMBER() OVER (PARTITION BY IntegerValue ORDER BY IntegerValue) AS rn
     FROM SampleData
 ) t ON sd.IntegerValue = t.IntegerValue AND t.rn > 1;
+
+
+-- Step 4: Show final result without duplicates
+SELECT * 
+FROM SampleData
+ORDER BY IntegerValue;
