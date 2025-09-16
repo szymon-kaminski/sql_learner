@@ -40,3 +40,9 @@ WITH Filled AS (
         ) AS WorkflowFilled
     FROM WorkflowLogs
 )
+
+
+-- Step 3: Wynik końcowy
+SELECT RowNumber, WorkflowFilled AS Workflow, Status
+FROM Filled
+ORDER BY RowNumber;
