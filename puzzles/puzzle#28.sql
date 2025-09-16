@@ -26,3 +26,17 @@ INSERT INTO WorkflowLogs (RowNumber, Workflow, Status) VALUES
 
 -- Podgląd danych wejściowych
 SELECT * FROM WorkflowLogs ORDER BY RowNumber;
+
+
+-- Step 2: Fill missing Workflow values (smear last non-null down)
+WITH Filled AS (
+    SELECT
+        RowNumber,
+        Status,
+        -- Uzupełniamy Workflow używając LAST_VALUE() z oknem
+        LAST_VALUE(Workflow IGNORE NULLS) OVER (
+            ORDER BY RowNumber
+            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+        ) AS WorkflowFilled
+    FROM WorkflowLogs
+)
