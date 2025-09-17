@@ -54,3 +54,14 @@ NumberedGroups AS (
         SUM(IsNewGroup) OVER (ORDER BY StepNumber) AS GroupID
     FROM Flags
 )
+
+
+-- Step 5: Aggregate per group to get min/max step and consecutive count
+SELECT
+    MIN(StepNumber) AS MinStepNumber,
+    MAX(StepNumber) AS MaxStepNumber,
+    Status,
+    COUNT(*) AS ConsecutiveCount
+FROM NumberedGroups
+GROUP BY GroupID, Status
+ORDER BY MinStepNumber;
