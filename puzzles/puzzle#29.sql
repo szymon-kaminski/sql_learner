@@ -35,3 +35,12 @@ WITH Prev AS (
     FROM Steps29
 ),
 
+
+-- Step 3: Mark boundaries (IsNewGroup = 1 when status changes or first row)
+Flags AS (
+    SELECT
+        StepNumber,
+        Status,
+        CASE WHEN PrevStatus IS NULL OR PrevStatus <> Status THEN 1 ELSE 0 END AS IsNewGroup
+    FROM Prev
+),
