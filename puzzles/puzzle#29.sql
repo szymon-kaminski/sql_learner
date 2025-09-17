@@ -51,3 +51,7 @@ Grouped AS (
     FROM StatusChanges
     GROUP BY grp, Status
 )
+
+
+-- Step 4: Return result
+SELECT * FROM Grouped ORDER BY MinStep;
