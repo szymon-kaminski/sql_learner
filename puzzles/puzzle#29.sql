@@ -44,3 +44,13 @@ Flags AS (
         CASE WHEN PrevStatus IS NULL OR PrevStatus <> Status THEN 1 ELSE 0 END AS IsNewGroup
     FROM Prev
 ),
+
+
+-- Step 4: Number groups by cumulative sum of IsNewGroup
+NumberedGroups AS (
+    SELECT
+        StepNumber,
+        Status,
+        SUM(IsNewGroup) OVER (ORDER BY StepNumber) AS GroupID
+    FROM Flags
+)
