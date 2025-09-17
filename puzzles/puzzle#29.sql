@@ -26,32 +26,12 @@ INSERT INTO Steps29 VALUES
 SELECT * FROM Steps29 ORDER BY StepNumber;
 
 
--- Step 2: Mark groups by changes in Status
-WITH StatusChanges AS (
+-- Step 2: Compute previous status for each row (use LAG once)
+WITH Prev AS (
     SELECT
         StepNumber,
         Status,
-        SUM(
-            CASE 
-                WHEN Status != LAG(Status) OVER (ORDER BY StepNumber)
-                THEN 1 ELSE 0 
-            END
-        ) OVER (ORDER BY StepNumber) AS grp
+        LAG(Status) OVER (ORDER BY StepNumber) AS PrevStatus
     FROM Steps29
 ),
 
-
--- Step 3: Aggregate per group
-Grouped AS (
-    SELECT
-        MIN(StepNumber) AS MinStep,
-        MAX(StepNumber) AS MaxStep,
-        Status,
-        COUNT(*) AS ConsecutiveCount
-    FROM StatusChanges
-    GROUP BY grp, Status
-)
-
-
--- Step 4: Return result
-SELECT * FROM Grouped ORDER BY MinStep;
