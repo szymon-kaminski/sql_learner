@@ -39,3 +39,15 @@ WITH StatusChanges AS (
         ) OVER (ORDER BY StepNumber) AS grp
     FROM Steps29
 ),
+
+
+-- Step 3: Aggregate per group
+Grouped AS (
+    SELECT
+        MIN(StepNumber) AS MinStep,
+        MAX(StepNumber) AS MaxStep,
+        Status,
+        COUNT(*) AS ConsecutiveCount
+    FROM StatusChanges
+    GROUP BY grp, Status
+)
