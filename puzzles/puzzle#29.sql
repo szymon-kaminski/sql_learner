@@ -24,3 +24,18 @@ INSERT INTO Steps29 VALUES
 (12, 'Passed');
 
 SELECT * FROM Steps29 ORDER BY StepNumber;
+
+
+-- Step 2: Mark groups by changes in Status
+WITH StatusChanges AS (
+    SELECT
+        StepNumber,
+        Status,
+        SUM(
+            CASE 
+                WHEN Status != LAG(Status) OVER (ORDER BY StepNumber)
+                THEN 1 ELSE 0 
+            END
+        ) OVER (ORDER BY StepNumber) AS grp
+    FROM Steps29
+),
