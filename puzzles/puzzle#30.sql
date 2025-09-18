@@ -29,3 +29,11 @@ FROM (
     UNION ALL
     SELECT 3, 'Monitor'
 ) t;
+
+
+-- Step 3: Test
+-- This will FAIL:
+-- SELECT * FROM Products;
+
+-- This will WORK:
+SELECT Product_ID, Name FROM Products;
