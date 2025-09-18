@@ -14,3 +14,10 @@ INSERT INTO ProductsBase (ProductID, ProductName) VALUES
 (1, 'Keyboard'),
 (2, 'Mouse'),
 (3, 'Monitor');
+
+
+-- Step 2: Prevent SELECT * misuse
+DROP VIEW IF EXISTS Products;
+CREATE VIEW Products AS
+SELECT ProductID, ProductName
+FROM ProductsBase;
