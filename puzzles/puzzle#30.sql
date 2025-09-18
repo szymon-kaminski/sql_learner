@@ -21,3 +21,11 @@ DROP VIEW IF EXISTS Products;
 CREATE VIEW Products AS
 SELECT ProductID, ProductName
 FROM ProductsBase;
+
+
+-- Step 3: Testing
+-- This will FAIL, because SELECT * on Products is blocked (it’s a view only exposing named columns).
+-- SELECT * FROM Products;  -- ❌ Error expected
+
+-- This will WORK, because we specify the columns explicitly.
+SELECT ProductID, ProductName FROM Products;
