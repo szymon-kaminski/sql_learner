@@ -14,3 +14,18 @@ INSERT INTO Products VALUES
 (1, 'Keyboard'),
 (2, 'Mouse'),
 (3, 'Monitor');
+
+
+-- Step 2: Drop the table structure and replace with a view that disallows SELECT *
+DROP VIEW IF EXISTS Products;
+CREATE VIEW Products AS
+SELECT 
+    ProductID AS Product_ID,
+    ProductName AS Name
+FROM (
+    SELECT 1 AS ProductID, 'Keyboard' AS ProductName
+    UNION ALL
+    SELECT 2, 'Mouse'
+    UNION ALL
+    SELECT 3, 'Monitor'
+) t;
