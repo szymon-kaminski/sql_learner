@@ -35,3 +35,14 @@ LIMIT 1 OFFSET 1;
 SELECT s.IntegerValue AS SecondHighest
 FROM SampleData s
 WHERE (SELECT COUNT(*) FROM SampleData t WHERE t.IntegerValue > s.IntegerValue) = 1;
+
+
+-- Step 5: Solution using subquery with LIMIT
+-- Take top 2 in descending order, then pick the lowest of them
+SELECT MIN(val) AS SecondHighest
+FROM (
+  SELECT IntegerValue AS val
+  FROM SampleData
+  ORDER BY IntegerValue DESC
+  LIMIT 2
+) AS TopTwo;
