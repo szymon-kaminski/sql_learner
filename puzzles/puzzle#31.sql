@@ -20,3 +20,11 @@ SELECT * FROM SampleData;
 SELECT MAX(IntegerValue) AS SecondHighest
 FROM SampleData
 WHERE IntegerValue < (SELECT MAX(IntegerValue) FROM SampleData);
+
+
+-- Step 3: Solution using ORDER BY + LIMIT/OFFSET
+-- Sort descending, skip the first (highest), take the next
+SELECT IntegerValue AS SecondHighest
+FROM SampleData
+ORDER BY IntegerValue DESC
+LIMIT 1 OFFSET 1;
