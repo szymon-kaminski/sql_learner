@@ -22,7 +22,7 @@ INSERT INTO Spacemen (SpacemanID, JobDescription, MissionCount) VALUES
 (8008, 'Technician', 2),
 (9009, 'Technician', 7);
 
-SELECT * FROM Spaceman ORDER BY SpacemanID, JobDescription, MissionCount;
+SELECT * FROM Spacemen ORDER BY SpacemanID, JobDescription, MissionCount;
 
 -- Step 2: Find most and least experienced spacemen per job
 -- We use subqueries to get SpacemanID for MAX and MIN MissionCount
