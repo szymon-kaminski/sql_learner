@@ -28,3 +28,10 @@ SELECT IntegerValue AS SecondHighest
 FROM SampleData
 ORDER BY IntegerValue DESC
 LIMIT 1 OFFSET 1;
+
+
+-- Step 4: Solution using correlated subquery
+-- Count how many values are greater; second highest has exactly 1 greater
+SELECT s.IntegerValue AS SecondHighest
+FROM SampleData s
+WHERE (SELECT COUNT(*) FROM SampleData t WHERE t.IntegerValue > s.IntegerValue) = 1;
