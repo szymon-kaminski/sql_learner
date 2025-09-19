@@ -13,3 +13,10 @@ INSERT INTO SampleData (IntegerValue) VALUES
 (3759),(3760),(3761),(3762),(3763);
 
 SELECT * FROM SampleData;
+
+
+-- Step 2: Solution using MAX subquery
+-- Get the maximum value that is less than the global maximum
+SELECT MAX(IntegerValue) AS SecondHighest
+FROM SampleData
+WHERE IntegerValue < (SELECT MAX(IntegerValue) FROM SampleData);
