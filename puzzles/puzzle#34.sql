@@ -19,3 +19,9 @@ INSERT INTO Orders34 (OrderID, CustomerID, Amount) VALUES
 
 -- Preview input data
 SELECT * FROM Orders34;
+
+
+-- Step 2: Exclude row where CustomerID = 1001 AND Amount = 50
+SELECT *
+FROM Orders34
+WHERE NOT (CustomerID = 1001 AND Amount = 50);
