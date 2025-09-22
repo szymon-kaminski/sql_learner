@@ -47,3 +47,19 @@ WITH BuildTime AS (
     FROM Manufacturing
     GROUP BY Product
 )
+
+
+-- Step 3: Join with orders and compare deadlines
+SELECT 
+    o.OrderID,
+    o.Product,
+    b.DaysToBuild,
+    o.DaysToDeliver,
+    CASE
+        WHEN b.DaysToBuild < o.DaysToDeliver THEN 'Ahead of Schedule'
+        WHEN b.DaysToBuild = o.DaysToDeliver THEN 'On Schedule'
+        ELSE 'Behind Schedule'
+    END AS Schedule
+FROM Orders o
+JOIN BuildTime b ON o.Product = b.Product
+ORDER BY o.OrderID;
