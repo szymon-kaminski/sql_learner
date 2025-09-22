@@ -32,3 +32,7 @@ INSERT INTO Manufacturing (Product, Component, DaysToManufacture) VALUES
 ('Twilight', 'Filament', 2),
 ('SunRay', 'Shine Capacitor', 3),
 ('SunRay', 'Photon Coil', 1);
+
+-- Preview input data
+SELECT * FROM Orders;
+SELECT * FROM Manufacturing;
