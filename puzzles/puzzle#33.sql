@@ -36,3 +36,14 @@ INSERT INTO Manufacturing (Product, Component, DaysToManufacture) VALUES
 -- Preview input data
 SELECT * FROM Orders;
 SELECT * FROM Manufacturing;
+
+
+-- Step 2: Find build time per product
+-- Since components can be built independently, total time = MAX of component times
+WITH BuildTime AS (
+    SELECT 
+        Product,
+        MAX(DaysToManufacture) AS DaysToBuild
+    FROM Manufacturing
+    GROUP BY Product
+)
