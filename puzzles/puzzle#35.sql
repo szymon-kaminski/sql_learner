@@ -23,3 +23,6 @@ INSERT INTO Sales35 (InvoiceID, SalesRepID, Amount, SalesType) VALUES
 (8, 3003, 345, 'Domestic'),
 (9, 6006, 6543, 'Domestic'),
 (10, 8008, 67, 'Domestic');
+
+-- Preview input data
+SELECT * FROM Sales35;
