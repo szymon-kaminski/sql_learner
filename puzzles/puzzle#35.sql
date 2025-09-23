@@ -26,3 +26,10 @@ INSERT INTO Sales35 (InvoiceID, SalesRepID, Amount, SalesType) VALUES
 
 -- Preview input data
 SELECT * FROM Sales35;
+
+
+-- Step 2: Find SalesReps with either Domestic or International sales, but not both
+SELECT SalesRepID
+FROM Sales35
+GROUP BY SalesRepID
+HAVING COUNT(DISTINCT SalesType) = 1;
