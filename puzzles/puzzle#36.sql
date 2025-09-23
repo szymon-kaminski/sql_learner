@@ -21,3 +21,6 @@ INSERT INTO Routes36 (RouteID, DepartureCity, ArrivalCity, Cost) VALUES
 (3, 'Des Moines', 'Memphis', 300),
 (4, 'Dallas', 'Des Moines', 400),
 (4, 'Des Moines', 'Dallas', 400);
+
+-- Preview input data
+SELECT * FROM Routes36;
