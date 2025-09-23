@@ -24,3 +24,22 @@ INSERT INTO Routes36 (RouteID, DepartureCity, ArrivalCity, Cost) VALUES
 
 -- Preview input data
 SELECT * FROM Routes36;
+
+
+-- Step 2: Find all possible routes from Austin to Des Moines with total cost
+SELECT 
+    CONCAT(r1.DepartureCity, ' --> ', r1.ArrivalCity, ' --> ', r2.ArrivalCity) AS RoutePath,
+    (r1.Cost + r2.Cost) AS TotalCost
+FROM Routes36 r1
+JOIN Routes36 r2 ON r1.ArrivalCity = r2.DepartureCity
+WHERE r1.DepartureCity = 'Austin' AND r2.ArrivalCity = 'Des Moines'
+
+UNION ALL
+
+SELECT 
+    CONCAT(r1.DepartureCity, ' --> ', r1.ArrivalCity, ' --> ', r2.ArrivalCity, ' --> ', r3.ArrivalCity) AS RoutePath,
+    (r1.Cost + r2.Cost + r3.Cost) AS TotalCost
+FROM Routes36 r1
+JOIN Routes36 r2 ON r1.ArrivalCity = r2.DepartureCity
+JOIN Routes36 r3 ON r2.ArrivalCity = r3.DepartureCity
+WHERE r1.DepartureCity = 'Austin' AND r3.ArrivalCity = 'Des Moines';
