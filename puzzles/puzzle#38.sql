@@ -1,6 +1,9 @@
 -- Puzzle #38: Reporting Elements
 
 -- Step 1: Create table with input data
+CREATE DATABASE IF NOT EXISTS sql_learner;
+USE sql_learner;
+
 DROP TABLE IF EXISTS Sales38;
 CREATE TABLE Sales38 (
     Region VARCHAR(20),
