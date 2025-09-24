@@ -19,3 +19,6 @@ INSERT INTO Sales38 (Region, Distributor, Sales) VALUES
 ('North', 'Direct Parts', 8),
 ('South', 'Direct Parts', 7),
 ('West',  'Direct Parts', 12);
+
+-- Preview input data
+SELECT * FROM Sales38;
