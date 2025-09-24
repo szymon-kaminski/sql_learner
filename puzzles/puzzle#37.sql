@@ -18,3 +18,7 @@ INSERT INTO Orders37 (OrderID, Distributor, Facility, Zone, Amount) VALUES
 (2, 'ACME', 123, 'ABC', 75.00),
 (3, 'Direct Parts', 789, 'XYZ', 150.00),
 (4, 'Direct Parts', 789, 'XYZ', 125.00);
+
+-- Preview input data
+SELECT * FROM Orders37;
+
