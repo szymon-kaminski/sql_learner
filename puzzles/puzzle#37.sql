@@ -22,3 +22,14 @@ INSERT INTO Orders37 (OrderID, Distributor, Facility, Zone, Amount) VALUES
 -- Preview input data
 SELECT * FROM Orders37;
 
+
+-- Step 2: Assign CriteriaID based on unique Distributor, Facility, Zone combinations
+SELECT 
+    DENSE_RANK() OVER (ORDER BY Distributor, Facility, Zone) AS CriteriaID,
+    OrderID,
+    Distributor,
+    Facility,
+    Zone,
+    Amount
+FROM Orders37;
+
