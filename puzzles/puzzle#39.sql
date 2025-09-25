@@ -7,3 +7,6 @@ USE sql_learner;
 CREATE TABLE PrimeNumbers (
     IntegerValue INTEGER PRIMARY KEY
 );
+
+INSERT INTO PrimeNumbers (IntegerValue) VALUES
+(1),(2),(3),(4),(5),(6),(7),(8),(9),(10);
