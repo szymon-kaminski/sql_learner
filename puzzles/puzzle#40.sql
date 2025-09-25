@@ -16,3 +16,15 @@ INSERT INTO Cities (City) VALUES
 
 -- Step 2: Podgląd danych wejściowych
 SELECT * FROM Cities;
+
+
+-- Step 3: Posortowanie zgodnie z oczekiwanym wynikiem
+SELECT City
+FROM Cities
+ORDER BY
+    CASE City
+        WHEN 'Baltimore' THEN 1
+        WHEN 'Denver'    THEN 2
+        WHEN 'Atlanta'   THEN 3
+        WHEN 'Chicago'   THEN 4
+    END;
