@@ -13,3 +13,6 @@ INSERT INTO Cities (City) VALUES
 ('Baltimore'),
 ('Chicago'),
 ('Denver');
+
+-- Step 2: Podgląd danych wejściowych
+SELECT * FROM Cities;
