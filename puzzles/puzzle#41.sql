@@ -19,3 +19,9 @@ INSERT INTO Associates (Associate1, Associate2) VALUES
 
 -- Step 2: Podgląd danych wejściowych
 SELECT * FROM Associates;
+
+
+-- Step 3: Zebranie wszystkich unikalnych osób
+SELECT Associate1 AS Associate FROM Associates
+UNION
+SELECT Associate2 FROM Associates;
