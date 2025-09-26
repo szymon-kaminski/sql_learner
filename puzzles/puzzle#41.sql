@@ -16,3 +16,6 @@ INSERT INTO Associates (Associate1, Associate2) VALUES
 ('Charles', 'Emma'),
 ('Francis', 'George'),
 ('George', 'Harriet');
+
+-- Step 2: Podgląd danych wejściowych
+SELECT * FROM Associates;
