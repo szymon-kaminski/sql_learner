@@ -32,11 +32,11 @@ SELECT DISTINCT
     CASE 
         WHEN Associate IN ('Anne', 'Betty', 'Charles', 'Dan', 'Emma') THEN 1
         WHEN Associate IN ('Francis', 'George', 'Harriet') THEN 2
-    END AS Grouping,
+    END AS GroupID,
     Associate
 FROM (
     SELECT Associate1 AS Associate FROM Associates
     UNION
     SELECT Associate2 FROM Associates
 ) AS AllAssociates
-ORDER BY Grouping, Associate;
+ORDER BY GroupID, Associate;
