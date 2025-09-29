@@ -18,4 +18,6 @@ INSERT INTO Friends42 (Friend1, Friend2) VALUES
 ('John',  'Mary'),
 ('Susan', 'Mary');
 
+-- Preview input data
+SELECT * FROM Friends42;
 
