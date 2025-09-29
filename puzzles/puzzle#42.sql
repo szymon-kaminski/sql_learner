@@ -21,3 +21,11 @@ INSERT INTO Friends42 (Friend1, Friend2) VALUES
 -- Preview input data
 SELECT * FROM Friends42;
 
+
+-- Step 2: Build distinct unordered pairs that appear in the data
+-- We use LEAST/GREATEST to normalize pair order (avoid duplicates like (A,B) and (B,A))
+SELECT DISTINCT
+    LEAST(Friend1, Friend2) AS FriendA,
+    GREATEST(Friend1, Friend2) AS FriendB
+FROM Friends42
+ORDER BY FriendA, FriendB;
