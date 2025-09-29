@@ -29,3 +29,28 @@ SELECT DISTINCT
     GREATEST(Friend1, Friend2) AS FriendB
 FROM Friends42
 ORDER BY FriendA, FriendB;
+
+
+-- Step 3: For each pair count mutual friends
+-- Mutual friends = count of distinct X such that X -> FriendA AND X -> FriendB
+SELECT
+    p.FriendA AS `Friend 1`,
+    p.FriendB AS `Friend 2`,
+    (
+      SELECT COUNT(DISTINCT f3.Friend1)
+      FROM Friends42 f3
+      WHERE f3.Friend2 = p.FriendA
+        AND f3.Friend1 IN (
+            SELECT f4.Friend1
+            FROM Friends42 f4
+            WHERE f4.Friend2 = p.FriendB
+        )
+    ) AS MutualFriends
+FROM (
+    SELECT DISTINCT
+        LEAST(Friend1, Friend2) AS FriendA,
+        GREATEST(Friend1, Friend2) AS FriendB
+    FROM Friends42
+) p
+ORDER BY `Friend 1`, `Friend 2`;
+
