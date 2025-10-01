@@ -21,3 +21,17 @@ INSERT INTO Orders43 (OrderID, CustomerID, Quantity) VALUES
 
 -- Preview input
 SELECT * FROM Orders43;
+
+
+-- Step 2: Compute running minimum per CustomerID using window function
+SELECT
+    OrderID,
+    CustomerID,
+    Quantity,
+    MIN(Quantity) OVER (
+        PARTITION BY CustomerID
+        ORDER BY OrderID
+        ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+    ) AS MinValue
+FROM Orders43
+ORDER BY CustomerID, OrderID;
