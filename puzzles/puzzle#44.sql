@@ -25,3 +25,19 @@ INSERT INTO Balances44 (CustomerID, BalanceDate, Amount) VALUES
 
 -- Preview input
 SELECT * FROM Balances44 ORDER BY CustomerID, BalanceDate DESC;
+
+
+-- Step 2: Generate Slowly Changing Dimension (Type 2) output
+SELECT
+    CustomerID,
+    BalanceDate AS StartDate,
+    COALESCE(
+        DATE_SUB(
+            LEAD(BalanceDate) OVER (PARTITION BY CustomerID ORDER BY BalanceDate DESC),
+            INTERVAL 1 DAY
+        ),
+        '9999-12-31'
+    ) AS EndDate,
+    Amount
+FROM Balances44
+ORDER BY CustomerID, StartDate DESC;
