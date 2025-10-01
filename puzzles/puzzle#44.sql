@@ -22,3 +22,6 @@ INSERT INTO Balances44 (CustomerID, BalanceDate, Amount) VALUES
 (2002, '2021-09-15', 75.12),
 (2002, '2021-09-10', 47.34),
 (2002, '2021-09-02', 11.11);
+
+-- Preview input
+SELECT * FROM Balances44 ORDER BY CustomerID, BalanceDate DESC;
