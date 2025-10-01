@@ -18,3 +18,6 @@ INSERT INTO Orders43 (OrderID, CustomerID, Quantity) VALUES
 (4, 1001, 7),
 (1, 2002, 4),
 (2, 2002, 9);
+
+-- Preview input
+SELECT * FROM Orders43;
