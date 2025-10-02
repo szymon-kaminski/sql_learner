@@ -18,3 +18,6 @@ INSERT INTO Accounts46 (AccountID, Balance) VALUES
 (3003, 186.76),
 (3003, 90.23),
 (3003, 10.11);
+
+-- Preview input
+SELECT * FROM Accounts46 ORDER BY AccountID;
