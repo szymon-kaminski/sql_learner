@@ -19,3 +19,6 @@ INSERT INTO Balances45 (CustomerID, StartDate, EndDate, Amount) VALUES
 (2002, '2021-09-12', '2021-09-17', 56.23),
 (2002, '2021-09-01', '2021-09-17', 42.12),
 (2002, '2021-08-15', '2021-08-31', 16.32);
+
+-- Preview input
+SELECT * FROM Balances45 ORDER BY CustomerID, StartDate;
