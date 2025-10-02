@@ -22,3 +22,14 @@ INSERT INTO Balances45 (CustomerID, StartDate, EndDate, Amount) VALUES
 
 -- Preview input
 SELECT * FROM Balances45 ORDER BY CustomerID, StartDate;
+
+
+-- Step 2: Find overlapping SCD records
+SELECT DISTINCT A.CustomerID, A.StartDate, A.EndDate, A.Amount
+FROM Balances45 A
+JOIN Balances45 B
+  ON A.CustomerID = B.CustomerID
+ AND A.StartDate <= B.EndDate
+ AND A.EndDate >= B.StartDate
+ AND A.StartDate < B.StartDate
+ORDER BY A.CustomerID, A.StartDate;
