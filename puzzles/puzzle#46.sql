@@ -21,3 +21,11 @@ INSERT INTO Accounts46 (AccountID, Balance) VALUES
 
 -- Preview input
 SELECT * FROM Accounts46 ORDER BY AccountID;
+
+
+-- Method 1: GROUP BY + HAVING
+-- Step 2a: Using GROUP BY and HAVING with MAX
+SELECT AccountID
+FROM Accounts46
+GROUP BY AccountID
+HAVING MAX(Balance) <= 0;
