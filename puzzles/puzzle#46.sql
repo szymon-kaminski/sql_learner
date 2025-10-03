@@ -29,3 +29,15 @@ SELECT AccountID
 FROM Accounts46
 GROUP BY AccountID
 HAVING MAX(Balance) <= 0;
+
+
+-- Method 2: NOT EXISTS
+-- Step 2b: Using NOT EXISTS
+SELECT DISTINCT A.AccountID
+FROM Accounts46 A
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Accounts46 B
+    WHERE B.AccountID = A.AccountID
+      AND B.Balance > 0
+);
