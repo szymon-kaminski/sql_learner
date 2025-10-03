@@ -48,3 +48,12 @@ WHERE NOT EXISTS (
 SELECT DISTINCT AccountID FROM Accounts46
 EXCEPT
 SELECT DISTINCT AccountID FROM Accounts46 WHERE Balance > 0;
+
+
+-- MEthod 4: LEFT JOIN
+-- Step 2d: Using LEFT JOIN to exclude accounts with positive balance
+SELECT DISTINCT A.AccountID
+FROM Accounts46 A
+LEFT JOIN Accounts46 B
+  ON A.AccountID = B.AccountID AND B.Balance > 0
+WHERE B.AccountID IS NULL;
