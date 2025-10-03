@@ -57,3 +57,13 @@ FROM Accounts46 A
 LEFT JOIN Accounts46 B
   ON A.AccountID = B.AccountID AND B.Balance > 0
 WHERE B.AccountID IS NULL;
+
+
+-- Method 5: INTERSECT (wspólne zbiory)
+-- Step 2e: Using INTERSECT (to simulate "only negatives")
+SELECT AccountID FROM Accounts46
+GROUP BY AccountID
+INTERSECT
+SELECT AccountID FROM Accounts46
+WHERE Balance <= 0
+GROUP BY AccountID;
