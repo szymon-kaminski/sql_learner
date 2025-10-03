@@ -41,3 +41,10 @@ WHERE NOT EXISTS (
     WHERE B.AccountID = A.AccountID
       AND B.Balance > 0
 );
+
+
+-- Method 3: EXCEPT / MINUS (zależnie od bazy)
+-- Step 2c: Using EXCEPT (or MINUS in Oracle)
+SELECT DISTINCT AccountID FROM Accounts46
+EXCEPT
+SELECT DISTINCT AccountID FROM Accounts46 WHERE Balance > 0;
