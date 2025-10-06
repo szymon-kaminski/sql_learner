@@ -38,3 +38,12 @@ WITH timeline AS (
   UNION ALL
   SELECT ScheduleID, EndTime FROM Schedule
 ),
+
+
+-- Step 3
+intervals AS (
+  SELECT ScheduleID,
+         point_time AS StartTime,
+         LEAD(point_time) OVER (PARTITION BY ScheduleID ORDER BY point_time) AS EndTime
+  FROM timeline
+)
