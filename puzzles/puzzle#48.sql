@@ -38,3 +38,10 @@ JOIN Sales s3
   ON s1.SalesID = s3.SalesID AND s3.Year = s1.Year - 2
 WHERE s1.Year = 2021;
 
+
+-- Step 4: Rozwiązanie #2 — z użyciem GROUP BY i HAVING
+SELECT SalesID
+FROM Sales
+WHERE Year BETWEEN 2019 AND 2021
+GROUP BY SalesID
+HAVING COUNT(DISTINCT Year) = 3;
