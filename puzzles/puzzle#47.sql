@@ -47,3 +47,17 @@ intervals AS (
          LEAD(point_time) OVER (PARTITION BY ScheduleID ORDER BY point_time) AS EndTime
   FROM timeline
 )
+
+
+-- Step 4
+SELECT i.ScheduleID,
+       COALESCE(a.Activity, 'Work') AS Activity,
+       i.StartTime,
+       i.EndTime
+FROM intervals i
+LEFT JOIN Activity a
+  ON i.ScheduleID = a.ScheduleID
+ AND i.StartTime >= a.StartTime
+ AND i.EndTime   <= a.EndTime
+WHERE i.EndTime IS NOT NULL
+ORDER BY i.ScheduleID, i.StartTime;
