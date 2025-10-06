@@ -27,3 +27,14 @@ INSERT INTO Sales VALUES
 
 -- Step 2: Podgląd danych wejściowych
 SELECT * FROM Sales ORDER BY SalesID, Year;
+
+
+-- Step 3: Rozwiązanie #1 — z użyciem JOIN
+SELECT DISTINCT s1.SalesID
+FROM Sales s1
+JOIN Sales s2 
+  ON s1.SalesID = s2.SalesID AND s2.Year = s1.Year - 1
+JOIN Sales s3 
+  ON s1.SalesID = s3.SalesID AND s3.Year = s1.Year - 2
+WHERE s1.Year = 2021;
+
