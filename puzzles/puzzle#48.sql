@@ -23,3 +23,7 @@ INSERT INTO Sales VALUES
 (4004, 2019),
 (4004, 2020),
 (4004, 2021);
+
+
+-- Step 2: Podgląd danych wejściowych
+SELECT * FROM Sales ORDER BY SalesID, Year;
