@@ -4,6 +4,9 @@
 
 
 -- Step 1: Utwórz tabelę i wstaw dane testowe
+CREATE DATABASE IF NOT EXISTS sql_learner;
+USE sql_learner;
+
 DROP TABLE IF EXISTS Sales;
 
 CREATE TABLE Sales (
