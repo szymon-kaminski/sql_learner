@@ -26,3 +26,15 @@ INSERT INTO Activity VALUES
 ('A', 'Break',   '2021-10-01 12:00', '2021-10-01 12:30'),
 ('A', 'Meeting', '2021-10-01 13:00', '2021-10-01 13:30'),
 ('B', 'Break',   '2021-10-01 11:00', '2021-10-01 11:15');
+
+
+-- Step 2
+WITH timeline AS (
+  SELECT ScheduleID, StartTime AS point_time FROM Activity
+  UNION ALL
+  SELECT ScheduleID, EndTime FROM Activity
+  UNION ALL
+  SELECT ScheduleID, StartTime FROM Schedule
+  UNION ALL
+  SELECT ScheduleID, EndTime FROM Schedule
+),
