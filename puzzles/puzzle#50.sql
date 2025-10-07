@@ -33,3 +33,6 @@ INSERT INTO Pitches (BatterID, PitchNumber, Result) VALUES
 (4004, 4, 'Foul'),
 (4004, 5, 'Foul'),
 (4004, 6, 'Strike');
+
+-- Preview data
+SELECT * FROM Pitches;
