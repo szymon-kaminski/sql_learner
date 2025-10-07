@@ -18,3 +18,6 @@ INSERT INTO SumoWrestlers (LineOrder, Name, Weight) VALUES
 (4, 'Sota', 569),
 (5, 'Aoto', 610),
 (6, 'Hinata', 525);
+
+-- Preview data
+SELECT * FROM SumoWrestlers;
