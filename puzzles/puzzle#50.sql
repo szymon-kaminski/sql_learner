@@ -53,3 +53,21 @@ WITH Counts AS (
             OVER (PARTITION BY BatterID ORDER BY PitchNumber) AS total_strikes
     FROM Pitches
 )
+
+
+-- Step 3: Compute Start and End of Pitch Counts
+SELECT
+    BatterID,
+    PitchNumber,
+    Result,
+    CONCAT(
+        COALESCE(LAG(total_balls) OVER (PARTITION BY BatterID ORDER BY PitchNumber), 0),
+        ' - ',
+        COALESCE(LAG(total_strikes) OVER (PARTITION BY BatterID ORDER BY PitchNumber), 0)
+    ) AS StartOfPitchCount,
+    CASE 
+        WHEN Result = 'In Play' THEN 'In-Play'
+        ELSE CONCAT(total_balls, ' - ', total_strikes)
+    END AS EndOfPitchCount
+FROM Counts
+ORDER BY BatterID, PitchNumber;
