@@ -32,3 +32,12 @@ WITH Cumulative AS (
         SUM(Weight) OVER (ORDER BY LineOrder) AS cumulative_weight
     FROM SumoWrestlers
 )
+
+
+-- Step 3: Select the last wrestler before exceeding 2000 lbs
+SELECT 
+    Name
+FROM Cumulative
+WHERE cumulative_weight <= 2000
+ORDER BY LineOrder DESC
+LIMIT 1;
