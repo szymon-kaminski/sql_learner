@@ -21,3 +21,14 @@ INSERT INTO SumoWrestlers (LineOrder, Name, Weight) VALUES
 
 -- Preview data
 SELECT * FROM SumoWrestlers;
+
+
+-- Step 2: Calculate cumulative weight for each wrestler
+WITH Cumulative AS (
+    SELECT 
+        LineOrder,
+        Name,
+        Weight,
+        SUM(Weight) OVER (ORDER BY LineOrder) AS cumulative_weight
+    FROM SumoWrestlers
+)
