@@ -36,3 +36,20 @@ INSERT INTO Pitches (BatterID, PitchNumber, Result) VALUES
 
 -- Preview data
 SELECT * FROM Pitches;
+
+
+-- Step 2: Calculate running totals for balls and strikes
+WITH Counts AS (
+    SELECT
+        BatterID,
+        PitchNumber,
+        Result,
+        SUM(CASE WHEN Result = 'Ball' THEN 1 ELSE 0 END)
+            OVER (PARTITION BY BatterID ORDER BY PitchNumber) AS total_balls,
+        SUM(CASE 
+                WHEN Result IN ('Strike', 'Foul') THEN 1 
+                ELSE 0 
+            END)
+            OVER (PARTITION BY BatterID ORDER BY PitchNumber) AS total_strikes
+    FROM Pitches
+)
