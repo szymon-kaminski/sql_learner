@@ -33,3 +33,12 @@ ADD ChecksumKey AS CHECKSUM(AssemblyID, Part);
 ALTER TABLE AssemblyParts
 ADD HashKey AS CONVERT(VARCHAR(40), HASHBYTES('SHA1', CONCAT(AssemblyID, Part)), 2);
 
+
+-- Step 4: View the result
+SELECT 
+    AssemblyID,
+    Part,
+    ChecksumKey,
+    HashKey
+FROM AssemblyParts;
+
