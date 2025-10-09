@@ -1,4 +1,4 @@
--- Puzzle #51 - Primary Key Creation
+-- Puzzle #51 – Primary Key Creation (MySQL)
 
 -- Step 1: Create database and table
 CREATE DATABASE IF NOT EXISTS sql_learner;
@@ -16,23 +16,22 @@ INSERT INTO AssemblyParts (AssemblyID, Part) VALUES
 (2002, 'Nut'),
 (2002, 'Washer'),
 (3003, 'Toggle'),
-(3003, 'Bolt');\
+(3003, 'Bolt');
 
--- Preview data
-SELECT * FROM AsemblyParts;
+-- preview data
+SELECT * FROM AssemblyParts;
 
 
--- Step 2: Create a checksum key
+-- Step 2: Add columns for hash and checksum equivalents
 ALTER TABLE AssemblyParts
-ADD ChecksumKey AS CHECKSUM(AssemblyID, Part);
+ADD COLUMN ChecksumKey BIGINT,
+ADD COLUMN HashKey VARCHAR(32);
 
-
--- Step 3: Create a hash key using HASHBYTES
--- In MySQL (using MD5 or SHA1), syntax differs slightly
--- Here’s the SQL Server style (if you use SQL Server):
-ALTER TABLE AssemblyParts
-ADD HashKey AS CONVERT(VARCHAR(40), HASHBYTES('SHA1', CONCAT(AssemblyID, Part)), 2);
-
+-- Step 3: Update columns using CRC32() and MD5()
+UPDATE AssemblyParts
+SET 
+    ChecksumKey = CRC32(CONCAT(AssemblyID, Part)),
+    HashKey = MD5(CONCAT(AssemblyID, Part));
 
 -- Step 4: View the result
 SELECT 
@@ -41,4 +40,5 @@ SELECT
     ChecksumKey,
     HashKey
 FROM AssemblyParts;
+
 
