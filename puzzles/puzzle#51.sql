@@ -16,4 +16,7 @@ INSERT INTO AssemblyParts (AssemblyID, Part) VALUES
 (2002, 'Nut'),
 (2002, 'Washer'),
 (3003, 'Toggle'),
-(3003, 'Bolt');
+(3003, 'Bolt');\
+
+-- Preview data
+SELECT * FROM AsemblyParts;
