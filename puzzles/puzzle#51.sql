@@ -20,3 +20,9 @@ INSERT INTO AssemblyParts (AssemblyID, Part) VALUES
 
 -- Preview data
 SELECT * FROM AsemblyParts;
+
+
+-- Step 2: Create a checksum key
+ALTER TABLE AssemblyParts
+ADD ChecksumKey AS CHECKSUM(AssemblyID, Part);
+
