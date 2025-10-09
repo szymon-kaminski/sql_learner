@@ -26,3 +26,10 @@ SELECT * FROM AsemblyParts;
 ALTER TABLE AssemblyParts
 ADD ChecksumKey AS CHECKSUM(AssemblyID, Part);
 
+
+-- Step 3: Create a hash key using HASHBYTES
+-- In MySQL (using MD5 or SHA1), syntax differs slightly
+-- Here’s the SQL Server style (if you use SQL Server):
+ALTER TABLE AssemblyParts
+ADD HashKey AS CONVERT(VARCHAR(40), HASHBYTES('SHA1', CONCAT(AssemblyID, Part)), 2);
+
