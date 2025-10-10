@@ -12,3 +12,11 @@ CREATE TABLE CustomerPhones (
     CONSTRAINT chk_phone_format
         CHECK (PhoneNumber REGEXP '^\\([0-9]{3}\\)-[0-9]{3}-[0-9]{4}$')
 );
+
+
+-- Step 3 - Insert Sample Data
+INSERT INTO CustomerPhones (CustomerID, PhoneNumber)
+VALUES
+(1001, '(555)-555-5555'),
+(2002, '(555)-555-5555'),
+(3003, '(555)-555-5555');
