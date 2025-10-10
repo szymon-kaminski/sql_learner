@@ -20,3 +20,7 @@ VALUES
 (1001, '(555)-555-5555'),
 (2002, '(555)-555-5555'),
 (3003, '(555)-555-5555');
+
+
+-- Step 4 - Verify Data
+SELECT * FROM CustomerPhones;
