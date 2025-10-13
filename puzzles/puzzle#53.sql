@@ -36,3 +36,4 @@ SELECT
     PrimaryID,
     SpouseID
 FROM Spouses;
+ORDER BY GroupID, PrimaryID;
