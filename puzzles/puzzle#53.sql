@@ -22,3 +22,17 @@ INSERT INTO Spouses (PrimaryID, SpouseID) VALUES
 
 -- Preview data
 SELECT * FROM Spouses;
+
+
+-- Step 3: Add query using DENSE_RANK and CASE to generate group IDs
+SELECT 
+    DENSE_RANK() OVER (
+        ORDER BY CASE 
+                     WHEN PrimaryID < SpouseID 
+                     THEN CONCAT(PrimaryID, SpouseID)
+                     ELSE CONCAT(SpouseID, PrimaryID) 
+                 END
+    ) AS GroupID,
+    PrimaryID,
+    SpouseID
+FROM Spouses;
