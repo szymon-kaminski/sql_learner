@@ -19,3 +19,6 @@ INSERT INTO Spouses (PrimaryID, SpouseID) VALUES
 ('Charlie', 'Pat'),
 ('Casey', 'Jordan'),
 ('Dee', 'Ashley');
+
+-- Preview data
+SELECT * FROM Spouses;
