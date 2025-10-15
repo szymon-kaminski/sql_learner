@@ -58,3 +58,8 @@ Prizes AS (
         END AS Prize
     FROM MatchCounts
 )
+
+
+-- Step 4: Calculate total winnings
+SELECT CONCAT('$', SUM(Prize)) AS Amount
+FROM Prizes;
