@@ -45,3 +45,16 @@ WITH MatchCounts AS (
         ON t.Number = w.Number
     GROUP BY t.TicketID
 ),
+
+
+-- Step 3: Assign prize per ticket
+Prizes AS (
+    SELECT 
+        TicketID,
+        CASE
+            WHEN MatchCount = (SELECT COUNT(*) FROM WinningNumbers) THEN 100
+            WHEN MatchCount BETWEEN 1 AND (SELECT COUNT(*) FROM WinningNumbers) - 1 THEN 10
+            ELSE 0
+        END AS Prize
+    FROM MatchCounts
+)
