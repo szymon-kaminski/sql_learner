@@ -1,19 +1,31 @@
--- Puzzle #51 - Primary Key Creation (MySQL)
+-- Puzzle #54 - Winning the Lottery
 
--- Step 1: Create database and table
+-- Step 1: Create database and tables
 CREATE DATABASE IF NOT EXISTS sql_learner;
 USE sql_learner;
 
-DROP TABLE IF EXISTS AssemblyParts;
-CREATE TABLE AssemblyParts (
-    AssemblyID INT,
-    Part VARCHAR(50)
+DROP TABLE IF EXISTS WinningNumbers;
+DROP TABLE IF EXISTS Tickets;
+
+CREATE TABLE WinningNumbers (
+    Number INT
 );
 
-INSERT INTO AssemblyParts (AssemblyID, Part) VALUES
-(1001, 'Bolt'),
-(1001, 'Screw'),
-(2002, 'Nut'),
-(2002, 'Washer'),
-(3003, 'Toggle'),
-(3003, 'Bolt');
+CREATE TABLE Tickets (
+    TicketID VARCHAR(10),
+    Number INT
+);
+
+INSERT INTO WinningNumbers (Number) VALUES
+(25), (45), (78);
+
+INSERT INTO Tickets (TicketID, Number) VALUES
+('AAA', 25),
+('AAA', 45),
+('AAA', 78),
+('BBB', 25),
+('BBB', 45),
+('BBB', 98),
+('CCC', 67),
+('CCC', 86),
+('CCC', 91);
