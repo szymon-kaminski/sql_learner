@@ -29,3 +29,19 @@ INSERT INTO Tickets (TicketID, Number) VALUES
 ('CCC', 67),
 ('CCC', 86),
 ('CCC', 91);
+
+-- preview data
+SELECT * FROM WinningNumbers;
+SELECT * FROM Tickets;
+
+
+-- Step 2: Count matches for each ticket
+WITH MatchCounts AS (
+    SELECT 
+        t.TicketID,
+        COUNT(w.Number) AS MatchCount
+    FROM Tickets t
+    LEFT JOIN WinningNumbers w
+        ON t.Number = w.Number
+    GROUP BY t.TicketID
+),
