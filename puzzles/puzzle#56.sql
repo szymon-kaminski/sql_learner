@@ -19,3 +19,9 @@ WITH RECURSIVE Numbers AS (
     FROM Numbers
     WHERE Number < 10
 )
+
+
+-- Step 3: Select final result from recursive CTE
+
+SELECT Number
+FROM Numbers;
