@@ -10,3 +10,12 @@ DROP TABLE IF EXISTS NumbersTable;
 
 WITH RECURSIVE Numbers AS (
     SELECT 1 AS Number
+
+
+-- Step 2: Add recursive logic to increment numbers
+
+    UNION ALL
+    SELECT Number + 1
+    FROM Numbers
+    WHERE Number < 10
+)
