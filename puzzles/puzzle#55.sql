@@ -30,3 +30,27 @@ INSERT INTO ProductsB VALUES
 -- preview data
 SELECT * FROM ProductsA;
 SELECT * FROM ProductsB;
+
+
+-- Step 2: Combine data from both tables (simulate FULL OUTER JOIN)
+WITH Combined AS (
+    SELECT 
+        a.ProductName AS ProductA,
+        a.Quantity AS QuantityA,
+        b.ProductName AS ProductB,
+        b.Quantity AS QuantityB
+    FROM ProductsA a
+    LEFT JOIN ProductsB b
+        ON a.ProductName = b.ProductName
+
+    UNION
+
+    SELECT 
+        a.ProductName AS ProductA,
+        a.Quantity AS QuantityA,
+        b.ProductName AS ProductB,
+        b.Quantity AS QuantityB
+    FROM ProductsA a
+    RIGHT JOIN ProductsB b
+        ON a.ProductName = b.ProductName
+)
