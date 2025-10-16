@@ -54,3 +54,17 @@ WITH Combined AS (
     RIGHT JOIN ProductsB b
         ON a.ProductName = b.ProductName
 )
+
+
+-- Step 3: Classify audit results
+SELECT
+    CASE
+        WHEN ProductA IS NOT NULL AND ProductB IS NOT NULL 
+             AND QuantityA = QuantityB THEN 'Matches in both table A and table B'
+        WHEN ProductA IS NULL THEN 'Product does not exist in table A'
+        WHEN ProductB IS NULL THEN 'Product does not exist in table B'
+        WHEN QuantityA <> QuantityB THEN 'Quantity in table A and table B do not match'
+    END AS Type,
+    COALESCE(ProductA, ProductB) AS ProductName
+FROM Combined
+
