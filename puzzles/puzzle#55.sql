@@ -67,4 +67,4 @@ SELECT
     END AS Type,
     COALESCE(ProductA, ProductB) AS ProductName
 FROM Combined
-
+ORDER BY Type;
