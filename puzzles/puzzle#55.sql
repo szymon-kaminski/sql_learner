@@ -26,3 +26,7 @@ INSERT INTO ProductsB VALUES
 ('Widget', 7),
 ('Doodad', 6),
 ('Dingbat', 9);
+
+-- preview data
+SELECT * FROM ProductsA;
+SELECT * FROM ProductsB;
