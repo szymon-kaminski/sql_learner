@@ -17,7 +17,7 @@ INSERT INTO Statements VALUES
 (2, 'SELECT * FROM Transactions;');
 
 
--- Step 2: Add recursive part to process remaining text
+-- Step 2: Refine output columns and adjust position calculation
 
 WITH RECURSIVE SplitWords AS (
     SELECT
@@ -48,24 +48,26 @@ WITH RECURSIVE SplitWords AS (
         RowNumber + 1,
         QuoteID,
         String,
-        Starts + Ends + 2,
-        Starts + Ends +
+        Ends + 2 AS Starts,
+        Ends + 
             CASE 
                 WHEN LOCATE(' ', Remainder) > 0 
                 THEN LOCATE(' ', Remainder)
                 ELSE LENGTH(Remainder) + 1
-            END,
+            END + 1 AS Ends,
         CASE 
             WHEN LOCATE(' ', Remainder) > 0 
             THEN SUBSTRING(Remainder, 1, LOCATE(' ', Remainder) - 1)
             ELSE Remainder
-        END,
+        END AS Word,
         CASE 
             WHEN LOCATE(' ', Remainder) > 0 
             THEN SUBSTRING(Remainder, LOCATE(' ', Remainder) + 1)
             ELSE ''
-        END
+        END AS Remainder
     FROM SplitWords
     WHERE Remainder <> ''
 )
-SELECT * FROM SplitWords;
+SELECT RowNumber, QuoteID, String, Starts, Ends, Word
+FROM SplitWords
+ORDER BY QuoteID, RowNumber;
