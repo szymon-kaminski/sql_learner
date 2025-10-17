@@ -17,7 +17,7 @@ INSERT INTO Statements VALUES
 (2, 'SELECT * FROM Transactions;');
 
 
--- Step 2: Create base anchor part of recursive CTE
+-- Step 2: Add recursive part to process remaining text
 
 WITH RECURSIVE SplitWords AS (
     SELECT
@@ -41,5 +41,31 @@ WITH RECURSIVE SplitWords AS (
             ELSE ''
         END AS Remainder
     FROM Statements
+
+    UNION ALL
+
+    SELECT
+        RowNumber + 1,
+        QuoteID,
+        String,
+        Starts + Ends + 2,
+        Starts + Ends +
+            CASE 
+                WHEN LOCATE(' ', Remainder) > 0 
+                THEN LOCATE(' ', Remainder)
+                ELSE LENGTH(Remainder) + 1
+            END,
+        CASE 
+            WHEN LOCATE(' ', Remainder) > 0 
+            THEN SUBSTRING(Remainder, 1, LOCATE(' ', Remainder) - 1)
+            ELSE Remainder
+        END,
+        CASE 
+            WHEN LOCATE(' ', Remainder) > 0 
+            THEN SUBSTRING(Remainder, LOCATE(' ', Remainder) + 1)
+            ELSE ''
+        END
+    FROM SplitWords
+    WHERE Remainder <> ''
 )
 SELECT * FROM SplitWords;
