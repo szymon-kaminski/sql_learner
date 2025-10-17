@@ -71,3 +71,16 @@ WITH RECURSIVE SplitWords AS (
 SELECT RowNumber, QuoteID, String, Starts, Ends, Word
 FROM SplitWords
 ORDER BY QuoteID, RowNumber;
+
+
+-- Step 3: Select final cleaned result
+
+SELECT 
+    RowNumber,
+    QuoteID,
+    String,
+    Starts,
+    Ends,
+    Word
+FROM SplitWords
+ORDER BY QuoteID, RowNumber;
