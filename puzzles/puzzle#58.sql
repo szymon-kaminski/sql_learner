@@ -60,5 +60,36 @@ Parsed AS (
         ) AS Expression
     FROM SplitOperators
     GROUP BY Equation
+),
+Evaluate AS (
+    SELECT
+        Equation,
+        Expression,
+        SUM(
+            CASE
+                WHEN SUBSTRING_INDEX(SUBSTRING_INDEX(Expression, ' ', n.n), ' ', -1) = '+' THEN 0
+                WHEN SUBSTRING_INDEX(SUBSTRING_INDEX(Expression, ' ', n.n), ' ', -1) = '-' THEN 0
+                ELSE CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(Expression, ' ', n.n), ' ', -1) AS SIGNED)
+            END
+        ) AS SumValue
+    FROM Parsed
+    JOIN (
+        SELECT a.N + b.N * 10 AS n
+        FROM (
+            SELECT 0 AS N UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4
+            UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9
+        ) a
+        CROSS JOIN (
+            SELECT 0 AS N UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4
+            UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9
+        ) b
+    ) n
+    ON n.n <= 1 + LENGTH(Expression) - LENGTH(REPLACE(Expression, ' ', ''))
+    GROUP BY Equation, Expression
 )
-SELECT * FROM Parsed;
+SELECT
+    Equation AS Permutation,
+    SumValue AS Sum
+FROM Evaluate
+ORDER BY Equation;
+
