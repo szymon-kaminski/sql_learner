@@ -22,3 +22,10 @@ INSERT INTO Equations (Equation) VALUES
 
 -- Preview input data
 SELECT * FROM Equations;
+
+
+-- Step 2: Rozdzielenie liczb operatorów
+SELECT
+    Equation,
+    REGEXP_REPLACE(Equation, '[+-]', ' ') AS Cleaned
+FROM Equations;
