@@ -36,7 +36,7 @@ WITH RECURSIVE SplitOperators AS (
     SELECT
         Equation,
         1 AS pos,
-        SUBSTRING(Equation, 1, 1) AS char
+        SUBSTRING(Equation, 1, 1) AS ch
     FROM Equations
 
     UNION ALL
@@ -53,8 +53,8 @@ Parsed AS (
         Equation,
         GROUP_CONCAT(
             CASE
-                WHEN char IN ('+', '-') THEN CONCAT(' ', char, ' ')
-                ELSE char
+                WHEN ch IN ('+', '-') THEN CONCAT(' ', ch, ' ')
+                ELSE ch
             END
             ORDER BY pos SEPARATOR ''
         ) AS Expression
