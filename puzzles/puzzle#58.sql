@@ -18,3 +18,7 @@ INSERT INTO Equations (Equation) VALUES
 ('1-23'),
 ('12+3'),
 ('12-3');
+
+
+-- Preview input data
+SELECT * FROM Equations;
