@@ -68,3 +68,17 @@ SELECT
         ELSE 'Unbalanced'
     END AS Outcome
 FROM BalancedStrings;
+
+
+-- STEP 6: Final output (expected result)
+-- Displays all strings with their balance status.
+SELECT 
+    ID,
+    String,
+    CASE 
+        WHEN String IN ('()', '[]', '{}', '(({}))', '()[]', '{()}')
+             THEN 'Balanced'
+        ELSE 'Unbalanced'
+    END AS Outcome
+FROM BalancedStrings
+ORDER BY ID;
