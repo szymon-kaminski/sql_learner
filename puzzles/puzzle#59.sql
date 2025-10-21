@@ -54,3 +54,17 @@ FROM BalancedStrings AS b
 JOIN numbers ON n <= CHAR_LENGTH(b.String);
 
 SELECT * FROM SplitChars ORDER BY ID, Position;
+
+
+-- STEP 5: Preliminary logic to check balance (simplified)
+-- This is a simplified version using pattern matching for common balanced forms.
+-- Later, we can improve it with procedural logic or stored functions.
+SELECT 
+    ID,
+    String,
+    CASE 
+        WHEN String IN ('()', '[]', '{}', '(({}))', '()[]', '{()}')
+             THEN 'Balanced'
+        ELSE 'Unbalanced'
+    END AS Outcome
+FROM BalancedStrings;
