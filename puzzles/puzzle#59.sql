@@ -11,6 +11,7 @@ CREATE TABLE BalancedStrings (
     String VARCHAR(50)
 );
 
+-- STEP 2: Insert example data
 INSERT INTO Brackets (ID, String) VALUES
 (1, '()'),
 (2, '[]'),
@@ -21,3 +22,17 @@ INSERT INTO Brackets (ID, String) VALUES
 (7, '{(})'),
 (8, '(()))()'),
 (9, '}{()[[');
+
+
+-- STEP 3: Add helper table for valid bracket pairs
+DROP TABLE IF EXISTS BracketPairs;
+
+CREATE TABLE BracketPairs (
+    OpenSymbol CHAR(1),
+    CloseSymbol CHAR(1)
+);
+
+INSERT INTO BracketPairs VALUES
+('(', ')'),
+('[', ']'),
+('{', '}');
