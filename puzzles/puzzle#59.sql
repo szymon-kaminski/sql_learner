@@ -45,7 +45,7 @@ SELECT * FROM BracketPairs;
 DROP TABLE IF EXISTS SplitChars;
 CREATE TABLE SplitChars (
     ID INT,
-    'Character' VARCHAR(1),
+    `Character` VARCHAR(1),
     Position INT
 );
 
@@ -54,10 +54,10 @@ DROP TABLE IF EXISTS Numbers;
 CREATE TABLE Numbers (n INT);
 INSERT INTO Numbers VALUES (1),(2),(3),(4),(5),(6),(7),(8),(9),(10);
 
-INSERT INTO SplitChars (ID, 'Character', Position)
+INSERT INTO SplitChars (ID, `Character`, Position)
 SELECT 
     b.ID,
-    MID(b.String, n, 1) AS 'Character',
+    MID(b.String, n, 1) AS `Character`,
     n AS Position
 FROM BalancedStrings AS b
 JOIN Numbers ON n <= CHAR_LENGTH(b.String);
