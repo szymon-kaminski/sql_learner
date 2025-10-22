@@ -43,20 +43,24 @@ SELECT * FROM BracketPairs;
 
 -- STEP 4: Split strings into individual characters
 DROP TABLE IF EXISTS SplitChars;
+CREATE TABLE SplitChars (
+    ID INT,
+    Char VARCHAR(1),
+    Position INT
+);
 
--- We'll create a helper table "numbers" (1–10) to iterate through each character position.
-WITH numbers AS (
-    SELECT 1 AS n UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL
-    SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL
-    SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10
-)
-CREATE TABLE SplitChars AS
+-- helper table with numbers 1–10
+DROP TABLE IF EXISTS Numbers;
+CREATE TABLE Numbers (n INT);
+INSERT INTO Numbers VALUES (1),(2),(3),(4),(5),(6),(7),(8),(9),(10);
+
+INSERT INTO SplitChars (ID, Char, Position)
 SELECT 
     b.ID,
     MID(b.String, n, 1) AS Char,
     n AS Position
 FROM BalancedStrings AS b
-JOIN numbers ON n <= CHAR_LENGTH(b.String);
+JOIN Numbers ON n <= CHAR_LENGTH(b.String);
 
 SELECT * FROM SplitChars ORDER BY ID, Position;
 
