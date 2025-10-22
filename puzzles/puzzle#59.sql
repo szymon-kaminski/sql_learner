@@ -39,6 +39,8 @@ INSERT INTO BracketPairs VALUES
 ('[', ']'),
 ('{', '}');
 
+SELECT * FROM BracketPairs;
+
 -- STEP 4: Split strings into individual characters
 DROP TABLE IF EXISTS SplitChars;
 
