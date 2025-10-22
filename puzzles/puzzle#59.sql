@@ -12,16 +12,18 @@ CREATE TABLE BalancedStrings (
 );
 
 -- STEP 2: Insert example data
-INSERT INTO Brackets (ID, String) VALUES
+INSERT INTO BalancedStrings (ID, String) VALUES
 (1, '()'),
 (2, '[]'),
 (3, '{}'),
 (4, '((({[]})))'),
-(5, '()[ ]'),
+(5, '()[]'),
 (6, '{()}'),
 (7, '{(})'),
 (8, '(()))()'),
 (9, '}{()[[');
+
+SELECT * FROM BalancedStrings;
 
 
 -- STEP 3: Add helper table for valid bracket pairs
