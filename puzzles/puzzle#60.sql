@@ -43,3 +43,14 @@ SELECT
 FROM Products
 GROUP BY ProductCode
 HAVING COUNT(DISTINCT Product) = 1;
+
+
+-- STEP 5: Final result — expected output
+-- The result set will contain Product Codes of EE and GG,
+-- as codes 01, 02, 03, and 04 are associated with multiple products (Alpha, Bravo, Charlie, Delta).
+SELECT 
+    ProductCode
+FROM Products
+GROUP BY ProductCode
+HAVING COUNT(DISTINCT Product) = 1
+ORDER BY ProductCode;
