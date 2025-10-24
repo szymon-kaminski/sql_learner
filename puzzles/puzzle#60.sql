@@ -26,3 +26,12 @@ INSERT INTO Products (Product, ProductCode) VALUES
 
 -- Preview data
 SELECT * FROM Products;
+
+
+-- STEP 3: Analyze duplicates — count how many different products share each ProductCode
+SELECT 
+    ProductCode,
+    COUNT(DISTINCT Product) AS ProductCount
+FROM Products
+GROUP BY ProductCode
+ORDER BY ProductCode;
