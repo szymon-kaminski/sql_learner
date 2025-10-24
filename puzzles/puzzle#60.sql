@@ -35,3 +35,11 @@ SELECT
 FROM Products
 GROUP BY ProductCode
 ORDER BY ProductCode;
+
+
+-- STEP 4: Select only unique ProductCodes (those used by one unique product)
+SELECT 
+    ProductCode
+FROM Products
+GROUP BY ProductCode
+HAVING COUNT(DISTINCT Product) = 1;
