@@ -12,7 +12,7 @@ CREATE TABLE PlayerScores (
     Score INT
 );
 
---Step 2: Wstawienie danych testowych
+-- Step 2: Wstawienie danych testowych
 INSERT INTO PlayerScores (AttemptID, PlayerID, Score) VALUES
 (1, 1001, 2),
 (2, 1001, 7),
