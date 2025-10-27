@@ -46,3 +46,33 @@ SELECT
     END AS Is_Previous_Score_Lower
 FROM PlayerScores;
 
+
+-- Step 5: Oznaczenie graczy, którzy poprawiali się we wszystkich próbach
+WITH ScoreFlags AS (
+    SELECT 
+        PlayerID,
+        AttemptID,
+        Score,
+        Score - FIRST_VALUE(Score) OVER (PARTITION BY PlayerID ORDER BY AttemptID) AS Difference_First,
+        COALESCE(Score - LAG(Score) OVER (PARTITION BY PlayerID ORDER BY AttemptID), 0) AS Difference_Last,
+        CASE 
+            WHEN LAG(Score) OVER (PARTITION BY PlayerID ORDER BY AttemptID) IS NULL THEN 1
+            WHEN Score > LAG(Score) OVER (PARTITION BY PlayerID ORDER BY AttemptID) THEN 1
+            ELSE 0
+        END AS Is_Previous_Score_Lower
+    FROM PlayerScores
+)
+SELECT 
+    AttemptID,
+    PlayerID,
+    Score,
+    Difference_First,
+    Difference_Last,
+    Is_Previous_Score_Lower,
+    CASE 
+        WHEN SUM(Is_Previous_Score_Lower) OVER (PARTITION BY PlayerID) = COUNT(*) OVER (PARTITION BY PlayerID)
+        THEN 1 ELSE 0
+    END AS Is_Overall_Improved
+FROM ScoreFlags
+ORDER BY PlayerID, AttemptID;
+
