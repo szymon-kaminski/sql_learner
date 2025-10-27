@@ -24,10 +24,25 @@ INSERT INTO PlayerScores (AttemptID, PlayerID, Score) VALUES
 SELECT * FROM PlayerScores;
 
 -- Step 3: Wyliczenie różnicy względem pierwszego i poprzedniego wyniku
+-- SELECT 
+   -- AttemptID,
+   -- PlayerID,
+   -- Score,
+   -- Score - FIRST_VALUE(Score) OVER (PARTITION BY PlayerID ORDER BY AttemptID) AS Difference_First,
+   -- Score - LAG(Score) OVER (PARTITION BY PlayerID ORDER BY AttemptID) AS Difference_Last
+-- FROM PlayerScores;
+
+-- Step 4: Dodanie flagi — czy bieżący wynik jest lepszy od poprzedniego?
 SELECT 
     AttemptID,
     PlayerID,
     Score,
     Score - FIRST_VALUE(Score) OVER (PARTITION BY PlayerID ORDER BY AttemptID) AS Difference_First,
-    Score - LAG(Score) OVER (PARTITION BY PlayerID ORDER BY AttemptID) AS Difference_Last
+    COALESCE(Score - LAG(Score) OVER (PARTITION BY PlayerID ORDER BY AttemptID), 0) AS Difference_Last,
+    CASE 
+        WHEN LAG(Score) OVER (PARTITION BY PlayerID ORDER BY AttemptID) IS NULL THEN 1
+        WHEN Score > LAG(Score) OVER (PARTITION BY PlayerID ORDER BY AttemptID) THEN 1
+        ELSE 0
+    END AS Is_Previous_Score_Lower
 FROM PlayerScores;
+
