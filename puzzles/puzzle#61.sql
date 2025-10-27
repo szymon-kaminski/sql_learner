@@ -22,3 +22,12 @@ INSERT INTO PlayerScores (AttemptID, PlayerID, Score) VALUES
 (3, 2002, 7);
 -- Preview data
 SELECT * FROM PlayerScores;
+
+-- Step 3: Wyliczenie różnicy względem pierwszego i poprzedniego wyniku
+SELECT 
+    AttemptID,
+    PlayerID,
+    Score,
+    Score - FIRST_VALUE(Score) OVER (PARTITION BY PlayerID ORDER BY AttemptID) AS Difference_First,
+    Score - LAG(Score) OVER (PARTITION BY PlayerID ORDER BY AttemptID) AS Difference_Last
+FROM PlayerScores;
