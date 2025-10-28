@@ -1,6 +1,7 @@
 -- Puzzle #62: Car and boat purchase
 
 -- Step 1: Create database and table
+DROP DATABASE IF EXISTS sql_puzzles;
 CREATE DATABASE IF NOT EXISTS sql_puzzles;
 USE sql_puzzles;
 
@@ -17,11 +18,11 @@ INSERT INTO Vehicles (VehicleID, Type, Model, Price) VALUES
 (1, 'Car', 'Rolls-Royce Phantom', 460000),
 (2, 'Car', 'Cadillac CT5', 39000),
 (3, 'Car', 'Porsche Boxster', 63000),
-(4, 'Car', 'Lamborghini Spyder', 290000),
-(5, 'Boat', 'Malibu', 210000),
+(4, 'Car', 'Lamborghini Spyder', 285000),
+(5, 'Boat', 'Malibu', 260000),
 (6, 'Boat', 'ATX 22-S', 85000),
 (7, 'Boat', 'Sea Ray SLX', 520000),
-(8, 'Boat', 'Mastercraft', 25000);
+(8, 'Boat', 'Mastercraft', 85000);
 
 -- Preview data
 SELECT * FROM Vehicles;
