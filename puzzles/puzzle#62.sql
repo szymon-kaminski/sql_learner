@@ -25,3 +25,14 @@ INSERT INTO Vehicles (VehicleID, Type, Model, Price) VALUES
 
 -- Preview data
 SELECT * FROM Vehicles;
+
+
+-- Step 3: Find all car–boat pairs where car is $200,000 more expensive
+SELECT 
+    c.Model AS Car,
+    b.Model AS Boat
+FROM Vehicles AS c
+JOIN Vehicles AS b
+    ON c.Type = 'Car'
+   AND b.Type = 'Boat'
+   AND c.Price = b.Price + 200000;
