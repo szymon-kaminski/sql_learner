@@ -27,3 +27,14 @@ INSERT INTO Orders (OrderID, Product, Discount) VALUES
 
 -- Preview data
 SELECT * FROM Orders;
+
+
+-- Step 3: Zapytanie końcowe
+SELECT 
+    OrderID
+FROM Orders
+GROUP BY OrderID
+HAVING 
+    COUNT(DISTINCT Product) = 1
+    AND COUNT(DISTINCT Discount) = 1
+    AND MAX(Discount) = 'PROMO';
