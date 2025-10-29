@@ -12,7 +12,7 @@ CREATE TABLE Orders (
 );
 
 
-Step 2: Wstawienie danych testowych
+-- Step 2: Wstawienie danych testowych
 INSERT INTO Orders (OrderID, Product, Discount) VALUES
 (1, 'Item 1', 'PROMO'),
 (1, 'Item 1', 'PROMO'),
