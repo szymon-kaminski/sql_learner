@@ -22,3 +22,18 @@ INSERT INTO Strings (ID, Str) VALUES
 
 -- Preview data
 SELECT * FROM Strings;
+
+
+-- Step 3: Obliczenia i warunki SQL
+SELECT 
+    ID,
+    Str,
+    CASE
+        WHEN LENGTH(Str) - LENGTH(REPLACE(Str, '"', '')) <> 2 THEN 'Error'
+        ELSE CASE
+            WHEN (LOCATE('"', Str, LOCATE('"', Str) + 1) - LOCATE('"', Str) - 1) > 10 THEN 'True'
+            WHEN (LOCATE('"', Str, LOCATE('"', Str) + 1) - LOCATE('"', Str) - 1) <= 10 THEN 'False'
+            ELSE 'Error'
+        END
+    END AS Result
+FROM Strings;
