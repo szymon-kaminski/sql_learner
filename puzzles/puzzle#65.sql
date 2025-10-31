@@ -23,3 +23,6 @@ INSERT INTO HomeListings (ListingID, HomeID, Status) VALUES
 (7, 'Home C', 'New Listing'),
 (8, 'Home C', 'Under Contract'),
 (9, 'Home C', 'Closed');
+
+-- Preview data
+SELECT * FROM HomeListings;
