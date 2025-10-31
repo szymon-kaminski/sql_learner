@@ -26,3 +26,27 @@ INSERT INTO HomeListings (ListingID, HomeID, Status) VALUES
 
 -- Preview data
 SELECT * FROM HomeListings;
+
+
+-- Step 3 - Implementacja SQL
+WITH Flagged AS (
+    SELECT 
+        ListingID,
+        HomeID,
+        Status,
+        CASE 
+            WHEN Status IN ('New Listing', 'Relisted') THEN 1
+            ELSE 0
+        END AS NewGroupFlag
+    FROM HomeListings
+),
+Grouped AS (
+    SELECT
+        ListingID,
+        HomeID,
+        Status,
+        SUM(NewGroupFlag) OVER (ORDER BY ListingID) AS GroupingID
+    FROM Flagged
+)
+SELECT * FROM Grouped;
+
