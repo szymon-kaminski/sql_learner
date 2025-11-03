@@ -43,6 +43,14 @@ SELECT * FROM Ranked ORDER BY Product, rn;
 
 
 -- STEP 4: Pivot / join sets by rank to produce (Bolt, Washer, Nut) rows
+WITH Ranked AS (
+    SELECT
+        SerialNo,
+        ManufactureDay,
+        Product,
+        ROW_NUMBER() OVER (PARTITION BY Product ORDER BY ManufactureDay, SerialNo) AS rn
+    FROM Parts
+)
 SELECT
     b.SerialNo AS Bolt,
     w.SerialNo AS Washer,
