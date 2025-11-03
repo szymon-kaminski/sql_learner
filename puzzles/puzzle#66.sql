@@ -28,3 +28,15 @@ INSERT INTO Parts (SerialNo, ManufactureDay, Product) VALUES
 
 -- Preview input
 SELECT * FROM Parts ORDER BY ManufactureDay, Product;
+
+
+-- STEP 3: Rank parts per product by ManufactureDay (earliest = 1)
+WITH Ranked AS (
+    SELECT
+        SerialNo,
+        ManufactureDay,
+        Product,
+        ROW_NUMBER() OVER (PARTITION BY Product ORDER BY ManufactureDay, SerialNo) AS rn
+    FROM Parts
+)
+SELECT * FROM Ranked ORDER BY Product, rn;
