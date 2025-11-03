@@ -56,3 +56,10 @@ LEFT JOIN
     (SELECT SerialNo, rn FROM Ranked WHERE Product = 'Nut') AS n
     ON b.rn = n.rn
 ORDER BY b.rn;
+
+
+-- STEP 5: Final expected output (same select as step 4)
+-- (Bolt | Washer | Nut)
+-- A111 | D222   | G333
+-- B111 | E222   | H333
+-- C111 | F222   | I333
