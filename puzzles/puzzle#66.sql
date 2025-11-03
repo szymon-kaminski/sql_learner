@@ -40,3 +40,19 @@ WITH Ranked AS (
     FROM Parts
 )
 SELECT * FROM Ranked ORDER BY Product, rn;
+
+
+-- STEP 4: Pivot / join sets by rank to produce (Bolt, Washer, Nut) rows
+SELECT
+    b.SerialNo AS Bolt,
+    w.SerialNo AS Washer,
+    n.SerialNo AS Nut
+FROM
+    (SELECT SerialNo, rn FROM Ranked WHERE Product = 'Bolt') AS b
+LEFT JOIN
+    (SELECT SerialNo, rn FROM Ranked WHERE Product = 'Washer') AS w
+    ON b.rn = w.rn
+LEFT JOIN
+    (SELECT SerialNo, rn FROM Ranked WHERE Product = 'Nut') AS n
+    ON b.rn = n.rn
+ORDER BY b.rn;
