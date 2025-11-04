@@ -21,3 +21,6 @@ INSERT INTO Students (Student, Birthday) VALUES
 ('Jenny', '2015-11-19'),
 ('Michelle', '2015-12-12'),
 ('Aaron', '2015-12-18');
+
+-- Preview input data
+SELECT * FROM Students;
