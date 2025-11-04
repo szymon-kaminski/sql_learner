@@ -24,3 +24,13 @@ INSERT INTO Students (Student, Birthday) VALUES
 
 -- Preview input data
 SELECT * FROM Students;
+
+
+-- Step 3: Grupowanie po dacie i łączenie imion
+SELECT
+    DATE_FORMAT(Birthday, '%m/%d/%Y') AS Birthday,
+    GROUP_CONCAT(Student ORDER BY Student SEPARATOR ', ') AS Students
+FROM Students
+GROUP BY Birthday
+HAVING COUNT(*) > 1
+ORDER BY Birthday;
