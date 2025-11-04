@@ -8,3 +8,16 @@ CREATE TABLE IF NOT EXISTS Students (
     Student VARCHAR(50),
     Birthday DATE
 );
+
+
+-- Step 2: Wstaw dane
+INSERT INTO Students (Student, Birthday) VALUES
+('Susan', '2015-04-15'),
+('Tim', '2015-04-15'),
+('Jacob', '2015-04-15'),
+('Earl', '2015-02-05'),
+('Mike', '2015-05-23'),
+('Angie', '2015-05-23'),
+('Jenny', '2015-11-19'),
+('Michelle', '2015-12-12'),
+('Aaron', '2015-12-18');
