@@ -32,3 +32,16 @@ WITH team_avg AS (
     FROM Scores
     GROUP BY Team
 ),
+
+
+-- Step 4: Find outlier (score with greatest deviation from average)
+deviation AS (
+    SELECT 
+        s.Team,
+        s.Year,
+        s.Score,
+        ABS(s.Score - t.avg_score) AS deviation,
+        RANK() OVER (PARTITION BY s.Team ORDER BY ABS(s.Score - t.avg_score) DESC) AS rnk
+    FROM Scores s
+    JOIN team_avg t ON s.Team = t.Team
+),
