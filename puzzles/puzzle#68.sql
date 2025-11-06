@@ -45,3 +45,17 @@ deviation AS (
     FROM Scores s
     JOIN team_avg t ON s.Team = t.Team
 ),
+
+
+-- Step 5: Remove outlier and compute new average
+filtered AS (
+    SELECT Team, Score
+    FROM deviation
+    WHERE rnk > 1  -- exclude the single largest deviation
+)
+SELECT 
+    Team,
+    ROUND(AVG(Score)) AS Score
+FROM filtered
+GROUP BY Team
+ORDER BY Team;
