@@ -59,3 +59,9 @@ SELECT
 FROM filtered
 GROUP BY Team
 ORDER BY Team;
+
+
+-- Step 6: Final expected output
+-- Team	     Score
+-- Cougars	  53
+-- Bulldogs	  61
