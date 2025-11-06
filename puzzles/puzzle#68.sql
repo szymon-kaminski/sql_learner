@@ -24,3 +24,11 @@ INSERT INTO Scores (Team, Year, Score) VALUES
 
 -- Preview input data
 SELECT * FROM Scores;
+
+
+-- Step 3: Find average score for each team
+WITH team_avg AS (
+    SELECT Team, AVG(Score) AS avg_score
+    FROM Scores
+    GROUP BY Team
+),
