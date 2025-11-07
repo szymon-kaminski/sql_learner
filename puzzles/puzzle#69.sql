@@ -50,7 +50,7 @@ WITH RECURSIVE hierarchy_cte AS (
     JOIN hierarchy_cte cte
       ON h.Parent = cte.Child
 ),
-grouping AS (
+group_split AS (
     SELECT DISTINCT 
         CASE 
             WHEN Child IN ('B','D','E','G') THEN 'Group A'
@@ -64,7 +64,7 @@ grouping AS (
     UNION ALL
     SELECT 'Group B', 'A'
 )
-SELECT * FROM grouping ORDER BY `Group`, ID;
+SELECT * FROM group_split ORDER BY `Group`, ID;
 
 
 -- STEP 5: Create final view for simplified output
