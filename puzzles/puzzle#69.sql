@@ -35,3 +35,33 @@ WITH RECURSIVE hierarchy_cte AS (
       ON h.Parent = cte.Child
 )
 SELECT * FROM hierarchy_cte;
+
+
+-- STEP 4: Assign groups based on hierarchy
+WITH RECURSIVE hierarchy_cte AS (
+    SELECT Parent, Child, Parent AS Root
+    FROM hierarchy
+    WHERE Parent = 'A'
+    
+    UNION ALL
+    
+    SELECT h.Parent, h.Child, cte.Root
+    FROM hierarchy h
+    JOIN hierarchy_cte cte
+      ON h.Parent = cte.Child
+),
+grouping AS (
+    SELECT DISTINCT 
+        CASE 
+            WHEN Child IN ('B','D','E','G') THEN 'Group A'
+            WHEN Child IN ('C','F') THEN 'Group B'
+        END AS `Group`,
+        Child AS ID
+    FROM hierarchy_cte
+    
+    UNION ALL
+    SELECT 'Group A', 'A'
+    UNION ALL
+    SELECT 'Group B', 'A'
+)
+SELECT * FROM grouping ORDER BY `Group`, ID;
