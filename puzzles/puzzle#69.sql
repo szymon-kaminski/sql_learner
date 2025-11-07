@@ -16,3 +16,6 @@ INSERT INTO hierarchy (Parent, Child) VALUES
 ('B','E'),
 ('C','F'),
 ('D','G');
+
+-- STEP 2: Verify input data
+SELECT * FROM hierarchy;
