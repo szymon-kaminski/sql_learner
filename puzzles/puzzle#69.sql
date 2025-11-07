@@ -19,3 +19,19 @@ INSERT INTO hierarchy (Parent, Child) VALUES
 
 -- STEP 2: Verify input data
 SELECT * FROM hierarchy;
+
+
+-- STEP 3: Build recursive hierarchy expansion
+WITH RECURSIVE hierarchy_cte AS (
+    SELECT Parent, Child, Parent AS Root
+    FROM hierarchy
+    WHERE Parent = 'A'
+    
+    UNION ALL
+    
+    SELECT h.Parent, h.Child, cte.Root
+    FROM hierarchy h
+    JOIN hierarchy_cte cte
+      ON h.Parent = cte.Child
+)
+SELECT * FROM hierarchy_cte;
