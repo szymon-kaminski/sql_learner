@@ -93,4 +93,3 @@ LEFT JOIN gaps g USING (ParentID)
 ORDER BY b.ParentID;
 
 
--- test git hub nowy klucz
