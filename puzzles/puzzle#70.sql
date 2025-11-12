@@ -36,4 +36,21 @@ FROM students
 GROUP BY ParentID;
 
 
+-- Step 3 - Calculate largest age gap between siblings
+WITH ordered AS (
+    SELECT
+        ParentID,
+        Age,
+        LAG(Age) OVER (PARTITION BY ParentID ORDER BY Age) AS prev_age
+    FROM students
+)
+SELECT
+    ParentID,
+    MAX(Age - prev_age) AS LargestAgeGap
+FROM ordered
+WHERE prev_age IS NOT NULL
+GROUP BY ParentID;
+
+
+
 
