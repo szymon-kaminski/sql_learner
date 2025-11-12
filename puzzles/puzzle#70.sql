@@ -22,4 +22,16 @@ INSERT INTO students VALUES
 (4004, 'H', 7, 'M');
 
 
+-- Step 2 - Basic stats per parent
+SELECT
+    ParentID,
+    COUNT(*) AS NumberChildren,
+    ROUND(AVG(Age)) AS AverageAge,
+    MAX(Age) - MIN(Age) AS AgeDifference,
+    MIN(Age) AS YoungestAge,
+    MAX(Age) AS OldestAge
+FROM students
+GROUP BY ParentID;
+
+
 
