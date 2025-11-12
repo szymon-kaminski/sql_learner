@@ -52,5 +52,44 @@ WHERE prev_age IS NOT NULL
 GROUP BY ParentID;
 
 
+-- Step 4 - Combine all stats into one result
+WITH base AS (
+    SELECT
+        ParentID,
+        COUNT(*) AS NumberChildren,
+        ROUND(AVG(Age)) AS AverageAge,
+        MAX(Age) - MIN(Age) AS AgeDifference,
+        MIN(Age) AS YoungestAge,
+        MAX(Age) AS OldestAge,
+        GROUP_CONCAT(Gender ORDER BY Gender SEPARATOR ', ') AS Genders
+    FROM students
+    GROUP BY ParentID
+),
+gaps AS (
+    SELECT
+        ParentID,
+        MAX(Age - prev_age) AS LargestAgeGap
+    FROM (
+        SELECT
+            ParentID,
+            Age,
+            LAG(Age) OVER (PARTITION BY ParentID ORDER BY Age) AS prev_age
+        FROM students
+    ) t
+    WHERE prev_age IS NOT NULL
+    GROUP BY ParentID
+)
+SELECT
+    b.ParentID,
+    b.NumberChildren,
+    b.AverageAge,
+    b.AgeDifference,
+    COALESCE(g.LargestAgeGap, 0) AS LargestAgeGap,
+    b.YoungestAge,
+    b.OldestAge,
+    b.Genders
+FROM base b
+LEFT JOIN gaps g USING (ParentID)
+ORDER BY b.ParentID;
 
 
