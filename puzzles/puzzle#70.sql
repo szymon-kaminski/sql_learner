@@ -21,6 +21,8 @@ INSERT INTO students VALUES
 (3003, 'G', 14, 'M'),
 (4004, 'H', 7, 'M');
 
+-- Verify input data
+SELECT * FROM students;
 
 -- Step 2 - Basic stats per parent
 SELECT
