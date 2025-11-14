@@ -89,3 +89,21 @@ BEGIN
     END IF;
 END//
 DELIMITER ;
+
+
+-- Step 6: Trigger - Permanent cannot duplicate Temp
+
+DELIMITER //
+CREATE TRIGGER trg_perm_no_temp_duplicate
+BEFORE INSERT ON PermanentEmployees
+FOR EACH ROW
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM TemporaryEmployees WHERE EmployeeID = NEW.EmployeeID
+    ) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Employee already exists in TemporaryEmployees.';
+    END IF;
+END//
+DELIMITER ;
+
