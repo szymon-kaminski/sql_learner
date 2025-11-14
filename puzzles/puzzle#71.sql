@@ -107,3 +107,30 @@ BEGIN
 END//
 DELIMITER ;
 
+
+-- Display results
+
+SELECT '=== EMPLOYEES ===' AS Section;
+SELECT * FROM Employees;
+
+SELECT '=== TEMPORARY EMPLOYEES ===' AS Section;
+SELECT * FROM TemporaryEmployees;
+
+SELECT '=== PERMANENT EMPLOYEES ===' AS Section;
+SELECT * FROM PermanentEmployees;
+
+SELECT '=== EMPLOYEE LOG ===' AS Section;
+SELECT * FROM EmployeeLog;
+
+-- Summary view
+SELECT 
+    e.EmpID,
+    e.Name,
+    e.ContractType,
+    IF(t.EmpID IS NOT NULL, 'Temporary', 
+       IF(p.EmpID IS NOT NULL, 'Permanent', 'Unclassified')
+    ) AS ClassifiedAs
+FROM Employees e
+LEFT JOIN TemporaryEmployees t ON e.EmpID = t.EmpID
+LEFT JOIN PermanentEmployees p ON e.EmpID = p.EmpID
+ORDER BY e.EmpID;
