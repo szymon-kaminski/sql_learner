@@ -73,3 +73,19 @@ BEGIN
 END//
 DELIMITER ;
 
+
+-- Step 5: Trigger - Permanent must reference Employees
+
+DELIMITER //
+CREATE TRIGGER trg_perm_check_employee_exists
+BEFORE INSERT ON PermanentEmployees
+FOR EACH ROW
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM Employees WHERE EmployeeID = NEW.EmployeeID
+    ) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Employee does not exist in Employees table.';
+    END IF;
+END//
+DELIMITER ;
