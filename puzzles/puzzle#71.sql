@@ -38,3 +38,20 @@ INSERT INTO PermanentEmployees VALUES
 (4004, 'Marketing'),
 (5005, 'Accounting'),
 (6006, 'Accounting');
+
+
+-- Step 3: Trigger - Temp must reference Employees
+
+DELIMITER //
+CREATE TRIGGER trg_temp_check_employee_exists
+BEFORE INSERT ON TemporaryEmployees
+FOR EACH ROW
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM Employees WHERE EmployeeID = NEW.EmployeeID
+    ) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Employee does not exist in Employees table.';
+    END IF;
+END//
+DELIMITER ;
