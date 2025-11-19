@@ -89,3 +89,40 @@ paired AS (
 )
 SELECT * FROM paired
 WHERE RepairGapDays <= 30;
+
+
+-- FINAL RESULT — Format output exactly like expected
+
+WITH ordered AS (
+    SELECT
+        RepairID,
+        CustomerID,
+        RepairDate,
+        ROW_NUMBER() OVER (PARTITION BY CustomerID ORDER BY RepairDate) AS rn
+    FROM Repairs
+),
+paired AS (
+    SELECT
+        cur.CustomerID,
+        cur.RepairID,
+        prev.RepairID AS PreviousRepairID,
+        cur.RepairDate,
+        prev.RepairDate AS PreviousRepairDate,
+        cur.rn - 1 AS SequenceNumber,
+        DATEDIFF(cur.RepairDate, prev.RepairDate) AS RepairGapDays
+    FROM ordered cur
+    LEFT JOIN ordered prev
+        ON cur.CustomerID = prev.CustomerID
+       AND cur.rn = prev.rn + 1
+)
+SELECT
+    CustomerID,
+    RepairID,
+    PreviousRepairID,
+    DATE_FORMAT(RepairDate, '%m/%d/%Y') AS RepairDate,
+    DATE_FORMAT(PreviousRepairDate, '%m/%d/%Y') AS PreviousRepairDate,
+    SequenceNumber,
+    RepairGapDays
+FROM paired
+WHERE RepairGapDays <= 30
+ORDER BY CustomerID, RepairDate;
