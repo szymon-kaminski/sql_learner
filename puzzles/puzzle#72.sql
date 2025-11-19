@@ -36,3 +36,29 @@ WITH ordered AS (
     FROM Repairs
 )
 SELECT * FROM ordered;
+
+-- STEP 3 — Join each repair with its previous repair
+
+WITH ordered AS (
+    SELECT
+        RepairID,
+        CustomerID,
+        RepairDate,
+        ROW_NUMBER() OVER (PARTITION BY CustomerID ORDER BY RepairDate) AS rn
+    FROM Repairs
+),
+paired AS (
+    SELECT
+        cur.CustomerID,
+        cur.RepairID,
+        prev.RepairID AS PreviousRepairID,
+        cur.RepairDate,
+        prev.RepairDate AS PreviousRepairDate,
+        cur.rn - 1 AS SequenceNumber,
+        DATEDIFF(cur.RepairDate, prev.RepairDate) AS RepairGapDays
+    FROM ordered cur
+    LEFT JOIN ordered prev
+        ON cur.CustomerID = prev.CustomerID
+       AND cur.rn = prev.rn + 1
+)
+SELECT * FROM paired;
