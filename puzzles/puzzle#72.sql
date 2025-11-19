@@ -22,3 +22,6 @@ INSERT INTO Repairs (RepairID, CustomerID, RepairDate) VALUES
 (6006, 'B', '2023-06-22'),
 (7007, 'B', '2023-06-23'),
 (8008, 'B', '2023-09-01');
+
+-- Preview input data
+SELECT * FROM Repairs ORDER BY CustomerID, RepairDate;
