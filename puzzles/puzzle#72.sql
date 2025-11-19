@@ -25,3 +25,14 @@ INSERT INTO Repairs (RepairID, CustomerID, RepairDate) VALUES
 
 -- Preview input data
 SELECT * FROM Repairs ORDER BY CustomerID, RepairDate;
+
+-- STEP 2 — Sort repairs per customer and assign row numbers
+WITH ordered AS (
+    SELECT
+        RepairID,
+        CustomerID,
+        RepairDate,
+        ROW_NUMBER() OVER (PARTITION BY CustomerID ORDER BY RepairDate) AS rn
+    FROM Repairs
+)
+SELECT * FROM ordered;
