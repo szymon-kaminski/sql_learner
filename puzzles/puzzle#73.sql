@@ -1,5 +1,9 @@
 -- Puzzle #73 - Distinct Statuses
 
+DROP DATABASE IF EXISTS puzzle73;
+CREATE DATABASE puzzle73;
+USE puzzle73;
+
 -- Step 1: Create table
 
 CREATE TABLE workflow_steps (
@@ -21,7 +25,7 @@ INSERT INTO workflow_steps (StepID, Workflow, Status) VALUES
 (8, 'Bravo', 'Inactive');
 
 -- Preview input data
-SELECT * FROM workflow_steps
+SELECT * FROM workflow_steps;
 
 -- Step 3: Create ordered CTE assigning row numbers per workflow
 
