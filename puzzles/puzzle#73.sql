@@ -53,3 +53,13 @@ o1.StepID,
 o1.Workflow,
 o1.Status
 )
+
+-- Step 5: Final result output
+
+SELECT
+StepID,
+Workflow,
+Status,
+CountDistinct AS Count
+FROM agg
+ORDER BY StepID;
