@@ -35,3 +35,21 @@ PARTITION BY Workflow ORDER BY StepID
 ) AS rn
 FROM workflow_steps
 ),
+
+-- Step 4: Aggregate unique statuses up to each step
+
+agg AS (
+SELECT
+o1.StepID,
+o1.Workflow,
+o1.Status,
+COUNT(DISTINCT o2.Status) AS CountDistinct
+FROM ordered o1
+JOIN ordered o2
+ON o1.Workflow = o2.Workflow
+AND o2.rn <= o1.rn
+GROUP BY
+o1.StepID,
+o1.Workflow,
+o1.Status
+)
