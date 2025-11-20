@@ -22,3 +22,16 @@ INSERT INTO workflow_steps (StepID, Workflow, Status) VALUES
 
 -- Preview input data
 SELECT * FROM workflow_steps
+
+-- Step 3: Create ordered CTE assigning row numbers per workflow
+
+WITH ordered AS (
+SELECT
+StepID,
+Workflow,
+Status,
+ROW_NUMBER() OVER (
+PARTITION BY Workflow ORDER BY StepID
+) AS rn
+FROM workflow_steps
+),
