@@ -20,3 +20,5 @@ INSERT INTO workflow_steps (StepID, Workflow, Status) VALUES
 (7, 'Bravo', 'Open'),
 (8, 'Bravo', 'Inactive');
 
+-- Preview input data
+SELECT * FROM workflow_steps
