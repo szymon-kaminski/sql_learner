@@ -25,3 +25,14 @@ INSERT INTO scores (GameID, Bowler, Score) VALUES
 
 -- Preview input data
 SELECT * FROM scores;
+
+
+-- Step 3: Rank players per game
+WITH ranked AS (
+    SELECT
+        GameID,
+        Bowler,
+        Score,
+        ROW_NUMBER() OVER (PARTITION BY GameID ORDER BY Score DESC) AS rn
+    FROM scores
+),
