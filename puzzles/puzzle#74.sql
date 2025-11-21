@@ -22,3 +22,6 @@ INSERT INTO scores (GameID, Bowler, Score) VALUES
 (2, 'John', 155),
 (2, 'Dennis', 100),
 (2, 'Anthony', 78);
+
+-- Preview input data
+SELECT * FROM scores;
