@@ -36,3 +36,15 @@ WITH ranked AS (
         ROW_NUMBER() OVER (PARTITION BY GameID ORDER BY Score DESC) AS rn
     FROM scores
 ),
+
+
+-- Step 4: Pair adjacent bowlers
+pairs AS (
+    SELECT
+        r1.Bowler AS Bowler1,
+        r2.Bowler AS Bowler2
+    FROM ranked r1
+    JOIN ranked r2
+        ON r1.GameID = r2.GameID
+       AND r1.rn = r2.rn - 1     -- next place
+)
