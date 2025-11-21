@@ -10,3 +10,15 @@ CREATE TABLE scores (
     Bowler VARCHAR(50),
     Score INT
 );
+
+
+-- Step 2: Insert sample data
+INSERT INTO scores (GameID, Bowler, Score) VALUES
+(1, 'John', 167),
+(1, 'Susan', 139),
+(1, 'Ralph', 95),
+(1, 'Mary', 90),
+(2, 'Susan', 187),
+(2, 'John', 155),
+(2, 'Dennis', 100),
+(2, 'Anthony', 78);
