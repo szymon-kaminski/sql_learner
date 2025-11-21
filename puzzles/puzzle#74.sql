@@ -48,3 +48,13 @@ pairs AS (
         ON r1.GameID = r2.GameID
        AND r1.rn = r2.rn - 1     -- next place
 )
+
+
+-- Step 5: Count repeated adjacency across games
+SELECT
+    Bowler1,
+    Bowler2,
+    COUNT(*) AS Count
+FROM pairs
+GROUP BY Bowler1, Bowler2
+ORDER BY Count DESC, Bowler1, Bowler2;
