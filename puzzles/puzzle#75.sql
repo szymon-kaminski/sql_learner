@@ -50,3 +50,9 @@ groups AS (
         ) AS grouping_id
     FROM normalized
 )
+
+
+-- Step 6: Final result
+SELECT *
+FROM groups
+ORDER BY BoxID;
