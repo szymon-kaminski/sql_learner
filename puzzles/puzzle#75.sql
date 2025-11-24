@@ -25,3 +25,17 @@ INSERT INTO boxes (BoxID, Length, Width, Height) VALUES
 
 -- Preview input data
 SELECT * FROM boxes;
+
+
+-- Step 4: Normalize dimensions (sort the 3 values)
+WITH normalized AS (
+    SELECT
+        BoxID,
+        -- sort dimensions by smallest → largest
+        LEAST(Length, Width, Height) AS dim1,
+        Length + Width + Height
+            - LEAST(Length, Width, Height)
+            - GREATEST(Length, Width, Height) AS dim2,
+        GREATEST(Length, Width, Height) AS dim3
+    FROM boxes
+),
