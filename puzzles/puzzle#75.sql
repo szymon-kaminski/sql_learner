@@ -39,3 +39,14 @@ WITH normalized AS (
         GREATEST(Length, Width, Height) AS dim3
     FROM boxes
 ),
+
+
+-- Step 5: Assign grouping ID
+groups AS (
+    SELECT
+        BoxID,
+        DENSE_RANK() OVER (
+            ORDER BY dim1, dim2, dim3
+        ) AS grouping_id
+    FROM normalized
+)
