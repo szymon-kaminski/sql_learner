@@ -13,3 +13,15 @@ CREATE TABLE boxes (
     Width INT,
     Height INT
 );
+
+
+-- Step 3: Insert sample data
+INSERT INTO boxes (BoxID, Length, Width, Height) VALUES
+('A', 10, 25, 15),
+('B', 15, 10, 25),
+('C', 10, 15, 25),
+('D', 20, 30, 30),
+('E', 30, 30, 20);
+
+-- Preview input data
+SELECT * FROM boxes;
