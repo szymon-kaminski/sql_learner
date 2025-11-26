@@ -39,7 +39,9 @@ WITH normalized AS (
     FROM boxes
 )
 
--- Step 6: Final result
-SELECT *
-FROM groups
+-- STEP 5: Assign grouping IDs and display final output
+SELECT
+    BoxID,
+    DENSE_RANK() OVER (ORDER BY dim1, dim2, dim3) AS Grouping_ID
+FROM normalized
 ORDER BY BoxID;
