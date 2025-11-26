@@ -50,3 +50,13 @@ starts AS (
     FROM batch_start
 )
 
+-- STEP 5: Match starts to ends and output final result
+SELECT
+    s.Batch,
+    s.BatchStart,
+    e.BatchEnd
+FROM starts s
+JOIN ends e
+    ON s.Batch = e.Batch
+    AND s.rn = e.rn
+ORDER BY s.BatchStart;
