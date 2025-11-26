@@ -30,3 +30,23 @@ INSERT INTO batch_lines (Batch, LineNum, Syntax) VALUES
 ('A', 4, NULL),
 ('A', 5, 'TRUNCATE TABLE Accounts;'),
 ('A', 6, 'GO');
+
+
+-- STEP 4: Determine Batch Ends
+-- Batch ends where Syntax = 'GO'
+WITH ends AS (
+    SELECT
+        Batch,
+        LineNum AS BatchEnd,
+        ROW_NUMBER() OVER (PARTITION BY Batch ORDER BY LineNum) AS rn
+    FROM batch_lines
+    WHERE Syntax = 'GO'
+),
+starts AS (
+    SELECT
+        Batch,
+        BatchStart,
+        ROW_NUMBER() OVER (PARTITION BY Batch ORDER BY BatchStart) AS rn
+    FROM batch_start
+)
+
