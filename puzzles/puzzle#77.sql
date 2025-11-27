@@ -59,3 +59,12 @@ next_val AS (
             ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
         ) AS NextKnown
     FROM prev_val
+
+
+-- STEP 6: Final selection
+-- Fill missing TempValue = GREATEST(PrevKnown, NextKnown)
+SELECT
+    TempID,
+    COALESCE(TempValue, GREATEST(PrevKnown, NextKnown)) AS TempValue
+FROM next_val
+ORDER BY TempID;
