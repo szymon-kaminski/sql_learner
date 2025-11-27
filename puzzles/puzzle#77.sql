@@ -8,3 +8,10 @@ USE puzzle77;
 
 -- STEP 2: Drop old table
 DROP TABLE IF EXISTS temperatures;
+
+
+-- STEP 3: Create table
+CREATE TABLE temperatures (
+    TempID INT,
+    TempValue INT
+);
