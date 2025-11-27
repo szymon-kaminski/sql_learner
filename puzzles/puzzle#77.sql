@@ -33,3 +33,29 @@ INSERT INTO temperatures (TempID, TempValue) VALUES
 
 -- Preview input data
 SELECT * FROM temperatures;
+
+-- STEP 5:
+-- Compute nearest known previous and next values
+-- Using window functions: MAX() OVER with RANGE window
+WITH prev_val AS (
+    SELECT
+        TempID,
+        TempValue,
+        -- most recent known previous temperature
+        MAX(TempValue) OVER (
+            ORDER BY TempID
+            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+        ) AS PrevKnown
+    FROM temperatures
+),
+next_val AS (
+    SELECT
+        TempID,
+        TempValue,
+        PrevKnown,
+        -- nearest known following temperature
+        MAX(TempValue) OVER (
+            ORDER BY TempID DESC
+            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+        ) AS NextKnown
+    FROM prev_val
