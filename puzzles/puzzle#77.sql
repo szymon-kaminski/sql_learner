@@ -34,31 +34,34 @@ INSERT INTO temperatures (TempID, TempValue) VALUES
 -- Preview input data
 SELECT * FROM temperatures;
 
--- STEP 5:
--- Compute nearest known previous and next values
--- Using window functions: MAX() OVER with RANGE window
-WITH prev_val AS (
-    SELECT
-        TempID,
-        TempValue,
-        -- most recent known previous temperature
-        MAX(TempValue) OVER (
-            ORDER BY TempID
-            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
-        ) AS PrevKnown
-    FROM temperatures
-),
-next_val AS (
-    SELECT
-        TempID,
-        TempValue,
-        PrevKnown,
-        -- nearest known following temperature
-        MAX(TempValue) OVER (
-            ORDER BY TempID DESC
-            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
-        ) AS NextKnown
-    FROM prev_val
+
+-- STEP 5 (replacement): Compute nearest previous and next known values using correlated subqueries
+-- and produce final filled output (compatible with older MySQL versions).
+
+SELECT
+    t1.TempID,
+    -- jeśli wartość istnieje -> zostawiamy, w przeciwnym razie bierzemy większą z PrevKnown i NextKnown
+    COALESCE(
+        t1.TempValue,
+        GREATEST(
+            -- PrevKnown: najbliższa znana wartość z przeszłości (TempID <= current)
+            (SELECT t2.TempValue
+             FROM temperatures t2
+             WHERE t2.TempValue IS NOT NULL
+               AND t2.TempID <= t1.TempID
+             ORDER BY t2.TempID DESC
+             LIMIT 1),
+            -- NextKnown: najbliższa znana wartość z przyszłości (TempID >= current)
+            (SELECT t3.TempValue
+             FROM temperatures t3
+             WHERE t3.TempValue IS NOT NULL
+               AND t3.TempID >= t1.TempID
+             ORDER BY t3.TempID ASC
+             LIMIT 1)
+        )
+    ) AS TempValue
+FROM temperatures t1
+ORDER BY t1.TempID;
 
 
 -- STEP 6: Final selection
@@ -66,5 +69,4 @@ next_val AS (
 SELECT
     TempID,
     COALESCE(TempValue, GREATEST(PrevKnown, NextKnown)) AS TempValue
-FROM next_val
 ORDER BY TempID;
