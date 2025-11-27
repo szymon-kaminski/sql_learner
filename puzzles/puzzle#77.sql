@@ -15,3 +15,21 @@ CREATE TABLE temperatures (
     TempID INT,
     TempValue INT
 );
+
+-- STEP 4: Insert sample data
+INSERT INTO temperatures (TempID, TempValue) VALUES
+(1, 52),
+(2, NULL),
+(3, NULL),
+(4, 65),
+(5, NULL),
+(6, 72),
+(7, NULL),
+(8, 70),
+(9, NULL),
+(10, 75),
+(11, NULL),
+(12, 80);
+
+-- Preview input data
+SELECT * FROM temperatures;
