@@ -4,3 +4,7 @@
 -- STEP 1: Create database
 CREATE DATABASE IF NOT EXISTS puzzle1;
 USE puzzle1;
+
+
+-- STEP 2: Drop existing table
+DROP TABLE IF EXISTS factorials;
