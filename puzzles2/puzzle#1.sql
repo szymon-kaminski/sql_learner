@@ -15,3 +15,8 @@ CREATE TABLE factorials (
     Number INT,
     Factorial BIGINT
 );
+
+
+-- STEP 4: Insert numbers 1–10
+INSERT INTO factorials (Number) VALUES
+(1),(2),(3),(4),(5),(6),(7),(8),(9),(10);
