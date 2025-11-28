@@ -8,3 +8,10 @@ USE puzzle1;
 
 -- STEP 2: Drop existing table
 DROP TABLE IF EXISTS factorials;
+
+
+-- STEP 3: Create table
+CREATE TABLE factorials (
+    Number INT,
+    Factorial BIGINT
+);
