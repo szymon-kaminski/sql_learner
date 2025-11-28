@@ -20,3 +20,16 @@ CREATE TABLE factorials (
 -- STEP 4: Insert numbers 1–10
 INSERT INTO factorials (Number) VALUES
 (1),(2),(3),(4),(5),(6),(7),(8),(9),(10);
+
+
+-- STEP 5: Select factorials using a recursive CTE (MySQL 8+)
+WITH RECURSIVE fact AS (
+    SELECT 1 AS Number, 1 AS Factorial
+    UNION ALL
+    SELECT Number + 1,
+           Factorial * (Number + 1)
+    FROM fact
+    WHERE Number < 10
+)
+SELECT Number, Factorial
+FROM fact;
