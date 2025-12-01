@@ -42,3 +42,22 @@ SELECT maxn AS MaxNumber, seq AS Permutation
 FROM cte
 WHERE LENGTH(used) = maxn       -- full permutations only
 ORDER BY seq;
+
+
+-- Step 5: Insert permutations into table
+WITH RECURSIVE cte AS (
+    SELECT '' AS seq, '' AS used, 3 AS maxn
+    UNION ALL
+    SELECT
+        CONCAT(seq, CASE WHEN seq = '' THEN '' ELSE ',' END, n),
+        CONCAT(used, n),
+        maxn
+    FROM cte
+    JOIN (
+        SELECT 1 AS n UNION SELECT 2 UNION SELECT 3
+    ) nums ON INSTR(used, nums.n) = 0
+)
+INSERT INTO permutations (MaxNumber, Permutation)
+SELECT maxn, seq
+FROM cte
+WHERE LENGTH(used) = maxn;
