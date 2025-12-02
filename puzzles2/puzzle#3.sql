@@ -7,3 +7,9 @@ USE puzzle3;
 
 -- STEP 2: Drop old table
 DROP TABLE IF EXISTS growing;
+
+
+-- STEP 3: Create table
+CREATE TABLE growing (
+    Permutation VARCHAR(50)
+);
