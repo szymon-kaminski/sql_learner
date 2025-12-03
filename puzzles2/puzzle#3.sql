@@ -15,7 +15,7 @@ CREATE TABLE growing (
 );
 
 
--- STEP 4: Insert generated growing sequences using a single recursive CTE (n = 5)
+-- STEP 4: Preview growing sequences using a recursive CTE
 WITH RECURSIVE cte AS (
     SELECT 1 AS n, CAST('1' AS CHAR(50)) AS seq
     UNION ALL
@@ -23,8 +23,9 @@ WITH RECURSIVE cte AS (
     FROM cte
     WHERE n < 5
 )
-INSERT INTO growing (Permutation)
-SELECT seq FROM cte;
+SELECT seq AS Permutation
+FROM cte
+ORDER BY LENGTH(seq);
 
 -- STEP 5: Preview final table
 SELECT * FROM growing ORDER BY LENGTH(Permutation);
