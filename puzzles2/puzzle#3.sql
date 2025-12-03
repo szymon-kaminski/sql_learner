@@ -27,5 +27,13 @@ SELECT seq AS Permutation
 FROM cte
 ORDER BY LENGTH(seq);
 
--- STEP 5: Preview final table
-SELECT * FROM growing ORDER BY LENGTH(Permutation);
+-- STEP 5: Insert growing sequences into the table
+WITH RECURSIVE cte AS (
+    SELECT 1 AS n, CAST('1' AS CHAR(50)) AS seq
+    UNION ALL
+    SELECT n + 1, CONCAT(seq, n + 1)
+    FROM cte
+    WHERE n < 5
+)
+INSERT INTO growing (Permutation)
+SELECT seq FROM cte;
