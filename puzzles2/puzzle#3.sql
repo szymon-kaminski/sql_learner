@@ -15,33 +15,16 @@ CREATE TABLE growing (
 );
 
 
--- STEP 4: Generate growing numbers for n = 5
+-- STEP 4: Insert generated growing sequences using a single recursive CTE (n = 5)
 WITH RECURSIVE cte AS (
-    SELECT 
-        1 AS n,
-        CAST('1' AS CHAR(50)) AS seq
+    SELECT 1 AS n, CAST('1' AS CHAR(50)) AS seq
     UNION ALL
-    SELECT
-        n + 1,
-        CONCAT(seq, n + 1)
-    FROM cte
-    WHERE n < 5
-)
-SELECT seq AS Permutation
-FROM cte;
-
-
--- STEP 5: Insert into table
-WITH RECURSIVE cte AS (
-    SELECT 
-        1 AS n,
-        CAST('1' AS CHAR(50)) AS seq
-    UNION ALL
-    SELECT
-        n + 1,
-        CONCAT(seq, n + 1)
+    SELECT n + 1, CONCAT(seq, n + 1)
     FROM cte
     WHERE n < 5
 )
 INSERT INTO growing (Permutation)
 SELECT seq FROM cte;
+
+-- STEP 5: Preview final table
+SELECT * FROM growing ORDER BY LENGTH(Permutation);
