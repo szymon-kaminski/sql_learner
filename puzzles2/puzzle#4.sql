@@ -9,3 +9,9 @@ USE puzzle4;
 
 -- STEP 2: Drop old table
 DROP TABLE IF EXISTS non_adjacent;
+
+
+-- STEP 3: Create output table
+CREATE TABLE non_adjacent (
+    Permutation VARCHAR(50)
+);
