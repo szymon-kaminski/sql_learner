@@ -5,3 +5,7 @@
 -- STEP 1: Create database
 CREATE DATABASE IF NOT EXISTS puzzle4;
 USE puzzle4;
+
+
+-- STEP 2: Drop old table
+DROP TABLE IF EXISTS non_adjacent;
