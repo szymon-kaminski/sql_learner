@@ -2,6 +2,7 @@
 -- Generate all permutations of {1,2,3,4}
 -- where no adjacent numbers differ by 1
 
+
 -- STEP 1: Create database
 CREATE DATABASE IF NOT EXISTS puzzle4;
 USE puzzle4;
@@ -17,16 +18,12 @@ CREATE TABLE non_adjacent (
 );
 
 
--- STEP 4: Preview valid non-adjacent permutations using recursive CTE
+-- STEP 4: Preview valid non-adjacent permutations (FINAL FIX)
 WITH RECURSIVE cte AS (
-    -- Start with empty sequence
     SELECT 
-        '' AS seq,
-        '' AS used
+        CAST('' AS CHAR(50)) AS seq,
+        CAST('' AS CHAR(50)) AS used
     UNION ALL
-    -- Add next number if:
-    -- 1) it was not used yet
-    -- 2) it is NOT adjacent to the previous number
     SELECT
         CONCAT(seq, CASE WHEN seq = '' THEN '' ELSE ',' END, n.n),
         CONCAT(used, n.n)
@@ -41,7 +38,9 @@ WITH RECURSIVE cte AS (
      AND (
           seq = ''
           OR ABS(
-                CAST(SUBSTRING_INDEX(seq, ',', -1) AS UNSIGNED) - n.n
+                CAST(SUBSTRING_INDEX(seq, ',', -1) AS SIGNED)
+                -
+                CAST(n.n AS SIGNED)
           ) <> 1
      )
 )
@@ -51,9 +50,11 @@ WHERE LENGTH(used) = 4
 ORDER BY seq;
 
 
--- STEP 5: Insert valid permutations into the table
+-- STEP 5: Insert valid permutations into the table (FINAL FIX)
 WITH RECURSIVE cte AS (
-    SELECT '' AS seq, '' AS used
+    SELECT 
+        CAST('' AS CHAR(50)) AS seq,
+        CAST('' AS CHAR(50)) AS used
     UNION ALL
     SELECT
         CONCAT(seq, CASE WHEN seq = '' THEN '' ELSE ',' END, n.n),
@@ -69,10 +70,14 @@ WITH RECURSIVE cte AS (
      AND (
           seq = ''
           OR ABS(
-                CAST(SUBSTRING_INDEX(seq, ',', -1) AS UNSIGNED) - n.n
+                CAST(SUBSTRING_INDEX(seq, ',', -1) AS SIGNED)
+                -
+                CAST(n.n AS SIGNED)
           ) <> 1
      )
 )
 INSERT INTO non_adjacent (Permutation)
-SELECT seq FROM cte
+SELECT seq
+FROM cte
 WHERE LENGTH(used) = 4;
+
