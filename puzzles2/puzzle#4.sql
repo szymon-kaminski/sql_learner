@@ -49,3 +49,30 @@ SELECT seq AS Permutation
 FROM cte
 WHERE LENGTH(used) = 4
 ORDER BY seq;
+
+
+-- STEP 5: Insert valid permutations into the table
+WITH RECURSIVE cte AS (
+    SELECT '' AS seq, '' AS used
+    UNION ALL
+    SELECT
+        CONCAT(seq, CASE WHEN seq = '' THEN '' ELSE ',' END, n.n),
+        CONCAT(used, n.n)
+    FROM cte
+    JOIN (
+        SELECT 1 AS n UNION
+        SELECT 2 UNION
+        SELECT 3 UNION
+        SELECT 4
+    ) n
+      ON INSTR(used, n.n) = 0
+     AND (
+          seq = ''
+          OR ABS(
+                CAST(SUBSTRING_INDEX(seq, ',', -1) AS UNSIGNED) - n.n
+          ) <> 1
+     )
+)
+INSERT INTO non_adjacent (Permutation)
+SELECT seq FROM cte
+WHERE LENGTH(used) = 4;
