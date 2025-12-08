@@ -7,3 +7,11 @@ CREATE TABLE numbers (
 );
 
 INSERT INTO numbers (n) VALUES (1), (2), (3);
+
+
+-- STEP 2 - TABELA NA WYNIKI
+DROP TABLE IF EXISTS results;
+CREATE TABLE results (
+    expression VARCHAR(100),
+    total INT
+);
