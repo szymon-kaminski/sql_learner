@@ -46,4 +46,13 @@ WITH RECURSIVE cte AS (
     FROM cte
     JOIN numbers n ON n.n = pos + 1
 
-   
+    UNION ALL
+
+    SELECT
+        -- plus
+        CONCAT(expr, '+', n.n),
+        total + n.n,
+        n.n,
+        pos + 1
+    FROM cte
+    JOIN numbers n ON n.n = pos + 1
