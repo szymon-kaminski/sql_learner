@@ -73,3 +73,5 @@ SELECT expr, total
 FROM cte
 WHERE pos = (SELECT COUNT(*) FROM numbers);
 
+-- STEP 4 - PODGLĄD WYNIKÓW
+SELECT * FROM results ORDER BY expression;
