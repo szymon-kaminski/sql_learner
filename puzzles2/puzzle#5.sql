@@ -56,3 +56,20 @@ WITH RECURSIVE cte AS (
         pos + 1
     FROM cte
     JOIN numbers n ON n.n = pos + 1
+
+    UNION ALL
+
+    SELECT
+        -- minus
+        CONCAT(expr, '-', n.n),
+        total - n.n,
+        -n.n,
+        pos + 1
+    FROM cte
+    JOIN numbers n ON n.n = pos + 1
+)
+INSERT INTO results (expression, total)
+SELECT expr, total
+FROM cte
+WHERE pos = (SELECT COUNT(*) FROM numbers);
+
