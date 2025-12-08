@@ -1,6 +1,10 @@
 -- PUZZLE #5: Add the numbers up
 
--- STEP 1 - TABELA Z DANYMI
+-- STEP 0 — BAZA
+CREATE DATABASE IF NOT EXISTS puzzle5;
+USE puzzle5;
+
+-- STEP 1 — TABELA Z LICZBAMI
 DROP TABLE IF EXISTS numbers;
 CREATE TABLE numbers (
     n INT PRIMARY KEY
@@ -8,15 +12,15 @@ CREATE TABLE numbers (
 
 INSERT INTO numbers (n) VALUES (1), (2), (3);
 
-
--- STEP 2 - TABELA NA WYNIKI
+-- STEP 2 — TABELA WYNIKOWA
 DROP TABLE IF EXISTS results;
 CREATE TABLE results (
     expression VARCHAR(100),
     total INT
 );
 
--- STEP 3 - REKURENCYJNE GENEROWANIE WYRAŻEŃ
+-- STEP 3 — INSERT + CTE 
+INSERT INTO results (expression, total)
 WITH RECURSIVE cte AS (
     -- start od pierwszej liczby
     SELECT 
@@ -29,8 +33,8 @@ WITH RECURSIVE cte AS (
 
     UNION ALL
 
+    -- sklejenie
     SELECT
-        -- konkatenacja
         CONCAT(expr, n.n),
         CASE 
             WHEN last_num >= 0 
@@ -48,8 +52,8 @@ WITH RECURSIVE cte AS (
 
     UNION ALL
 
+    -- plus
     SELECT
-        -- plus
         CONCAT(expr, '+', n.n),
         total + n.n,
         n.n,
@@ -59,8 +63,8 @@ WITH RECURSIVE cte AS (
 
     UNION ALL
 
+    -- minus
     SELECT
-        -- minus
         CONCAT(expr, '-', n.n),
         total - n.n,
         -n.n,
@@ -68,10 +72,10 @@ WITH RECURSIVE cte AS (
     FROM cte
     JOIN numbers n ON n.n = pos + 1
 )
-INSERT INTO results (expression, total)
 SELECT expr, total
 FROM cte
 WHERE pos = (SELECT COUNT(*) FROM numbers);
 
--- STEP 4 - PODGLĄD WYNIKÓW
+-- STEP 4 — PODGLĄD
 SELECT * FROM results ORDER BY expression;
+
