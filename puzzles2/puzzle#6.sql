@@ -17,3 +17,10 @@ INSERT INTO params (n) VALUES (3);
 
 -- set variable @n from params for convenient usage in CTEs
 SELECT n INTO @n FROM params LIMIT 1;
+
+
+-- STEP 2 — OUTPUT TABLE
+DROP TABLE IF EXISTS permutations;
+CREATE TABLE permutations (
+    permutation VARCHAR(255) PRIMARY KEY
+);
