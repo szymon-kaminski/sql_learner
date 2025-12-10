@@ -24,3 +24,20 @@ DROP TABLE IF EXISTS permutations;
 CREATE TABLE permutations (
     permutation VARCHAR(255) PRIMARY KEY
 );
+
+
+-- STEP 3 — RECURSIVE CTE: build strings by appending '0' and '1' until length = n
+WITH RECURSIVE perms AS (
+    -- start with empty string of length 0
+    SELECT '' AS s, 0 AS len
+    UNION ALL
+    -- append '0'
+    SELECT CONCAT(s, '0'), len + 1
+    FROM perms
+    WHERE len < @n
+    UNION ALL
+    -- append '1'
+    SELECT CONCAT(s, '1'), len + 1
+    FROM perms
+    WHERE len < @n
+)
