@@ -41,3 +41,11 @@ WITH RECURSIVE perms AS (
     FROM perms
     WHERE len < @n
 )
+
+
+-- STEP 4 — INSERT final permutations (only those with length = n)
+INSERT INTO permutations (permutation)
+SELECT s
+FROM perms
+WHERE len = @n
+ORDER BY s;
