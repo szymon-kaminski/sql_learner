@@ -48,3 +48,34 @@ DROP TABLE IF EXISTS permutations;
 CREATE TABLE permutations (
     permutation VARCHAR(255) PRIMARY KEY
 );
+
+
+-- STEP 4 — RECURSIVE CTE: build permutations by appending unused numbers
+-- Note: CAST('' AS CHAR(255)) ensures proper column type inference in MySQL CTE
+INSERT INTO permutations (permutation)
+SELECT s
+FROM (
+    WITH RECURSIVE perms AS (
+        -- seed: each single-number permutation
+        SELECT
+            CAST(val AS CHAR(255)) AS s,            -- string representation "1", "2", ...
+            CAST(val AS CHAR(255)) AS used,         -- used numbers as CSV "1", "2", ...
+            1 AS len
+        FROM numbers
+
+        UNION ALL
+
+        -- extend by any number not yet used
+        SELECT
+            CONCAT(p.s, ',', n.val) AS s,
+            CONCAT(p.used, ',', n.val) AS used,
+            p.len + 1 AS len
+        FROM perms p
+        JOIN numbers n ON FIND_IN_SET(CAST(n.val AS CHAR), p.used) = 0
+        WHERE p.len < @n
+    )
+    SELECT s
+    FROM perms
+    WHERE len = @n
+) AS x
+ORDER BY s;
