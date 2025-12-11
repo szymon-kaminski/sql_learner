@@ -41,3 +41,10 @@ FROM (
     )
     SELECT num FROM seq
 ) AS t;
+
+
+-- STEP 3 — OUTPUT TABLE
+DROP TABLE IF EXISTS permutations;
+CREATE TABLE permutations (
+    permutation VARCHAR(255) PRIMARY KEY
+);
