@@ -79,3 +79,7 @@ FROM (
     WHERE len = @n
 ) AS x
 ORDER BY s;
+
+
+-- STEP 5 — PODGLĄD finalny
+SELECT permutation FROM permutations ORDER BY permutation;
