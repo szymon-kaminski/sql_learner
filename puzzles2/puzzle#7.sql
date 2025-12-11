@@ -5,3 +5,16 @@
 DROP DATABASE IF EXISTS puzzle7;
 CREATE DATABASE puzzle7;
 USE puzzle7;
+
+
+-- STEP 1 — PARAMETER (length n)
+DROP TABLE IF EXISTS params;
+CREATE TABLE params (
+    n INT NOT NULL
+);
+
+-- set desired n here
+INSERT INTO params (n) VALUES (3);
+
+-- set variable @n from params for convenient usage in CTEs
+SELECT n INTO @n FROM params LIMIT 1;
