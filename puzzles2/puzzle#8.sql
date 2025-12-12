@@ -47,7 +47,7 @@ CREATE TABLE assignments (
 );
 
 
--- STEP 3 — MAIN GENERATION USING SELF-JOINS
+-- STEP 3 - MAIN GENERATION USING SELF-JOINS
 -- Strategy:
 -- 1) choose motorcycle (m)
 -- 2) choose unordered pair for sidecar (s1 < s2), excluding m
@@ -114,3 +114,9 @@ WHERE
     -- car (remaining 4) must contain at least one adult
     AND ( (SELECT COUNT(*) FROM people x WHERE x.id NOT IN (m.id, s1.id, s2.id, g1.id, g2.id, g3.id) AND x.is_adult = 1) >= 1 )
 ;
+
+
+-- STEP 4 - FINAL CHECK / PODGLĄD
+-- Count rows and sample
+SELECT COUNT(*) AS total_assignments FROM assignments;
+SELECT * FROM assignments ORDER BY permutation LIMIT 20;
