@@ -33,3 +33,15 @@ INSERT INTO people (id, name, is_adult) VALUES
 (8, 'C3', 0),
 (9, 'C4', 0),
 (10,'C5', 0);
+
+
+-- STEP 2 - OUTPUT TABLE
+DROP TABLE IF EXISTS assignments;
+CREATE TABLE assignments (
+    motorcycle VARCHAR(10),
+    sidecar VARCHAR(50),
+    golf_cart VARCHAR(100),
+    car VARCHAR(200),
+    permutation VARCHAR(400),
+    PRIMARY KEY (permutation)
+);
