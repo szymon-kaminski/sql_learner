@@ -74,7 +74,12 @@ JOIN people p4 ON p4.person_id NOT IN (a1.person_id, a2.person_id, a3.person_id,
 JOIN people p5 ON p5.person_id NOT IN (a1.person_id, a2.person_id, a3.person_id, a4.person_id, p1.person_id, p2.person_id, p3.person_id, p4.person_id)
 JOIN people p6 ON p6.person_id NOT IN (a1.person_id, a2.person_id, a3.person_id, a4.person_id, p1.person_id, p2.person_id, p3.person_id, p4.person_id, p5.person_id)
 WHERE
-    a1.is_adult = TRUE;
+    a1.is_adult = TRUE
+    -- golf cart (2 passengers, order does NOT matter)
+    AND p2.person_id < p3.person_id
+    -- car (3 passengers, order does NOT matter)
+    AND p4.person_id < p5.person_id
+    AND p5.person_id < p6.person_id;
 
 
 -- Step 4 - verify
