@@ -36,3 +36,42 @@ CREATE TABLE assignments (
     car_passenger2 INT,
     car_passenger3 INT
 );
+
+
+-- Step 3: Generate all 7200 assignments
+INSERT INTO assignments (
+    motorcycle_driver,
+    sidecar_driver,
+    sidecar_passenger,
+    golf_driver,
+    golf_passenger1,
+    golf_passenger2,
+    car_driver,
+    car_passenger1,
+    car_passenger2,
+    car_passenger3
+)
+SELECT
+    a1.person_id AS motorcycle_driver,
+    a2.person_id AS sidecar_driver,
+    p1.person_id AS sidecar_passenger,
+    a3.person_id AS golf_driver,
+    p2.person_id AS golf_passenger1,
+    p3.person_id AS golf_passenger2,
+    a4.person_id AS car_driver,
+    p4.person_id AS car_passenger1,
+    p5.person_id AS car_passenger2,
+    p6.person_id AS car_passenger3
+FROM
+    people a1
+JOIN people a2 ON a2.person_id <> a1.person_id AND a2.is_adult = TRUE
+JOIN people a3 ON a3.person_id NOT IN (a1.person_id, a2.person_id) AND a3.is_adult = TRUE
+JOIN people a4 ON a4.person_id NOT IN (a1.person_id, a2.person_id, a3.person_id) AND a4.is_adult = TRUE
+JOIN people p1 ON p1.person_id NOT IN (a1.person_id, a2.person_id, a3.person_id, a4.person_id)
+JOIN people p2 ON p2.person_id NOT IN (a1.person_id, a2.person_id, a3.person_id, a4.person_id, p1.person_id)
+JOIN people p3 ON p3.person_id NOT IN (a1.person_id, a2.person_id, a3.person_id, a4.person_id, p1.person_id, p2.person_id)
+JOIN people p4 ON p4.person_id NOT IN (a1.person_id, a2.person_id, a3.person_id, a4.person_id, p1.person_id, p2.person_id, p3.person_id)
+JOIN people p5 ON p5.person_id NOT IN (a1.person_id, a2.person_id, a3.person_id, a4.person_id, p1.person_id, p2.person_id, p3.person_id, p4.person_id)
+JOIN people p6 ON p6.person_id NOT IN (a1.person_id, a2.person_id, a3.person_id, a4.person_id, p1.person_id, p2.person_id, p3.person_id, p4.person_id, p5.person_id)
+WHERE
+    a1.is_adult = TRUE;
