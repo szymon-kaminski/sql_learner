@@ -20,3 +20,19 @@ CREATE TABLE people (
 INSERT INTO people VALUES
 (1, TRUE), (2, TRUE), (3, TRUE), (4, TRUE), (5, TRUE),
 (6, FALSE), (7, FALSE), (8, FALSE), (9, FALSE), (10, FALSE);
+
+-- Step 2 - Create output table
+
+CREATE TABLE assignments (
+    assignment_id INT AUTO_INCREMENT PRIMARY KEY,
+    motorcycle_driver INT,
+    sidecar_driver INT,
+    sidecar_passenger INT,
+    golf_driver INT,
+    golf_passenger1 INT,
+    golf_passenger2 INT,
+    car_driver INT,
+    car_passenger1 INT,
+    car_passenger2 INT,
+    car_passenger3 INT
+);
