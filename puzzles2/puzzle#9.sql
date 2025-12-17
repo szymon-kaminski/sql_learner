@@ -70,3 +70,7 @@ SELECT
     CHAR_LENGTH(stmt) - CHAR_LENGTH(REPLACE(stmt, ' ', '')) AS TotalSpaces
 FROM words
 ORDER BY id, RowNumber;
+
+
+-- STEP 4 - Verify 
+SELECT EmpID FROM Emps;
