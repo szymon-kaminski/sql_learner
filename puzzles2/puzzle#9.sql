@@ -22,7 +22,7 @@ CREATE TABLE numbers (n INT PRIMARY KEY);
 
 INSERT INTO numbers (n)
 WITH RECURSIVE cte AS (
-    SELECT 1
+    SELECT 1 AS n
     UNION ALL
     SELECT n + 1 FROM cte WHERE n < 200
 )
@@ -72,5 +72,3 @@ FROM words
 ORDER BY id, RowNumber;
 
 
--- STEP 4 - Verify 
-SELECT EmpID FROM Emps;
