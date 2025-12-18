@@ -30,3 +30,17 @@ SELECT
 FROM ordered
 WHERE prev_seat IS NULL
    OR seat_number - prev_seat > 1;
+
+
+-- STEP 3 - TOTAL MISSING NUMBERS
+WITH ordered AS (
+    SELECT
+        seat_number,
+        LAG(seat_number) OVER (ORDER BY seat_number) AS prev_seat
+    FROM seating_chart
+)
+SELECT
+    SUM(seat_number - prev_seat - 1) AS total_missing_numbers
+FROM ordered
+WHERE prev_seat IS NOT NULL
+  AND seat_number - prev_seat > 1;
