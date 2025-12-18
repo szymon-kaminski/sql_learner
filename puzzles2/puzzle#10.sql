@@ -44,3 +44,15 @@ SELECT
 FROM ordered
 WHERE prev_seat IS NOT NULL
   AND seat_number - prev_seat > 1;
+
+
+-- STEP 4 - COUNT ODD & EVEN NUMBERS
+SELECT
+    CASE
+        WHEN seat_number % 2 = 0 THEN 'Even Numbers'
+        ELSE 'Odd Numbers'
+    END AS type,
+    COUNT(*) AS count
+FROM seating_chart
+GROUP BY type
+ORDER BY type;
