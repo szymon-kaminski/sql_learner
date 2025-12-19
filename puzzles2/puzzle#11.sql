@@ -25,3 +25,18 @@ INSERT INTO process_steps VALUES
 (10,'Passed'),
 (11,'Passed'),
 (12,'Passed');
+
+
+-- STEP 2 - DETECT CHANGE POINTS
+WITH changes AS (
+    SELECT
+        step_number,
+        status,
+        CASE
+            WHEN status <> LAG(status) OVER (ORDER BY step_number)
+                 OR LAG(status) OVER (ORDER BY step_number) IS NULL
+            THEN 1
+            ELSE 0
+        END AS is_new_group
+    FROM process_steps
+)
