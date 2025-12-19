@@ -40,3 +40,13 @@ WITH changes AS (
         END AS is_new_group
     FROM process_steps
 )
+
+
+-- STEP 3 - ASSIGN GROUP ID
+, grouped AS (
+    SELECT
+        step_number,
+        status,
+        SUM(is_new_group) OVER (ORDER BY step_number) AS group_id
+    FROM changes
+)
