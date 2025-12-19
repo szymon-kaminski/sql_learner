@@ -50,3 +50,14 @@ WITH changes AS (
         SUM(is_new_group) OVER (ORDER BY step_number) AS group_id
     FROM changes
 )
+
+
+-- STEP 4 - FINAL AGGREGATION (EXPECTED OUTPUT)
+SELECT
+    MIN(step_number) AS min_step_number,
+    MAX(step_number) AS max_step_number,
+    status,
+    COUNT(*) AS consecutive_count
+FROM grouped
+GROUP BY group_id, status
+ORDER BY min_step_number;
