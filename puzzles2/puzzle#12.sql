@@ -4,3 +4,10 @@
 DROP DATABASE IF EXISTS puzzle12;
 CREATE DATABASE puzzle12;
 USE puzzle12;
+
+
+-- STEP 1 - OUTPUT TABLE
+CREATE TABLE numbers_sequence (
+    step_number INT PRIMARY KEY,
+    value INT NOT NULL
+);
