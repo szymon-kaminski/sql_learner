@@ -12,12 +12,7 @@ CREATE TABLE numbers_sequence (
     value INT NOT NULL
 );
 
--- STEP 2 - BASE CASE (START VALUE)
-INSERT INTO numbers_sequence (step_number, value)
-VALUES (1, 1);
-
-
--- STEP 3 - RECURSIVE LOGIC (CORE)
+-- STEP 2 - RECURSIVE LOGIC (CORE)
 INSERT INTO numbers_sequence (step_number, value)
 WITH RECURSIVE seq AS (
     SELECT
