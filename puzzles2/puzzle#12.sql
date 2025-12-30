@@ -11,3 +11,7 @@ CREATE TABLE numbers_sequence (
     step_number INT PRIMARY KEY,
     value INT NOT NULL
 );
+
+-- STEP 2 - BASE CASE (START VALUE)
+INSERT INTO numbers_sequence (step_number, value)
+VALUES (1, 1);
