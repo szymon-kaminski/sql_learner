@@ -34,3 +34,8 @@ WITH RECURSIVE seq AS (
 )
 INSERT INTO numbers_sequence
 SELECT * FROM seq;
+
+-- STEP 4 - FINAL OUTPUT
+SELECT *
+FROM numbers_sequence
+ORDER BY step_number;
