@@ -18,6 +18,7 @@ VALUES (1, 1);
 
 
 -- STEP 3 - RECURSIVE LOGIC (CORE)
+INSERT INTO numbers_sequence (step_number, value)
 WITH RECURSIVE seq AS (
     SELECT
         1 AS step_number,
@@ -32,10 +33,6 @@ WITH RECURSIVE seq AS (
     FROM seq
     WHERE value < 100
 )
-INSERT INTO numbers_sequence
-SELECT * FROM seq;
+SELECT step_number, value
+FROM seq;
 
--- STEP 4 - FINAL OUTPUT
-SELECT *
-FROM numbers_sequence
-ORDER BY step_number;
