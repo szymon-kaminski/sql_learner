@@ -49,3 +49,10 @@ WITH RECURSIVE pascal AS (
 )
 INSERT INTO pascal_triangle
 SELECT * FROM pascal;
+
+
+-- STEP 4 - QUERY ANY POSITION
+SELECT value
+FROM pascal_triangle
+WHERE row_number = 5
+  AND position = 3;
