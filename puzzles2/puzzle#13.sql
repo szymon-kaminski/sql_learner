@@ -16,7 +16,7 @@ CREATE TABLE pascal_triangle (
 
 
 -- STEP 2 - BASE CASE (ROW 1)
-INSERT INTO pascal_triangle (row_number, position, value)
+INSERT INTO pascal_triangle (row_no, col_no, val)
 VALUES (1, 1, 1);
 
 
