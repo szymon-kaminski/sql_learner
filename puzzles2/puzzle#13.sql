@@ -47,3 +47,10 @@ WITH RECURSIVE pascal AS (
 )
 SELECT row_no, col_no, val
 FROM pascal;
+
+
+-- STEP 3 - QUERY ANY POSITION
+SELECT val
+FROM pascal_triangle
+WHERE row_no = 5
+  AND col_no = 3;
