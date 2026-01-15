@@ -53,7 +53,7 @@ FROM pascal;
 
 
 -- STEP 4 - QUERY ANY POSITION
-SELECT value
+SELECT val
 FROM pascal_triangle
-WHERE row_number = 5
-  AND position = 3;
+WHERE row_no = 5
+  AND col_no = 3;
