@@ -24,31 +24,32 @@ VALUES (1, 1, 1);
 WITH RECURSIVE pascal AS (
     -- base row
     SELECT
-        1 AS row_number,
-        1 AS position,
-        1 AS value
+        1 AS row_no,
+        1 AS col_no,
+        1 AS val
 
     UNION ALL
 
     -- next rows
     SELECT
-        p.row_number + 1,
-        n.position,
-        COALESCE(p.value, 0) + COALESCE(p2.value, 0)
+        p.row_no + 1,
+        c.col_no,
+        IFNULL(p.val, 0) + IFNULL(p2.val, 0)
     FROM pascal p
     JOIN (
-        SELECT 1 AS position
+        SELECT 1 AS col_no
         UNION ALL
-        SELECT position + 1
+        SELECT col_no + 1
         FROM pascal
-    ) n
+    ) c
     LEFT JOIN pascal p2
-        ON p2.row_number = p.row_number
-       AND p2.position = n.position
-    WHERE p.row_number < 10
+        ON p2.row_no = p.row_no
+       AND p2.col_no = c.col_no
+    WHERE p.row_no < 10
 )
 INSERT INTO pascal_triangle
-SELECT * FROM pascal;
+SELECT row_no, col_no, val
+FROM pascal;
 
 
 -- STEP 4 - QUERY ANY POSITION
