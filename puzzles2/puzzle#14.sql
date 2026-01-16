@@ -7,7 +7,6 @@ USE puzzle14;
 
 
 -- STEP 1 - PARAMETERS
-Parametry problemu (łatwa zmiana bez ruszania logiki).
 CREATE TABLE params (
     n INT,
     k INT
