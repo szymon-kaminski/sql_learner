@@ -14,3 +14,30 @@ CREATE TABLE params (
 );
 
 INSERT INTO params VALUES (7, 3);
+
+
+-- STEP 2 - RECURSIVE ELIMINATION (CORE LOGIC)
+WITH RECURSIVE josephus AS (
+    -- base case
+    SELECT
+        n,
+        k,
+        1 AS step_no,
+        n AS people_left,
+        0 AS current_pos
+    FROM params
+
+    UNION ALL
+
+    -- recursive elimination
+    SELECT
+        j.n,
+        j.k,
+        step_no + 1,
+        people_left - 1,
+        (current_pos + k) % people_left
+    FROM josephus j
+    WHERE people_left > 1
+)
+SELECT *
+FROM josephus;
