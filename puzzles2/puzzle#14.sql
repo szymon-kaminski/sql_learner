@@ -41,3 +41,28 @@ WITH RECURSIVE josephus AS (
 )
 SELECT *
 FROM josephus;
+
+
+-- STEP 3 - FINAL WINNER
+WITH RECURSIVE josephus AS (
+    SELECT
+        n,
+        k,
+        n AS people_left,
+        0 AS current_pos
+    FROM params
+
+    UNION ALL
+
+    SELECT
+        j.n,
+        j.k,
+        people_left - 1,
+        (current_pos + k) % people_left
+    FROM josephus j
+    WHERE people_left > 1
+)
+SELECT current_pos + 1 AS winner
+FROM josephus
+ORDER BY people_left
+LIMIT 1;
