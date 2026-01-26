@@ -54,3 +54,54 @@ CREATE TABLE game (
     lower_left INT,
     decision VARCHAR(10)
 );
+
+
+-- STEP 4 - CORE LOGIC (RECURSIVE GAME)
+INSERT INTO game
+WITH RECURSIVE play AS (
+    -- first card
+    SELECT
+        1 AS turn_no,
+        CONCAT(label, ' of ', suit) AS card,
+        value,
+        0 AS higher_left,
+        0 AS lower_left,
+        'START' AS decision
+    FROM shuffled
+    WHERE pos = 1
+
+    UNION ALL
+
+    SELECT
+        p.turn_no + 1,
+        CONCAT(s.label, ' of ', s.suit),
+        s.value,
+
+        (SELECT COUNT(*) FROM shuffled x
+         WHERE x.pos > s.pos AND x.value > s.value),
+
+        (SELECT COUNT(*) FROM shuffled x
+         WHERE x.pos > s.pos AND x.value < s.value),
+
+        CASE
+            WHEN
+                (SELECT COUNT(*) FROM shuffled x
+                 WHERE x.pos > s.pos AND x.value > s.value)
+              >
+                (SELECT COUNT(*) FROM shuffled x
+                 WHERE x.pos > s.pos AND x.value < s.value)
+            THEN 'HIGHER'
+            WHEN
+                (SELECT COUNT(*) FROM shuffled x
+                 WHERE x.pos > s.pos AND x.value > s.value)
+              <
+                (SELECT COUNT(*) FROM shuffled x
+                 WHERE x.pos > s.pos AND x.value < s.value)
+            THEN 'LOWER'
+            ELSE
+                IF(RAND() > 0.5, 'HIGHER', 'LOWER')
+        END
+    FROM play p
+    JOIN shuffled s ON s.pos = p.turn_no + 1
+)
+SELECT * FROM play;
