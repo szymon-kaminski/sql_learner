@@ -43,3 +43,14 @@ CROSS JOIN (
 CREATE TABLE shuffled AS
 SELECT *, ROW_NUMBER() OVER (ORDER BY RAND()) AS pos
 FROM deck;
+
+
+-- STEP 3 - GAME LOG TABLE
+CREATE TABLE game (
+    turn_no INT,
+    card VARCHAR(20),
+    value INT,
+    higher_left INT,
+    lower_left INT,
+    decision VARCHAR(10)
+);
