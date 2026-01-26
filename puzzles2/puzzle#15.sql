@@ -105,3 +105,7 @@ WITH RECURSIVE play AS (
     JOIN shuffled s ON s.pos = p.turn_no + 1
 )
 SELECT * FROM play;
+
+
+-- STEP 5 - VIEW GAME
+SELECT * FROM game;
