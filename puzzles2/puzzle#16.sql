@@ -39,3 +39,10 @@ SELECT
 
     NULL AS stay_win
 FROM seq;
+
+
+-- STEP 3 — COMPUTE RESULTS (SEDNO LOGIKI)
+UPDATE simulations
+SET
+    stay_win = (chosen_door = prize_door),
+    switch_win = (chosen_door <> prize_door);
