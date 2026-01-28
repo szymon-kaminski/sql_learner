@@ -46,3 +46,15 @@ UPDATE simulations
 SET
     stay_win = (chosen_door = prize_door),
     switch_win = (chosen_door <> prize_door);
+
+
+-- STEP 4 — STATYSTYKA
+SELECT
+    COUNT(*) AS total_games,
+
+    SUM(stay_win) AS stay_wins,
+    ROUND(SUM(stay_win) / COUNT(*) * 100, 2) AS stay_win_pct,
+
+    SUM(switch_win) AS switch_wins,
+    ROUND(SUM(switch_win) / COUNT(*) * 100, 2) AS switch_win_pct
+FROM simulations;
