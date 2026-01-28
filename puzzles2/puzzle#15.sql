@@ -53,55 +53,6 @@ CREATE TABLE game (
 );
 
 -- STEP 4 - CORE LOGIC
-WITH RECURSIVE play AS (
-    -- first card
-    SELECT
-        1 AS turn_no,
-        CONCAT(label, ' of ', suit) AS card,
-        value,
-        0 AS higher_left,
-        0 AS lower_left,
-        CAST('START' AS CHAR(10)) AS decision,
-        pos
-    FROM shuffled
-    WHERE pos = 1
-
-    UNION ALL
-
-    SELECT
-        p.turn_no + 1,
-        CONCAT(s.label, ' of ', s.suit),
-        s.value,
-
-        (SELECT COUNT(*) FROM shuffled x
-         WHERE x.pos > s.pos AND x.value > s.value),
-
-        (SELECT COUNT(*) FROM shuffled x
-         WHERE x.pos > s.pos AND x.value < s.value),
-
-        CAST(
-            CASE
-                WHEN
-                    (SELECT COUNT(*) FROM shuffled x
-                     WHERE x.pos > s.pos AND x.value > s.value)
-                >
-                    (SELECT COUNT(*) FROM shuffled x
-                     WHERE x.pos > s.pos AND x.value < s.value)
-                THEN 'HIGHER'
-                WHEN
-                    (SELECT COUNT(*) FROM shuffled x
-                     WHERE x.pos > s.pos AND x.value > s.value)
-                <
-                    (SELECT COUNT(*) FROM shuffled x
-                     WHERE x.pos > s.pos AND x.value < s.value)
-                THEN 'LOWER'
-                ELSE IF(RAND() > 0.5, 'HIGHER', 'LOWER')
-            END AS CHAR(10)
-        ) AS decision,
-        s.pos
-    FROM play p
-    JOIN shuffled s ON s.pos = p.pos + 1
-)
 INSERT INTO game
 SELECT
     turn_no,
@@ -110,7 +61,65 @@ SELECT
     higher_left,
     lower_left,
     decision
-FROM play;
+FROM (
+    WITH RECURSIVE play AS (
+        -- base
+        SELECT
+            1 AS turn_no,
+            CONCAT(label, ' of ', suit) AS card,
+            value,
+            0 AS higher_left,
+            0 AS lower_left,
+            CAST('START' AS CHAR(10)) AS decision,
+            pos
+        FROM shuffled
+        WHERE pos = 1
+
+        UNION ALL
+
+        SELECT
+            p.turn_no + 1,
+            CONCAT(s.label, ' of ', s.suit),
+            s.value,
+
+            (SELECT COUNT(*) FROM shuffled x
+             WHERE x.pos > s.pos AND x.value > s.value),
+
+            (SELECT COUNT(*) FROM shuffled x
+             WHERE x.pos > s.pos AND x.value < s.value),
+
+            CAST(
+                CASE
+                    WHEN
+                        (SELECT COUNT(*) FROM shuffled x
+                         WHERE x.pos > s.pos AND x.value > s.value)
+                    >
+                        (SELECT COUNT(*) FROM shuffled x
+                         WHERE x.pos > s.pos AND x.value < s.value)
+                    THEN 'HIGHER'
+                    WHEN
+                        (SELECT COUNT(*) FROM shuffled x
+                         WHERE x.pos > s.pos AND x.value > s.value)
+                    <
+                        (SELECT COUNT(*) FROM shuffled x
+                         WHERE x.pos > s.pos AND x.value < s.value)
+                    THEN 'LOWER'
+                    ELSE IF(RAND() > 0.5, 'HIGHER', 'LOWER')
+                END AS CHAR(10)
+            ) AS decision,
+            s.pos
+        FROM play p
+        JOIN shuffled s ON s.pos = p.pos + 1
+    )
+    SELECT
+        turn_no,
+        card,
+        value,
+        higher_left,
+        lower_left,
+        decision
+    FROM play
+) t;
 
 -- STEP 5 - VIEW GAME
 SELECT * FROM game;
