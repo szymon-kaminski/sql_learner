@@ -52,7 +52,7 @@ CREATE TABLE game (
     value INT,
     higher_left INT,
     lower_left INT,
-    decision VARCHAR(10)
+    decision VARCHAR(20)
 );
 
 
@@ -83,24 +83,25 @@ WITH RECURSIVE play AS (
         (SELECT COUNT(*) FROM shuffled x
          WHERE x.pos > s.pos AND x.value < s.value),
 
-        CASE
-            WHEN
-                (SELECT COUNT(*) FROM shuffled x
-                 WHERE x.pos > s.pos AND x.value > s.value)
-              >
-                (SELECT COUNT(*) FROM shuffled x
-                 WHERE x.pos > s.pos AND x.value < s.value)
-            THEN 'HIGHER'
-            WHEN
-                (SELECT COUNT(*) FROM shuffled x
-                 WHERE x.pos > s.pos AND x.value > s.value)
-              <
-                (SELECT COUNT(*) FROM shuffled x
-                 WHERE x.pos > s.pos AND x.value < s.value)
-            THEN 'LOWER'
-            ELSE
-                IF(RAND() > 0.5, 'HIGHER', 'LOWER')
-        END
+        CAST(
+            CASE
+                WHEN
+                    (SELECT COUNT(*) FROM shuffled x
+                    WHERE x.pos > s.pos AND x.value > s.value)
+                >
+                    (SELECT COUNT(*) FROM shuffled x
+                     WHERE x.pos > s.pos AND x.value < s.value)
+                THEN 'HIGHER'
+                WHEN
+                    (SELECT COUNT(*) FROM shuffled x
+                     WHERE x.pos > s.pos AND x.value > s.value)
+                <
+                 (SELECT COUNT(*) FROM shuffled x
+                     WHERE x.pos > s.pos AND x.value < s.value)
+                THEN 'LOWER'
+                ELSE IF(RAND() > 0.5, 'HIGHER', 'LOWER')
+            END AS CHAR(10)
+) AS decision
     FROM play p
     JOIN shuffled s ON s.pos = p.turn_no + 1
 )
