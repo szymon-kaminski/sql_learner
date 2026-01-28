@@ -1,10 +1,9 @@
--- Puzzle #15: High-Low Card Game 
+-- Puzzle #15: High-Low Card Game
 
 -- STEP 0 - DATABASE
 DROP DATABASE IF EXISTS puzzle15;
 CREATE DATABASE puzzle15;
 USE puzzle15;
-
 
 -- STEP 1 - DECK
 CREATE TABLE deck (
@@ -38,12 +37,10 @@ CROSS JOIN (
     SELECT 'A',14
 ) v;
 
-
 -- STEP 2 - SHUFFLE
 CREATE TABLE shuffled AS
 SELECT *, ROW_NUMBER() OVER (ORDER BY RAND()) AS pos
 FROM deck;
-
 
 -- STEP 3 - GAME LOG TABLE
 CREATE TABLE game (
@@ -55,9 +52,7 @@ CREATE TABLE game (
     decision VARCHAR(20)
 );
 
-
--- STEP 4 - CORE LOGIC (RECURSIVE GAME)
-INSERT INTO game
+-- STEP 4 - CORE LOGIC
 WITH RECURSIVE play AS (
     -- first card
     SELECT
@@ -66,7 +61,8 @@ WITH RECURSIVE play AS (
         value,
         0 AS higher_left,
         0 AS lower_left,
-        'START' AS decision
+        CAST('START' AS CHAR(10)) AS decision,
+        pos
     FROM shuffled
     WHERE pos = 1
 
@@ -87,7 +83,7 @@ WITH RECURSIVE play AS (
             CASE
                 WHEN
                     (SELECT COUNT(*) FROM shuffled x
-                    WHERE x.pos > s.pos AND x.value > s.value)
+                     WHERE x.pos > s.pos AND x.value > s.value)
                 >
                     (SELECT COUNT(*) FROM shuffled x
                      WHERE x.pos > s.pos AND x.value < s.value)
@@ -96,17 +92,26 @@ WITH RECURSIVE play AS (
                     (SELECT COUNT(*) FROM shuffled x
                      WHERE x.pos > s.pos AND x.value > s.value)
                 <
-                 (SELECT COUNT(*) FROM shuffled x
+                    (SELECT COUNT(*) FROM shuffled x
                      WHERE x.pos > s.pos AND x.value < s.value)
                 THEN 'LOWER'
                 ELSE IF(RAND() > 0.5, 'HIGHER', 'LOWER')
             END AS CHAR(10)
-) AS decision
+        ) AS decision,
+        s.pos
     FROM play p
-    JOIN shuffled s ON s.pos = p.turn_no + 1
+    JOIN shuffled s ON s.pos = p.pos + 1
 )
-SELECT * FROM play;
-
+INSERT INTO game
+SELECT
+    turn_no,
+    card,
+    value,
+    higher_left,
+    lower_left,
+    decision
+FROM play;
 
 -- STEP 5 - VIEW GAME
 SELECT * FROM game;
+
