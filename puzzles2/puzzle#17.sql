@@ -59,3 +59,12 @@ SELECT
     dice,
     score
 FROM play;
+
+
+-- STEP 3 - NUMBER OF THROWS PER GAME
+CREATE TABLE results AS
+SELECT
+    game_id,
+    MAX(throw_no) AS total_throws
+FROM throws
+GROUP BY game_id;
