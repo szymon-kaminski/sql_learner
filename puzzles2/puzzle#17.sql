@@ -68,3 +68,12 @@ SELECT
     MAX(throw_no) AS total_throws
 FROM throws
 GROUP BY game_id;
+
+
+-- STEP 4 - FINAL ANSWER
+SELECT
+    COUNT(*) AS games,
+    ROUND(AVG(total_throws), 2) AS avg_throws_to_100,
+    MIN(total_throws) AS best_case,
+    MAX(total_throws) AS worst_case
+FROM results;
