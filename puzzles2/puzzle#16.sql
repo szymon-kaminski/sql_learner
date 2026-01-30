@@ -1,5 +1,7 @@
 -- Puzzle #16: Monty Hall Simulation
 
+SET cte_max_recursion_depth = 10000;
+
 -- STEP 0 - DATABASE
 DROP DATABASE IF EXISTS puzzle16;
 CREATE DATABASE puzzle16;
